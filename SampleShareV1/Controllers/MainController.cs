@@ -53,6 +53,7 @@ namespace SampleShareV1.Controllers
         }
 
         [HttpPost]
+        [ActionName("login")]
         [ValidateAntiForgeryToken]
         public ActionResult login(Users objUser)
         {
