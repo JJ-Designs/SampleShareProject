@@ -5,11 +5,11 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="1612be4f1a6b4a15bd71e8ab4d1385bb" Name="Diagram1">
-        <EntityTypeShape EntityType="SampleShareDBModel.AudioSamples" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="SampleShareDBModel.Categories" Width="1.5" PointX="3" PointY="5.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="SampleShareDBModel.Tags" Width="1.5" PointX="3" PointY="8.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="SampleShareDBModel.Userright" Width="1.5" PointX="0.75" PointY="1.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="SampleShareDBModel.Users" Width="1.5" PointX="3" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SampleShareDBModel.AudioSamples" Width="1.5" PointX="3.25" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SampleShareDBModel.Categories" Width="1.5" PointX="5.375" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SampleShareDBModel.Tags" Width="1.5" PointX="5.375" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SampleShareDBModel.Userright" Width="1.5" PointX="0.5" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SampleShareDBModel.Users" Width="1.5" PointX="0.5" PointY="0.5" IsExpanded="true" />
         <AssociationConnector Association="SampleShareDBModel.FK__AudioSamp__Categ__6E01572D" ManuallyRouted="false" />
         <AssociationConnector Association="SampleShareDBModel.FK__AudioSamp__TagID__6D0D32F4" ManuallyRouted="false" />
         <AssociationConnector Association="SampleShareDBModel.FK__AudioSamp__UserI__6C190EBB" ManuallyRouted="false" />

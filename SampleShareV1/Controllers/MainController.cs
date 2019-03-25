@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SampleShareV1.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -37,9 +38,36 @@ namespace SampleShareV1.Controllers
             return View();
         }
 
+        [HttpGet]
+        [ActionName("login")]
         public ActionResult Login()
         {
             return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult login(Users objUser)
+        {
+            if (ModelState.IsValid)
+            {
+                using (SampleShareDBEntities entities = new SampleShareDBEntities())
+                {
+                    var obj = entities.Users.Where(a => a.UserName.Equals(objUser.UserName) && a.Pass.Equals(objUser.Pass)).FirstOrDefault();
+                    if (obj != null)
+                    {
+                        Session["UserID"] = obj.UserID.ToString();
+                        Session["UserName"] = obj.UserName.ToString();
+                        Session["FullName"] = obj.FirstName.ToString() + " " + obj.LastName.ToString();
+                        return RedirectToAction("MyProfile");
+                    }
+                    else
+                    {
+                        ViewBag.Message = "Brugernavn eller password er forkert.";
+                    }
+                }
+            }
+            return View(objUser);
         }
     }
 }
