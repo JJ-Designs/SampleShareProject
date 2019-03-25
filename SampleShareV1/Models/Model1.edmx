@@ -1,0 +1,344 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="SampleShareDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AudioSamples">
+          <Key>
+            <PropertyRef Name="SampleID" />
+          </Key>
+          <Property Name="SampleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SampleTitel" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Discription" Type="varchar" MaxLength="200" />
+          <Property Name="Duration" Type="time" Precision="7" />
+          <Property Name="CreationDate" Type="date" />
+          <Property Name="Downloads" Type="int" />
+          <Property Name="FilePath" Type="varchar" MaxLength="50" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="TagID" Type="int" />
+          <Property Name="CategoryID" Type="int" />
+        </EntityType>
+        <EntityType Name="Categories">
+          <Key>
+            <PropertyRef Name="CategoryID" />
+          </Key>
+          <Property Name="CategoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CategoryName" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Tags">
+          <Key>
+            <PropertyRef Name="TagID" />
+          </Key>
+          <Property Name="TagID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TagName" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Userright">
+          <Key>
+            <PropertyRef Name="userrightid" />
+          </Key>
+          <Property Name="userrightid" Type="int" Nullable="false" />
+          <Property Name="levelDescription" Type="varchar" MaxLength="50" />
+          <Property Name="userrightCategory" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="50" />
+          <Property Name="LastName" Type="varchar" MaxLength="30" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+          <Property Name="Pass" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="userrightid" Type="int" />
+        </EntityType>
+        <Association Name="FK__AudioSamp__Categ__6E01572D">
+          <End Role="Categories" Type="Self.Categories" Multiplicity="0..1" />
+          <End Role="AudioSamples" Type="Self.AudioSamples" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categories">
+              <PropertyRef Name="CategoryID" />
+            </Principal>
+            <Dependent Role="AudioSamples">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AudioSamp__TagID__6D0D32F4">
+          <End Role="Tags" Type="Self.Tags" Multiplicity="0..1" />
+          <End Role="AudioSamples" Type="Self.AudioSamples" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tags">
+              <PropertyRef Name="TagID" />
+            </Principal>
+            <Dependent Role="AudioSamples">
+              <PropertyRef Name="TagID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AudioSamp__UserI__6C190EBB">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="AudioSamples" Type="Self.AudioSamples" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="AudioSamples">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Users__userright__628FA481">
+          <End Role="Userright" Type="Self.Userright" Multiplicity="0..1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Userright">
+              <PropertyRef Name="userrightid" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="userrightid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SampleShareDBModelStoreContainer">
+          <EntitySet Name="AudioSamples" EntityType="Self.AudioSamples" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tags" EntityType="Self.Tags" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Userright" EntityType="Self.Userright" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__AudioSamp__Categ__6E01572D" Association="Self.FK__AudioSamp__Categ__6E01572D">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="AudioSamples" EntitySet="AudioSamples" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AudioSamp__TagID__6D0D32F4" Association="Self.FK__AudioSamp__TagID__6D0D32F4">
+            <End Role="Tags" EntitySet="Tags" />
+            <End Role="AudioSamples" EntitySet="AudioSamples" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AudioSamp__UserI__6C190EBB" Association="Self.FK__AudioSamp__UserI__6C190EBB">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="AudioSamples" EntitySet="AudioSamples" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Users__userright__628FA481" Association="Self.FK__Users__userright__628FA481">
+            <End Role="Userright" EntitySet="Userright" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SampleShareDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AudioSamples">
+          <Key>
+            <PropertyRef Name="SampleID" />
+          </Key>
+          <Property Name="SampleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SampleTitel" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Discription" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Duration" Type="Time" Precision="7" />
+          <Property Name="CreationDate" Type="DateTime" Precision="0" />
+          <Property Name="Downloads" Type="Int32" />
+          <Property Name="FilePath" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="TagID" Type="Int32" />
+          <Property Name="CategoryID" Type="Int32" />
+          <NavigationProperty Name="Categories" Relationship="Self.FK__AudioSamp__Categ__6E01572D" FromRole="AudioSamples" ToRole="Categories" />
+          <NavigationProperty Name="Tags" Relationship="Self.FK__AudioSamp__TagID__6D0D32F4" FromRole="AudioSamples" ToRole="Tags" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__AudioSamp__UserI__6C190EBB" FromRole="AudioSamples" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Categories">
+          <Key>
+            <PropertyRef Name="CategoryID" />
+          </Key>
+          <Property Name="CategoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="AudioSamples" Relationship="Self.FK__AudioSamp__Categ__6E01572D" FromRole="Categories" ToRole="AudioSamples" />
+        </EntityType>
+        <EntityType Name="Tags">
+          <Key>
+            <PropertyRef Name="TagID" />
+          </Key>
+          <Property Name="TagID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TagName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="AudioSamples" Relationship="Self.FK__AudioSamp__TagID__6D0D32F4" FromRole="Tags" ToRole="AudioSamples" />
+        </EntityType>
+        <EntityType Name="Userright">
+          <Key>
+            <PropertyRef Name="userrightid" />
+          </Key>
+          <Property Name="userrightid" Type="Int32" Nullable="false" />
+          <Property Name="levelDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="userrightCategory" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__Users__userright__628FA481" FromRole="Userright" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Pass" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="userrightid" Type="Int32" />
+          <NavigationProperty Name="AudioSamples" Relationship="Self.FK__AudioSamp__UserI__6C190EBB" FromRole="Users" ToRole="AudioSamples" />
+          <NavigationProperty Name="Userright" Relationship="Self.FK__Users__userright__628FA481" FromRole="Users" ToRole="Userright" />
+        </EntityType>
+        <Association Name="FK__AudioSamp__Categ__6E01572D">
+          <End Role="Categories" Type="Self.Categories" Multiplicity="0..1" />
+          <End Role="AudioSamples" Type="Self.AudioSamples" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categories">
+              <PropertyRef Name="CategoryID" />
+            </Principal>
+            <Dependent Role="AudioSamples">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AudioSamp__TagID__6D0D32F4">
+          <End Role="Tags" Type="Self.Tags" Multiplicity="0..1" />
+          <End Role="AudioSamples" Type="Self.AudioSamples" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tags">
+              <PropertyRef Name="TagID" />
+            </Principal>
+            <Dependent Role="AudioSamples">
+              <PropertyRef Name="TagID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AudioSamp__UserI__6C190EBB">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="AudioSamples" Type="Self.AudioSamples" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="AudioSamples">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Users__userright__628FA481">
+          <End Role="Userright" Type="Self.Userright" Multiplicity="0..1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Userright">
+              <PropertyRef Name="userrightid" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="userrightid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SampleShareDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AudioSamples" EntityType="Self.AudioSamples" />
+          <EntitySet Name="Categories" EntityType="Self.Categories" />
+          <EntitySet Name="Tags" EntityType="Self.Tags" />
+          <EntitySet Name="Userright" EntityType="Self.Userright" />
+          <EntitySet Name="Users" EntityType="Self.Users" />
+          <AssociationSet Name="FK__AudioSamp__Categ__6E01572D" Association="Self.FK__AudioSamp__Categ__6E01572D">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="AudioSamples" EntitySet="AudioSamples" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AudioSamp__TagID__6D0D32F4" Association="Self.FK__AudioSamp__TagID__6D0D32F4">
+            <End Role="Tags" EntitySet="Tags" />
+            <End Role="AudioSamples" EntitySet="AudioSamples" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AudioSamp__UserI__6C190EBB" Association="Self.FK__AudioSamp__UserI__6C190EBB">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="AudioSamples" EntitySet="AudioSamples" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Users__userright__628FA481" Association="Self.FK__Users__userright__628FA481">
+            <End Role="Userright" EntitySet="Userright" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SampleShareDBModelStoreContainer" CdmEntityContainer="SampleShareDBEntities">
+          <EntitySetMapping Name="AudioSamples">
+            <EntityTypeMapping TypeName="SampleShareDBModel.AudioSamples">
+              <MappingFragment StoreEntitySet="AudioSamples">
+                <ScalarProperty Name="SampleID" ColumnName="SampleID" />
+                <ScalarProperty Name="SampleTitel" ColumnName="SampleTitel" />
+                <ScalarProperty Name="Discription" ColumnName="Discription" />
+                <ScalarProperty Name="Duration" ColumnName="Duration" />
+                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+                <ScalarProperty Name="Downloads" ColumnName="Downloads" />
+                <ScalarProperty Name="FilePath" ColumnName="FilePath" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="TagID" ColumnName="TagID" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="SampleShareDBModel.Categories">
+              <MappingFragment StoreEntitySet="Categories">
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tags">
+            <EntityTypeMapping TypeName="SampleShareDBModel.Tags">
+              <MappingFragment StoreEntitySet="Tags">
+                <ScalarProperty Name="TagID" ColumnName="TagID" />
+                <ScalarProperty Name="TagName" ColumnName="TagName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Userright">
+            <EntityTypeMapping TypeName="SampleShareDBModel.Userright">
+              <MappingFragment StoreEntitySet="Userright">
+                <ScalarProperty Name="userrightid" ColumnName="userrightid" />
+                <ScalarProperty Name="levelDescription" ColumnName="levelDescription" />
+                <ScalarProperty Name="userrightCategory" ColumnName="userrightCategory" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="SampleShareDBModel.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Pass" ColumnName="Pass" />
+                <ScalarProperty Name="userrightid" ColumnName="userrightid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
