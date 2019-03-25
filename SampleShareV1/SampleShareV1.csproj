@@ -162,6 +162,8 @@
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\img\SampleShare.png" />
+    <Content Include="Content\img\SampleShareLogo.png" />
     <Content Include="Content\img\Wallpaper1.jpg" />
     <Content Include="Content\samples\Sample.mp3" />
     <Content Include="Content\Style.css" />
