@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="SampleShareDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="SampleShareDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AudioSamples">
           <Key>
             <PropertyRef Name="SampleID" />
@@ -48,11 +48,13 @@
           </Key>
           <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserName" Type="varchar" MaxLength="30" Nullable="false" />
-          <Property Name="FirstName" Type="varchar" MaxLength="50" />
-          <Property Name="LastName" Type="varchar" MaxLength="30" />
           <Property Name="Email" Type="varchar" MaxLength="50" />
           <Property Name="Pass" Type="varchar" MaxLength="32" Nullable="false" />
           <Property Name="userrightid" Type="int" />
+          <Property Name="FullName" Type="varchar" MaxLength="80" />
+          <Property Name="Profession" Type="varchar" MaxLength="60" />
+          <Property Name="Discriptions" Type="varchar" MaxLength="255" />
+          <Property Name="ProfileImgPath" Type="varchar" MaxLength="60" />
         </EntityType>
         <Association Name="FK__AudioSamp__Categ__6E01572D">
           <End Role="Categories" Type="Self.Categories" Multiplicity="0..1" />
@@ -125,8 +127,7 @@
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="SampleShareDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -179,13 +180,15 @@
           </Key>
           <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="LastName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Pass" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="userrightid" Type="Int32" />
           <NavigationProperty Name="AudioSamples" Relationship="Self.FK__AudioSamp__UserI__6C190EBB" FromRole="Users" ToRole="AudioSamples" />
           <NavigationProperty Name="Userright" Relationship="Self.FK__Users__userright__628FA481" FromRole="Users" ToRole="Userright" />
+          <Property Name="FullName" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="Profession" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="Discriptions" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="ProfileImgPath" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK__AudioSamp__Categ__6E01572D">
           <End Role="Categories" Type="Self.Categories" Multiplicity="0..1" />
@@ -308,10 +311,12 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="SampleShareDBModel.Users">
               <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="ProfileImgPath" ColumnName="ProfileImgPath" />
+                <ScalarProperty Name="Discriptions" ColumnName="Discriptions" />
+                <ScalarProperty Name="Profession" ColumnName="Profession" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Pass" ColumnName="Pass" />
                 <ScalarProperty Name="userrightid" ColumnName="userrightid" />

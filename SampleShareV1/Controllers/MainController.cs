@@ -38,16 +38,20 @@ namespace SampleShareV1.Controllers
             return View();
         }
 
-        public ActionResult SignUp()
-        {
-            return View();
-        }
-
         [HttpGet]
         [ActionName("MyProfile")]
-        public ActionResult MyProfile()
+        public ActionResult MyProfile(int UserIDFromURL)
         {
-            return View();
+            SampleShareDBEntities entities = new SampleShareDBEntities();
+            Users user = entities.Users.Single(s => s.UserID == UserIDFromURL);
+            if (Session["UserID"] != null)
+            {
+                return View(user);
+            }
+            else
+            {
+                return RedirectToAction("index", "Home");
+            }
         }
 		
         [HttpGet]
@@ -71,8 +75,8 @@ namespace SampleShareV1.Controllers
                     {
                         Session["UserID"] = obj.UserID.ToString();
                         Session["UserName"] = obj.UserName.ToString();
-                        Session["FullName"] = obj.FirstName.ToString() + " " + obj.LastName.ToString();
-                        return RedirectToAction("MyProfile");
+                        Session["FullName"] = obj.FullName.ToString();
+                        return RedirectToAction("MyProfile", new { UserIDFromURL = Session["UserID"] });
                     }
                     else
                     {
@@ -81,6 +85,33 @@ namespace SampleShareV1.Controllers
                 }
             }
             return View(objUser);
+        }
+        
+        //Sign up controller. Get (When you firt open the page)
+        [HttpGet]
+        [ActionName("SignUp")]
+        public ActionResult SignUp()
+        {
+            return View();
+        }
+
+        //Sign up controller. Post (When you submit information from the page)
+        [HttpPost]
+        [ActionName("SignUp")]
+        public ActionResult SignUp(Users users)
+        {
+            SampleShareDBEntities entities = new SampleShareDBEntities();
+            entities.Users.Add(users);
+            entities.SaveChanges();
+            return RedirectToAction("login");
+            
+        }
+
+        //Logout controller 
+        public ActionResult logout()
+        {
+            Session.Abandon();
+            return RedirectToAction("index");
         }
     }
 }
