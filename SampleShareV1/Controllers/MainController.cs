@@ -38,6 +38,11 @@ namespace SampleShareV1.Controllers
             return View();
         }
 
+        public ActionResult SignUp()
+        {
+            return View();
+        }
+
         [HttpGet]
         [ActionName("MyProfile")]
         public ActionResult MyProfile()
