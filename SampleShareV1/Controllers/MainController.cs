@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Entity;
 
 namespace SampleShareV1.Controllers
 {
@@ -37,6 +38,43 @@ namespace SampleShareV1.Controllers
         {
             return View();
         }
+        [HttpGet]
+        [ActionName("EditMyProfile")]
+        public ActionResult EditMyProfile(int UserIDFromURL)
+        {
+            SampleShareDBEntities entities = new SampleShareDBEntities();
+            Users user = entities.Users.Single(s => s.UserID == UserIDFromURL);
+            if (Session["UserID"] != null)
+            {
+                return View(user);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Main");
+            }
+        }
+
+        [HttpPost]
+        [ActionName("EditMyProfile")]
+        public ActionResult EditMyProfile(Users userprofile)
+        {
+            SampleShareDBEntities entities = new SampleShareDBEntities();
+            Users user = entities.Users.Single(u => u.UserName.Equals(userprofile.UserName));
+
+            user.UserName = userprofile.UserName;
+            user.FullName = userprofile.FullName;
+            user.Email = userprofile.Email;
+            user.Profession = userprofile.Profession;
+            user.Discriptions = userprofile.Discriptions;
+            user.Pass = userprofile.Pass;
+
+            entities.Entry(user).State = EntityState.Modified;
+            entities.SaveChanges();
+            return RedirectToAction("MyProfile", new { UserIDFromURL = Session["UserID"] });
+        }
+
+
+
 
         [HttpGet]
         [ActionName("MyProfile")]
@@ -50,7 +88,7 @@ namespace SampleShareV1.Controllers
             }
             else
             {
-                return RedirectToAction("index", "Home");
+                return RedirectToAction("Index", "Main");
             }
         }
 		
@@ -80,7 +118,7 @@ namespace SampleShareV1.Controllers
                     }
                     else
                     {
-                        ViewBag.Message = "Brugernavn eller password er forkert.";
+                        ViewBag.Message = "USERNAME OR PASSWORD IS WRONG!";
                     }
                 }
             }
@@ -101,6 +139,9 @@ namespace SampleShareV1.Controllers
         public ActionResult SignUp(Users users)
         {
             SampleShareDBEntities entities = new SampleShareDBEntities();
+
+            users.userrightid = 2;
+
             entities.Users.Add(users);
             entities.SaveChanges();
             return RedirectToAction("login");

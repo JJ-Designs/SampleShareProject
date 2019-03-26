@@ -28,18 +28,18 @@
 
                             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                             <div class="group">
-                                <label for="fullname" class="label">Fullname</label>
-                                @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "input", @placeholder = "Fornavn", tabindex = "1" } })
+                                <label for="fullname" class="label">Name</label>
+                                @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "input", @placeholder = "Name", tabindex = "1" } })
                                 @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
                             </div>
                             <div class="group">
                                 <label for="user" class="label">Username</label>
-                                @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "input", @placeholder = "Brugernavn", tabindex = "3" } })
+                                @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "input", @placeholder = "Username", tabindex = "3" } })
                                 @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
                             </div>
                             <div class="group">
                                 <label for="pass" class="label">Email Address</label>
-                                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "input", @placeholder = "E-Mail Adresse", tabindex = "4" } })
+                                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "input", @placeholder = "E-Mail", tabindex = "4" } })
                                 @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                             </div>
                             <div class="group">
