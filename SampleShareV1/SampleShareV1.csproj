@@ -295,6 +295,7 @@
     <Content Include="Views\Main\MyProfile.cshtml" />
     <Content Include="Views\Main\SignUp.cshtml" />
     <Content Include="Views\Main\EditMyProfile.cshtml" />
+    <Content Include="Views\Main\Catalog.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

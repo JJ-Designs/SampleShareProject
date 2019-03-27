@@ -1,0 +1,103 @@
+﻿@model IEnumerable<SampleShareV1.Models.AudioSamples>
+
+@{
+    ViewBag.Title = "Catalog";
+}
+
+<h2>Catalog</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SampleTitel)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Discription)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Duration)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreationDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Downloads)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FilePath)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Categories.CategoryName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Tags.TagName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Users.UserName)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.SampleTitel)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Discription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Duration)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreationDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Downloads)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FilePath)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Categories.CategoryName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tags.TagName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Users.UserName)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.SampleID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.SampleID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.SampleID })
+            </td>
+        </tr>
+    }
+
+</table>
+
+<div class="row ">
+    @foreach (var item in Model)
+    {
+        <div class="col-sm-4" style="margin-top:20px;">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">@item.SampleTitel</h4>
+                    <p class="card-text"><i class="fas fa-user"></i><a href="#"><b>@item.Users.UserName</b></a></p>
+                    <audio class="embed-responsive-item" controls controlsList="nodownload">
+                        <source class="card-title" src="~/Content/samples/Sample.mp3" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                    <p class="card-text">Tags: <i>Sound, Effect, Audio </i></p>
+                    <a href="#" class="btn btn-primary"><i class="fas fa-download"></i> Download</a>
+                    <a href="@Url.Action("","", new { id = item.SampleID})" class="btn btn-outline-dark">More</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>

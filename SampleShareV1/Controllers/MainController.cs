@@ -28,11 +28,15 @@ namespace SampleShareV1.Controllers
             return View();
         }
 
+        [HttpGet]
+        [ActionName("Catalog")]
         public ActionResult Catalog()
         {
-            return View();
+            SampleShareDBEntities entities = new SampleShareDBEntities();
+            List<AudioSamples> audioSamples = entities.AudioSamples.ToList();
+            return View(audioSamples);
         }
-
+        
         public ActionResult MyContent()
         {
             return View();

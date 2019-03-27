@@ -19,6 +19,7 @@
           <Property Name="UserID" Type="int" />
           <Property Name="TagID" Type="int" />
           <Property Name="CategoryID" Type="int" />
+          <Property Name="isPublic" Type="bit" />
         </EntityType>
         <EntityType Name="Categories">
           <Key>
@@ -148,6 +149,7 @@
           <NavigationProperty Name="Categories" Relationship="Self.FK__AudioSamp__Categ__6E01572D" FromRole="AudioSamples" ToRole="Categories" />
           <NavigationProperty Name="Tags" Relationship="Self.FK__AudioSamp__TagID__6D0D32F4" FromRole="AudioSamples" ToRole="Tags" />
           <NavigationProperty Name="Users" Relationship="Self.FK__AudioSamp__UserI__6C190EBB" FromRole="AudioSamples" ToRole="Users" />
+          <Property Name="isPublic" Type="Boolean" />
         </EntityType>
         <EntityType Name="Categories">
           <Key>
@@ -270,6 +272,7 @@
           <EntitySetMapping Name="AudioSamples">
             <EntityTypeMapping TypeName="SampleShareDBModel.AudioSamples">
               <MappingFragment StoreEntitySet="AudioSamples">
+                <ScalarProperty Name="isPublic" ColumnName="isPublic" />
                 <ScalarProperty Name="SampleID" ColumnName="SampleID" />
                 <ScalarProperty Name="SampleTitel" ColumnName="SampleTitel" />
                 <ScalarProperty Name="Discription" ColumnName="Discription" />
