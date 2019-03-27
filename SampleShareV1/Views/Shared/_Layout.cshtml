@@ -43,7 +43,7 @@
             <div class="navbar-collapse collapse dual-nav w-50 order-2">
                 <ul class="nav navbar-nav ml-auto">
                     <li>
-                        @if (Session["UserID"] != null)
+                        @if (Session["UserID"] == null)
                         {
                             <form class="form-inline my-2 my-lg-0" action="~/Main/Login">
                                 <button class="btn btn-outline-dark btn-sm my-2 my-sm-0" type="submit">
