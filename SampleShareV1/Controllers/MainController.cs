@@ -159,5 +159,26 @@ namespace SampleShareV1.Controllers
             Session.Abandon();
             return RedirectToAction("index");
         }
+
+        // Upload Controller
+        [HttpGet]
+        [ActionName("UploadSample")]
+        public ActionResult UploadSample()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult UploadSample(HttpPostedFileBase uploadFile)
+        {
+            foreach (string file in Request.Files)
+            {
+                uploadFile = Request.Files[file];
+            }
+            // Container Name - Sample  
+            BlobController BlobManagerObj = new BlobController("samples");
+            string FileAbsoluteUri = BlobManagerObj.UploadFile(uploadFile);
+
+            return RedirectToAction("index");
+        }
     }
 }
