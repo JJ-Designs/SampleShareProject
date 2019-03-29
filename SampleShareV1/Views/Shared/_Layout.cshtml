@@ -20,8 +20,15 @@
                     <li class="nav-item active">
                         <a class="nav-link pl-0" href="@Url.Action("index","Main")">Home <span class="sr-only">Home</span></a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Dropdown link
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Link</a>
@@ -35,7 +42,7 @@
                             <a class="nav-link" href="@Url.Action("MyProfile", "Main", new { UserIDFromURL = Session["UserID"] })">My Profile</a>
                         </li>
                     }
-                    </ul>
+                </ul>
             </div>
             <a class="navbar-brand mx-auto d-block text-center order-0 order-md-1 w-25 img-fluid" href="@Url.Action("index","Main")">
                 <img src="~/Content/img/SampleShareLogo.png" class="img-fluid" alt="">
