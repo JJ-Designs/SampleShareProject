@@ -37,6 +37,21 @@ namespace SampleShareV1.Controllers
             List<AudioSamples> audioSamples = entities.AudioSamples.ToList();
             return View(audioSamples);
         }
+
+        [HttpGet]
+        [ActionName("DownLoad")]
+        public ActionResult Downlaod(int AudioSampleIDFromURL)
+        {
+            SampleShareDBEntities entities = new SampleShareDBEntities();
+            List<AudioSamples> audioSamples = entities.AudioSamples.ToList();
+            AudioSamples audioSample = entities.AudioSamples.SingleOrDefault(a => a.SampleID == AudioSampleIDFromURL);
+
+            // Container Name - Sample  
+            BlobController BlobManagerObj = new BlobController("samples");
+            string FileAbsoluteUri = BlobManagerObj.DownloadFile(audioSample.FilePath);
+
+            return RedirectToAction("Catalog");
+        }
         
         public ActionResult MyContent()
         {
@@ -47,7 +62,7 @@ namespace SampleShareV1.Controllers
         public ActionResult EditMyProfile(int UserIDFromURL)
         {
             SampleShareDBEntities entities = new SampleShareDBEntities();
-            Users user = entities.Users.Single(s => s.UserID == UserIDFromURL);
+            Users user = entities.Users.Single(u => u.UserID == UserIDFromURL);
             if (Session["UserID"] != null)
             {
                 return View(user);

@@ -94,7 +94,7 @@
                         Your browser does not support the audio element.
                     </audio>
                     <p class="card-text">Tags: <i>Sound, Effect, Audio </i></p>
-                    <a href="#" class="btn btn-primary"><i class="fas fa-download"></i> Download</a>
+                    <a href="@Url.Action("Download","Main",new { AudioSampleIDFromURL = item.SampleID })" class="btn btn-primary"><i class="fas fa-download"></i> Download</a>
                     <a href="@Url.Action("","", new { id = item.SampleID})" class="btn btn-outline-dark">More</a>
                 </div>
             </div>

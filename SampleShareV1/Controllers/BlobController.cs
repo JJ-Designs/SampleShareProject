@@ -97,6 +97,27 @@ namespace SampleShareV1.Controllers
             return AbsoluteUri;
         }
 
+        //downloadFile
+        public string DownloadFile(string SampleFileName)
+        {
+            string AbsoluteUri;
+            CloudBlockBlob blockBlob = blobContainer.GetBlockBlobReference(SampleFileName);
+
+            MemoryStream memStream = new MemoryStream();
+
+            blockBlob.DownloadToStream(memStream);
+            AbsoluteUri = blockBlob.Uri.AbsoluteUri;
+
+            HttpContext.Response.ContentType = blockBlob.Properties.ContentType.ToString();
+            HttpContext.Response.AddHeader("Content-Disposition", "Attachment; filename=" + blockBlob.ToString());
+
+            HttpContext.Response.AddHeader("Content-Length", blockBlob.Properties.Length.ToString());
+            HttpContext.Response.BinaryWrite(memStream.ToArray());
+            HttpContext.Response.Flush();
+            HttpContext.Response.Close();
+            return AbsoluteUri;
+        }
+
         public List<string> BlobList()
         {
             List<string> _blobList = new List<string>();
