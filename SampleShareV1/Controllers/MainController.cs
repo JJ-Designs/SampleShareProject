@@ -35,6 +35,7 @@ namespace SampleShareV1.Controllers
         {
             SampleShareDBEntities entities = new SampleShareDBEntities();
             List<AudioSamples> audioSamples = entities.AudioSamples.ToList();
+            ViewBag.Categories = entities.Categories.ToList();
             return View(audioSamples);
         }
 

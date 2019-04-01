@@ -20,15 +20,18 @@
                     <li class="nav-item active">
                         <a class="nav-link pl-0" href="@Url.Action("index","Main")">Home <span class="sr-only">Home</span></a>
                     </li>
+                    @*<li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Dropdown link
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
+                    </li>*@
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
-                    </li>
-                    <li class="nav-item">@Html.ActionLink("Create blob container", "CreateBlobContainer", "Blob")</li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
+                        <a class="nav-link" href="@Url.Action("Catalog","Main")">Catalog</a>
                     </li>
                     @if (Session["UserID"] != null)
                     {
@@ -43,6 +46,16 @@
             </a>
             <div class="navbar-collapse collapse dual-nav w-50 order-2">
                 <ul class="nav navbar-nav ml-auto">
+                    @if (Session["UserID"] != null)
+                    {
+                        <li>
+                            <form class="form-inline my-2 my-lg-0" action="~/Main/UploadSample">
+                                <button style="margin-right: 2vh;"class="btn btn-primary btn-sm my-2 my-sm-0" type="submit">
+                                    <i class="fas fa-upload"></i>  Upload
+                                </button>
+                            </form>
+                        </li>
+                    }
                     <li>
                         @if (Session["UserID"] == null)
                         {
@@ -74,6 +87,7 @@
         </footer>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.js"></script>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
