@@ -10167,3 +10167,10 @@ a.text-dark:hover, a.text-dark:focus {
     font-weight: 600;
     color: #007bff;
 }
+
+input[type="checkbox"] {
+    width: 200px; /*Desired width*/
+    height: 200px; /*Desired height*/
+    cursor: pointer;
+    -webkit-appearance: none;
+}

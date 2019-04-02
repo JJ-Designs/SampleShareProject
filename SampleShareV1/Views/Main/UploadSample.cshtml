@@ -9,18 +9,56 @@
         @using (Html.BeginForm("UploadSample", "Main", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
             @Html.AntiForgeryToken()
-            <fieldset>
-                <h3>Upload Sound (MP3, WAV, FLAC)</h3>
-                <div class="custom-file">
-                    <label style="margin-right:15px;">Select file </label>
-                    <input type="file" name="FilePath" value="" />
-                </div>
+        <fieldset>
+            <h3>Upload Sound (MP3, WAV, FLAC)</h3>
 
-                <div style="margin-top: 2vh;">
-                    <button type="submit" class="btn btn-primary">Upload</button>
-                </div>
+            <div class="custom-file">
+                <label>Please select audio file: </label>
+                <input type="file" name="FilePath" value="" />
+            </div>
 
-            </fieldset>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Title</span>
+                </div>
+                <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+            </div>
+
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Description</span>
+                </div>
+                <textarea class="form-control"></textarea>
+            </div>
+
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Tags (comma separated)</span>
+                </div>
+                <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Category</span>
+                    @foreach (var item in ViewBag.Categories)
+                    {
+                        <button class="btn btn-outline-secondary" type="button">@item.CategoryName</button>
+                    }
+                </div>
+            </div>
+            <div class="input-group mb-3">
+                <div class="custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" id="switch1">
+                    <label class="custom-control-label" for="switch1">Private</label>
+                </div>
+            </div>
+
+
+            <div style="margin-top: 2vh;">
+                <button type="submit" class="btn btn-primary">Upload</button>
+            </div>
+
+        </fieldset>
         }
     </div>
 </body>

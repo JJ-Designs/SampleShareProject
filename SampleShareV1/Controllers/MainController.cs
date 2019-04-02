@@ -180,6 +180,8 @@ namespace SampleShareV1.Controllers
         [ActionName("UploadSample")]
         public ActionResult UploadSample()
         {
+            SampleShareDBEntities entities = new SampleShareDBEntities();
+            ViewBag.Categories = entities.Categories.ToList();
             return View();
         }
         [HttpPost]
