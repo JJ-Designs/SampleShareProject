@@ -183,15 +183,18 @@ namespace SampleShareV1.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult UploadSample(HttpPostedFileBase uploadFile)
+        public ActionResult UploadSample(HttpPostedFileBase uploadFile, AudioSamples audioSample)
         {
             foreach (string file in Request.Files)
             {
                 uploadFile = Request.Files[file];
             }
+            SampleShareDBEntities entities = new SampleShareDBEntities();
+            entities.AudioSamples.Add(audioSample);
             // Container Name - Sample  
             BlobController BlobManagerObj = new BlobController("samples");
             string FileAbsoluteUri = BlobManagerObj.UploadFile(uploadFile);
+            entities.SaveChanges();
 
             return RedirectToAction("index");
         }
