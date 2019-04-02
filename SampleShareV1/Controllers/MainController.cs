@@ -192,7 +192,14 @@ namespace SampleShareV1.Controllers
                 uploadFile = Request.Files[file];
             }
             SampleShareDBEntities entities = new SampleShareDBEntities();
+
+            audioSample.FilePath = audioSample.SampleTitel + audioSample.SampleID;
+            audioSample.CreationDate = DateTime.Now;
+            audioSample.Downloads = 0;
+            audioSample.UserID = (int)Session["UserID"];
+
             entities.AudioSamples.Add(audioSample);
+
             // Container Name - Sample  
             BlobController BlobManagerObj = new BlobController("samples");
             string FileAbsoluteUri = BlobManagerObj.UploadFile(uploadFile);

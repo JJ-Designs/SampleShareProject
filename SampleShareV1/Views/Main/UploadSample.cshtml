@@ -21,35 +21,49 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="inputGroup-sizing-default">Title</span>
                 </div>
-                <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+
+                @Html.EditorFor(model => model.SampleTitel, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.SampleTitel, "", new { @class = "text-danger" })
             </div>
 
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text">Description</span>
                 </div>
-                <textarea class="form-control"></textarea>
+                @Html.TextAreaFor(model => model.Discription, new { htmlAttributes = new { @class = "form-control"} })
+                @Html.ValidationMessageFor(model => model.Discription, "", new { @class = "text-danger" })
+                @*<textarea class="form-control"></textarea>*@
             </div>
 
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="inputGroup-sizing-default">Tags (comma separated)</span>
                 </div>
-                <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                @Html.EditorFor(model => model.Tags.TagName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Tags.TagName, "", new { @class = "text-danger" })
+                @*<input type="text" class="form-control">*@
             </div>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="inputGroup-sizing-default">Category</span>
-                    @foreach (var item in ViewBag.Categories)
-                    {
-                        <button class="btn btn-outline-secondary" type="button">@item.CategoryName</button>
-                    }
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                        @foreach (var item in ViewBag.Categories)
+                        {
+                        <label class="btn btn-secondary">
+                            @Html.EditorFor(model => model.Categories.CategoryName, new { htmlAttributes = new { @type = "radio" } })
+                            @item.CategoryName
+                            @Html.ValidationMessageFor(model => model.Categories.CategoryName, "", new { @class = "text-danger" })
+                            @*<input type="radio" /> @item.CategoryName*@
+                        </label>
+                        }
+                    </div>
                 </div>
             </div>
             <div class="input-group mb-3">
                 <div class="custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" id="switch1">
-                    <label class="custom-control-label" for="switch1">Private</label>
+                    @Html.EditorFor(model => model.isPublic, new { htmlAttributes = new { @class = "custom-control-input", @id = "switch1", @type = "checkbox" } })
+                    @Html.ValidationMessageFor(model => model.isPublic, "", new { @class = "text-danger" })
+                    <label class="custom-control-label" for="switch1">Public</label>
                 </div>
             </div>
 
