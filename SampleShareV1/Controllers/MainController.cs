@@ -184,6 +184,8 @@ namespace SampleShareV1.Controllers
             ViewBag.Categories = entities.Categories.ToList();
             return View();
         }
+
+        //Billede eksempel 1
         [HttpPost]
         public ActionResult UploadSample(HttpPostedFileBase uploadFile, AudioSamples audioSample)
         {
@@ -196,13 +198,14 @@ namespace SampleShareV1.Controllers
             audioSample.FilePath = audioSample.SampleTitel + audioSample.SampleID;
             audioSample.CreationDate = DateTime.Now;
             audioSample.Downloads = 0;
-            audioSample.UserID = (int)Session["UserID"];
+            string id = (string)Session["UserID"];
+            audioSample.UserID = Int32.Parse(id);
 
             entities.AudioSamples.Add(audioSample);
 
             // Container Name - Sample  
-            BlobController BlobManagerObj = new BlobController("samples");
-            string FileAbsoluteUri = BlobManagerObj.UploadFile(uploadFile);
+            BlobController BlobManagerObj = new BlobController("samples"); //constrktor ses i Billede eksempel 2
+            string FileAbsoluteUri = BlobManagerObj.UploadFile(uploadFile, audioSample.FilePath); //metode ses i Billede eksempel 3
             entities.SaveChanges();
 
             return RedirectToAction("index");

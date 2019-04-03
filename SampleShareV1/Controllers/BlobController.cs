@@ -12,10 +12,10 @@ namespace SampleShareV1.Controllers
 {
     public class BlobController : Controller
     {
-
+        //Eksempel 2
         private CloudBlobContainer blobContainer;
 
-
+        //BlobController constroctor. new instance for each container.
         public BlobController(string ContainerName)
         {
             // Check if Container Name is null or empty  
@@ -70,7 +70,8 @@ namespace SampleShareV1.Controllers
             return View();
         }
 
-        public string UploadFile(HttpPostedFileBase FileToUpload)
+        //Eksempel 3
+        public string UploadFile(HttpPostedFileBase FileToUpload, string FileName)
         {
             string AbsoluteUri;
             // Check HttpPostedFileBase is null or not  
@@ -78,7 +79,6 @@ namespace SampleShareV1.Controllers
                 return null;
             try
             {
-                string FileName = Path.GetFileName(FileToUpload.FileName);
                 CloudBlockBlob blockBlob;
                 // Create a block blob  
                 blockBlob = blobContainer.GetBlockBlobReference(FileName);

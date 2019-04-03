@@ -16,15 +16,14 @@ namespace SampleShareV1.Models
     {
         public int SampleID { get; set; }
         public string SampleTitel { get; set; }
-        public string Discription { get; set; }
-        public Nullable<System.TimeSpan> Duration { get; set; }
         public Nullable<System.DateTime> CreationDate { get; set; }
         public Nullable<int> Downloads { get; set; }
         public string FilePath { get; set; }
         public Nullable<int> UserID { get; set; }
         public Nullable<int> TagID { get; set; }
         public Nullable<int> CategoryID { get; set; }
-        public bool isPublic { get; set; }
+        public Nullable<bool> isPublic { get; set; }
+        public string Description { get; set; }
     
         public virtual Categories Categories { get; set; }
         public virtual Tags Tags { get; set; }

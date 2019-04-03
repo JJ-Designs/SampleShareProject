@@ -11,8 +11,7 @@
           </Key>
           <Property Name="SampleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="SampleTitel" Type="varchar" MaxLength="30" Nullable="false" />
-          <Property Name="Discription" Type="varchar" MaxLength="200" />
-          <Property Name="Duration" Type="time" Precision="7" />
+          <Property Name="Description" Type="varchar" MaxLength="200" />
           <Property Name="CreationDate" Type="date" />
           <Property Name="Downloads" Type="int" />
           <Property Name="FilePath" Type="varchar" MaxLength="50" />
@@ -138,8 +137,6 @@
           </Key>
           <Property Name="SampleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="SampleTitel" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Discription" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="Duration" Type="Time" Precision="7" />
           <Property Name="CreationDate" Type="DateTime" Precision="0" />
           <Property Name="Downloads" Type="Int32" />
           <Property Name="FilePath" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
@@ -150,6 +147,7 @@
           <NavigationProperty Name="Tags" Relationship="Self.FK__AudioSamp__TagID__6D0D32F4" FromRole="AudioSamples" ToRole="Tags" />
           <NavigationProperty Name="Users" Relationship="Self.FK__AudioSamp__UserI__6C190EBB" FromRole="AudioSamples" ToRole="Users" />
           <Property Name="isPublic" Type="Boolean" />
+          <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Categories">
           <Key>
@@ -272,11 +270,10 @@
           <EntitySetMapping Name="AudioSamples">
             <EntityTypeMapping TypeName="SampleShareDBModel.AudioSamples">
               <MappingFragment StoreEntitySet="AudioSamples">
+                <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="isPublic" ColumnName="isPublic" />
                 <ScalarProperty Name="SampleID" ColumnName="SampleID" />
                 <ScalarProperty Name="SampleTitel" ColumnName="SampleTitel" />
-                <ScalarProperty Name="Discription" ColumnName="Discription" />
-                <ScalarProperty Name="Duration" ColumnName="Duration" />
                 <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
                 <ScalarProperty Name="Downloads" ColumnName="Downloads" />
                 <ScalarProperty Name="FilePath" ColumnName="FilePath" />
