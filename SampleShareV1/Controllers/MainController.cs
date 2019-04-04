@@ -34,7 +34,7 @@ namespace SampleShareV1.Controllers
         public ActionResult Catalog()
         {
             SampleShareDBEntities entities = new SampleShareDBEntities();
-            List<AudioSamples> audioSamples = entities.AudioSamples.ToList();
+            List<AudioSamples> audioSamples = entities.AudioSamples.Where(a => a.isPublic == true).ToList();
             ViewBag.Categories = entities.Categories.ToList();
             return View(audioSamples);
         }
@@ -44,7 +44,7 @@ namespace SampleShareV1.Controllers
         public ActionResult Downlaod(int AudioSampleIDFromURL)
         {
             SampleShareDBEntities entities = new SampleShareDBEntities();
-            List<AudioSamples> audioSamples = entities.AudioSamples.ToList();
+            List<AudioSamples> audioSamples = entities.AudioSamples.Where(a => a.isPublic == true).ToList();
             AudioSamples audioSample = entities.AudioSamples.SingleOrDefault(a => a.SampleID == AudioSampleIDFromURL);
 
             // Container Name - Sample  
@@ -180,9 +180,16 @@ namespace SampleShareV1.Controllers
         [ActionName("UploadSample")]
         public ActionResult UploadSample()
         {
-            SampleShareDBEntities entities = new SampleShareDBEntities();
-            ViewBag.Categories = entities.Categories.ToList();
-            return View();
+            if(Session["UserID"] != null)
+            { 
+                SampleShareDBEntities entities = new SampleShareDBEntities();
+                ViewBag.Categories = entities.Categories.ToList();
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index", "Main");
+            }
         }
 
         //Billede eksempel 1
@@ -194,8 +201,8 @@ namespace SampleShareV1.Controllers
                 uploadFile = Request.Files[file];
             }
             SampleShareDBEntities entities = new SampleShareDBEntities();
-
-            audioSample.FilePath = audioSample.SampleTitel + audioSample.SampleID;
+            string fileExt = uploadFile.FileName.Substring(uploadFile.FileName.IndexOf("."));
+            audioSample.FilePath = audioSample.SampleTitel + fileExt;
             audioSample.CreationDate = DateTime.Now;
             audioSample.Downloads = 0;
             string id = (string)Session["UserID"];

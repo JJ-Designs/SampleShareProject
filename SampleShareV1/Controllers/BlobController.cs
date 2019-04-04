@@ -73,7 +73,7 @@ namespace SampleShareV1.Controllers
         //Eksempel 3
         public string UploadFile(HttpPostedFileBase FileToUpload, string FileName)
         {
-            string AbsoluteUri;
+            string absoluteUri;
             // Check HttpPostedFileBase is null or not  
             if (FileToUpload == null || FileToUpload.ContentLength == 0)
                 return null;
@@ -88,13 +88,13 @@ namespace SampleShareV1.Controllers
                 blockBlob.UploadFromStream(FileToUpload.InputStream);
 
                 // get file uri  
-                AbsoluteUri = blockBlob.Uri.AbsoluteUri;
+                absoluteUri = blockBlob.Uri.AbsoluteUri;
             }
             catch (Exception ExceptionObj)
             {
                 throw ExceptionObj;
             }
-            return AbsoluteUri;
+            return absoluteUri;
         }
 
         //downloadFile

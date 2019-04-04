@@ -50,9 +50,9 @@
                         @foreach (var item in ViewBag.Categories)
                         {
                         <label class="btn btn-secondary">
-                            @Html.EditorFor(model => model.Categories.CategoryName, new { htmlAttributes = new { @type = "radio" } })
+                            @Html.EditorFor(model => model.CategoryID, new { htmlAttributes = new { @type = "radio" } })
                             @item.CategoryName
-                            @Html.ValidationMessageFor(model => model.Categories.CategoryName, "", new { @class = "text-danger" })
+                            @Html.ValidationMessageFor(model => model.CategoryID, "", new { @class = "text-danger" })
                             @*<input type="radio" /> @item.CategoryName*@
                         </label>
                         }
@@ -61,7 +61,7 @@
             </div>
             <div class="input-group mb-3">
                 <div class="custom-control custom-switch">
-                    @Html.EditorFor(model => model.isPublic, new { htmlAttributes = new { @class = "custom-control-input", @id = "switch1", @type = "checkbox" } })
+                    @Html.EditorFor(model => model.isPublic, new { htmlAttributes = new { @class = "custom-control-input", @id = "switch1", @type ="radio", @checked = "checked" } })
                     @Html.ValidationMessageFor(model => model.isPublic, "", new { @class = "text-danger" })
                     <label class="custom-control-label" for="switch1">Public</label>
                 </div>
