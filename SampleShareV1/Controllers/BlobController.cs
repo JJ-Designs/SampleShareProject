@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Web;
+using Web = System.Web;
 using System.Web.Mvc;
 using Microsoft.Azure;
 using Microsoft.WindowsAzure.Storage;
@@ -71,7 +71,7 @@ namespace SampleShareV1.Controllers
         }
 
         //Eksempel 3
-        public string UploadFile(HttpPostedFileBase FileToUpload, string FileName)
+        public string UploadFile(Web.HttpPostedFileBase FileToUpload, string FileName)
         {
             string absoluteUri;
             // Check HttpPostedFileBase is null or not  
@@ -108,13 +108,14 @@ namespace SampleShareV1.Controllers
             blockBlob.DownloadToStream(memStream);
             AbsoluteUri = blockBlob.Uri.AbsoluteUri;
 
-            HttpContext.Response.ContentType = blockBlob.Properties.ContentType.ToString();
-            HttpContext.Response.AddHeader("Content-Disposition", "Attachment; filename=" + blockBlob.ToString());
+            
+            Web.HttpContext.Current.Response.ContentType = blockBlob.Properties.ContentType.ToString();
+            Web.HttpContext.Current.Response.AddHeader("Content-Disposition", "Attachment; filename=" + blockBlob.Name);
 
-            HttpContext.Response.AddHeader("Content-Length", blockBlob.Properties.Length.ToString());
-            HttpContext.Response.BinaryWrite(memStream.ToArray());
-            HttpContext.Response.Flush();
-            HttpContext.Response.Close();
+            Web.HttpContext.Current.Response.AddHeader("Content-Length", blockBlob.Properties.Length.ToString());
+            Web.HttpContext.Current.Response.BinaryWrite(memStream.ToArray());
+            Web.HttpContext.Current.Response.Flush();
+            Web.HttpContext.Current.Response.Close();
             return AbsoluteUri;
         }
 
