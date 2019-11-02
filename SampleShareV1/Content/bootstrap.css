@@ -10109,6 +10109,18 @@ a.text-dark:hover, a.text-dark:focus {
     cursor: pointer;
 }
 
+.profile-delete-btn {
+    border: none;
+    border-radius: 1.5rem;
+    width: 50%;
+    padding: 2%;
+    font-weight: 600;
+    color: #fffff2;
+    background-color: #d11a2a;
+    cursor: pointer;
+    float: right;
+}
+
 .proile-rating {
     font-size: 12px;
     color: #818182;
@@ -10162,6 +10174,11 @@ a.text-dark:hover, a.text-dark:focus {
     font-weight: 600;
 }
 
+.disclamerLabel {
+    font-size: 1.5vh;
+    float: right;
+}
+
 .profile-tab p {
     font-weight: 600;
     color: #007bff;
@@ -10191,4 +10208,30 @@ input[type="checkbox"] {
 /* Line Allign*/
 .allign {
 display:inline-block;
+}
+
+/* Upload button*/
+.upload-btn {
+    border: 2px solid gray;
+    color: gray;
+    background-color: white;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+.upload-btn-wrapper input[type=file] {
+    font-size: 50px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+}
+
+.uploadLabel {
+    text-decoration: none;
+    color: #495057;
+    font-weight: 600;
+    font-size: 14px;
 }
