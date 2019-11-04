@@ -40,6 +40,16 @@ namespace SampleShareV1.Controllers
         }
 
         [HttpGet]
+        [ActionName("MyPortfolio")]
+        public ActionResult MyPortfolio()
+        {
+            SampleShareDBEntities entities = new SampleShareDBEntities();
+            List<AudioSamples> audioSamples = entities.AudioSamples.Where(a => a.isPublic == true).ToList();
+            ViewBag.Categories = entities.Categories.ToList();
+            return View(audioSamples);
+        }
+
+        [HttpGet]
         [ActionName("DownLoad")]
         public ActionResult Downlaod(int AudioSampleIDFromURL)
         {
@@ -192,7 +202,6 @@ namespace SampleShareV1.Controllers
             }
         }
 
-        //Billede eksempel 1
         [HttpPost]
         public ActionResult UploadSample(HttpPostedFileBase uploadFile, AudioSamples audioSample)
         {

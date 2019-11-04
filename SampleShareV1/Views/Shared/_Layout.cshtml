@@ -23,22 +23,26 @@
                         <a class="nav-link pl-0" href="@Url.Action("index","Main")">Home <span class="sr-only">Home</span></a>
                     </li>
                     @*<li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Dropdown link
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <a class="dropdown-item" href="#">Action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <a class="dropdown-item" href="#">Something else here</a>
-                            </div>
-                        </li>*@
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Dropdown link
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+        </li>*@
                     <li class="nav-item">
                         <a class="nav-link" href="@Url.Action("Catalog","Main")">Catalog</a>
                     </li>
                     @if (Session["UserID"] != null)
                     {
                         <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("MyProfile", "Main", new { UserIDFromURL = Session["UserID"] })">My Profile</a>
+                            <a class="nav-link" href="@Url.Action("MyPortfolio", "Main", new { UserIDFromURL = Session["UserID"] })">Portfolio</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("MyProfile", "Main", new { UserIDFromURL = Session["UserID"] })">Profile</a>
                         </li>
                     }
                 </ul>
