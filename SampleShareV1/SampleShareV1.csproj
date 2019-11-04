@@ -314,6 +314,7 @@
     <Content Include="Views\Main\Catalog.cshtml" />
     <Content Include="Views\Blob\CreateBlobContainer.cshtml" />
     <Content Include="Views\Main\UploadSample.cshtml" />
+    <Content Include="Views\Main\MyPortfolio.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

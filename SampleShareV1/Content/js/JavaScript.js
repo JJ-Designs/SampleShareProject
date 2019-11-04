@@ -7,7 +7,7 @@
     responsive: true,
 });
 
-wavesurfer.load('../Content/samples/Sample.mp3');
+wavesurfer.load('https://sampleshare.blob.core.windows.net/samples/Flute.wav');
 
 // PLAY PAUSE
 function playAudio() {
