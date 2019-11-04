@@ -36,6 +36,10 @@ namespace SampleShareV1.Controllers
             SampleShareDBEntities entities = new SampleShareDBEntities();
             List<AudioSamples> audioSamples = entities.AudioSamples.Where(a => a.isPublic == true).ToList();
             ViewBag.Categories = entities.Categories.ToList();
+
+            // Container Name - Sample  
+            BlobController BlobManagerObj = new BlobController("samples");
+            //ViewBag.FilePath = BlobManagerObj.
             return View(audioSamples);
         }
 
@@ -215,6 +219,21 @@ namespace SampleShareV1.Controllers
             string FileAbsoluteUri = BlobManagerObj.UploadFile(uploadFile, audioSample.FilePath); //metode ses i Billede eksempel 3
             entities.SaveChanges();
 
+            return RedirectToAction("index");
+        }
+
+        [HttpGet]
+        [ActionName("DeleteUserAndFiles")]
+        public ActionResult DeleteUserAndFiles(int UserIDFromURL)
+        {
+            SampleShareDBEntities entities = new SampleShareDBEntities();
+            Users user = entities.Users.Single(a => a.UserID == UserIDFromURL);
+            List<AudioSamples> audioSamplesToDel = entities.AudioSamples.Where(a => a.UserID == user.UserID).ToList();
+            foreach (AudioSamples audioSample in audioSamplesToDel)
+                entities.AudioSamples.Remove(audioSample);
+            entities.Users.Remove(user);
+
+            entities.SaveChanges();
             return RedirectToAction("index");
         }
     }

@@ -2,11 +2,15 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Web = System.Web;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using Microsoft.Azure;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
+using Web = System.Web;
 
 namespace SampleShareV1.Controllers
 {
@@ -118,6 +122,22 @@ namespace SampleShareV1.Controllers
             Web.HttpContext.Current.Response.Close();
             return AbsoluteUri;
         }
+
+        public string PreviewFile(string SampleFileName)
+        {
+
+            string AbsoluteUri;
+            CloudBlockBlob blockBlob = blobContainer.GetBlockBlobReference(SampleFileName);
+
+            MemoryStream memStream = new MemoryStream();
+
+            blockBlob.DownloadToStream(memStream);
+            AbsoluteUri = blockBlob.Uri.AbsoluteUri;
+
+            return AbsoluteUri;
+        }
+
+       
 
         public List<string> BlobList()
         {

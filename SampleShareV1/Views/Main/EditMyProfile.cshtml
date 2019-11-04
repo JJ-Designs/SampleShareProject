@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "EditMyProfile";
+    ViewBag.ConfrimPass = null;
 }
 @using (Html.BeginForm())
 {
@@ -119,7 +120,7 @@
                                 <div class="col-md-6">
                                 </div>
                                 <div class="col-md-6">
-                                        <input type="submit" class="profile-delete-btn" value="Delete Account" />
+                                        <a href="@Url.Action("DeleteUserAndFiles","Main", new {UserIDFromURL = Model.UserID })" class="profile-delete-btn"/>
                                         <label class="disclamerLabel">All uploaded samples will also be deleted.</label>
                                 </div>
                             </div>
@@ -147,8 +148,8 @@
                                 </div>
                                 <div class="col-md-6">
                                     <p>
-                                        @Html.EditorFor(model => model.Pass, new { htmlAttributes = new { @type = "password", @class = "form-control" } })
-                                        @Html.ValidationMessageFor(model => model.Pass, "", new { @class = "text-danger" })
+                                        @*@Html.EditorFor(ViewBag.ConfrimPass, new { htmlAttributes = new { @type = "password", @class = "form-control" } })
+                                        @Html.ValidationMessageFor(ViewBag.ConfrimPass, "", new { @class = "text-danger" })*@
                                     </p>
                                 </div>
                             </div>
