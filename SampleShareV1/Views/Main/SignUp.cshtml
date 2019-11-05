@@ -53,6 +53,12 @@
                             <div class="group">
                                 <input type="submit" class="button" value="Sign Up">
                             </div>
+                            @if (@ViewBag.Message != null)
+                            {
+                                <div class="group foot-lnk" style="color:#d11a2a;">
+                                    @ViewBag.Message
+                                </div>
+                            }
                             <div class="hr"></div>
                             <div class="foot-lnk" style="margin-top: -2vh;">
                                 <a href="@Url.Action("Login","Main")">Already Member?<br /></a>
