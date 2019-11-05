@@ -29,18 +29,29 @@
     {
         <div class="col-sm-4" style="margin-top:20px;">
             <div class="card">
+
                 <div class="card-body">
 
-                    <h4 class="card-title">@item.SampleTitel</h4>
-                    <p class="card-text"><i class="fas fa-user"></i><a href="#"><b>  @item.Users.UserName</b></a></p>
-                    <audio class="embed-responsive-item" controls controlsList="nodownload">
-                        <source class="card-title" src="https://sampleshare.blob.core.windows.net/samples/@Url.Content(item.FilePath)" type="audio/mpeg">
-                        Your browser does not support the audio element.
-                    </audio>
+                    <div class="allign">
+                        <button id="playpause" class="circle btn btn-primary">
+                            <i class="fa fa-play"></i>
+                        </button>
+                    </div>
+                    <div class="allign">
+                        <h4 class="card-title">@item.SampleTitel</h4>
+                        <p style="margin-top: -2vh;" class="card-text"><i class="fas fa-user"></i><a href="#"><b> @item.Users.UserName</b></a></p>
+                    </div>
+
+                    <div id="waveform">
+                        <audio id="song" style="display: none" preload="false" src="https://sampleshare.blob.core.windows.net/samples/@Url.Content(item.FilePath)"></audio>
+                    </div>
+
                     <p class="card-text">Tags: <i>Sound, Effect, Audio </i></p>
                     <a href="@Url.Action("Download","Main",new { AudioSampleIDFromURL = item.SampleID })" class="btn btn-primary"><i class="fas fa-download"></i> Download</a>
                     <a href="@Url.Action("","", new { id = item.SampleID})" class="btn btn-outline-dark">More</a>
                 </div>
+
+       
             </div>
         </div>
     }

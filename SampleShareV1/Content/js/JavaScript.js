@@ -7,7 +7,26 @@
     responsive: true,
 });
 
-wavesurfer.load('https://sampleshare.blob.core.windows.net/samples/Flute.wav');
+//function CreateWavesurfer(url) {
+//    var wavesurfer = WaveSurfer.create({
+//        container: '#waveform',
+//        backend: 'MediaElement',
+//        progressColor: '#007bff',
+//        cursorColor: '#fff',
+//        hideScrollbar: true,
+//        responsive: true,
+//    });
+
+   // wavesurfer.load(document.querySelector(url))
+
+//}
+
+//CreateWavesurfer('#song');
+//CreateWavesurfer('#song');
+//CreateWavesurfer('#song');
+//CreateWavesurfer('#song');
+
+wavesurfer.load(document.querySelector('#song'))
 
 // PLAY PAUSE
 function playAudio() {
