@@ -45,10 +45,10 @@ namespace SampleShareV1.Controllers
 
         [HttpGet]
         [ActionName("MyPortfolio")]
-        public ActionResult MyPortfolio()
+        public ActionResult MyPortfolio(int UserIDFromURL)
         {
             SampleShareDBEntities entities = new SampleShareDBEntities();
-            List<AudioSamples> audioSamples = entities.AudioSamples.Where(a => a.isPublic == true).ToList();
+            List<AudioSamples> audioSamples = entities.AudioSamples.Where(a => a.UserID == UserIDFromURL).ToList();
             ViewBag.Categories = entities.Categories.ToList();
             return View(audioSamples);
         }
