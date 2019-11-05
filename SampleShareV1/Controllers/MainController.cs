@@ -45,10 +45,10 @@ namespace SampleShareV1.Controllers
 
         [HttpGet]
         [ActionName("MyPortfolio")]
-        public ActionResult MyPortfolio()
+        public ActionResult MyPortfolio(int UserIDFromURL)
         {
             SampleShareDBEntities entities = new SampleShareDBEntities();
-            List<AudioSamples> audioSamples = entities.AudioSamples.Where(a => a.isPublic == true).ToList();
+            List<AudioSamples> audioSamples = entities.AudioSamples.Where(a => a.UserID == UserIDFromURL).ToList();
             ViewBag.Categories = entities.Categories.ToList();
             return View(audioSamples);
         }
@@ -170,16 +170,34 @@ namespace SampleShareV1.Controllers
         //Sign up controller. Post (When you submit information from the page)
         [HttpPost]
         [ActionName("SignUp")]
-        public ActionResult SignUp(Users users)
+        public ActionResult SignUp(Users user)
         {
-            SampleShareDBEntities entities = new SampleShareDBEntities();
-
-            users.userrightid = 2;
-
-            entities.Users.Add(users);
-            entities.SaveChanges();
-            return RedirectToAction("login");
-            
+            if (user.FullName != "" && user.FullName != null && user.Email != "" && user.Email != null && user.Pass != "" && user.Pass != null && user.UserName != "" && user.UserName != null)
+            {
+                if (user.Pass.Length >= 4)
+                {
+                    SampleShareDBEntities entities = new SampleShareDBEntities();
+                    if (!entities.Users.Any(x => x.UserName == user.UserName))
+                    {
+                        if (!entities.Users.Any(x => x.Email == user.Email))
+                        {
+                            user.userrightid = 2;
+                            entities.Users.Add(user);
+                            entities.SaveChanges();
+                            return RedirectToAction("login");
+                        }
+                        else
+                            ViewBag.Message = "ACCOUNT ALREADY LINKED TO E-MAIL";
+                    }
+                    else
+                        ViewBag.Message = "USERNAME ALLREADY EXSIST";
+                }
+                else
+                    ViewBag.Message = "PASSWORD MUST BE LONGER THEN 4 CHARACTERS";
+            }
+            else
+                ViewBag.Message = "YOU MUST ENTER SOMETHING IN ALL FEILDS!";
+            return View(user);
         }
 
         //Logout controller 
