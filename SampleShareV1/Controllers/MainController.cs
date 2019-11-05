@@ -259,8 +259,8 @@ namespace SampleShareV1.Controllers
             foreach (AudioSamples audioSample in audioSamplesToDel)
                 entities.AudioSamples.Remove(audioSample);
             entities.Users.Remove(user);
-
             entities.SaveChanges();
+            Session.Abandon();
             return RedirectToAction("index");
         }
     }
