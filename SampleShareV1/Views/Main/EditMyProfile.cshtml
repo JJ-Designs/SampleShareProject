@@ -120,9 +120,9 @@
                                 <div class="col-md-6">
                                 </div>
                                 <div class="col-md-6">
-                                    @*<a href="@Url.Action("DeleteUserAndFiles","Main", new {UserIDFromURL = Model.UserID })" />*@
-                                    <input type="button" class="profile-delete-btn" value="Delete Account" onclick="location.href=@Url.Action("DeleteUserAndFiles","Main", new {UserIDFromURL = Model.UserID })" />
-                                    <label class="disclamerLabel">All uploaded samples will also be deleted.</label>
+                                    <input type="button" class="profile-delete-btn" onclick="location.href='@Url.Action("DeleteUserAndFiles","Main", new {UserIDFromURL = Model.UserID })'" value="Delete Account"/>
+                                        <label class="disclamerLabel">All uploaded samples will also be deleted.</label>
+                                    
                                 </div>
                             </div>
                         </div>
