@@ -172,14 +172,20 @@ namespace SampleShareV1.Controllers
         [ActionName("SignUp")]
         public ActionResult SignUp(Users users)
         {
-            SampleShareDBEntities entities = new SampleShareDBEntities();
+            if (users.FullName != "" && users.FullName != null && users.Email != "" && users.Email != null && users.Pass != "" && users.Pass != null)
+            {
+                SampleShareDBEntities entities = new SampleShareDBEntities();
+                users.userrightid = 2;
 
-            users.userrightid = 2;
-
-            entities.Users.Add(users);
-            entities.SaveChanges();
-            return RedirectToAction("login");
-            
+                entities.Users.Add(users);
+                entities.SaveChanges();
+                return RedirectToAction("login");
+            }
+            else
+            {
+                ViewBag.Message = "USERNAME OR PASSWORD IS WRONG!";
+            }
+            return View(users);
         }
 
         //Logout controller 
