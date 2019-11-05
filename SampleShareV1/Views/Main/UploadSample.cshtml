@@ -13,8 +13,11 @@
             <h3>Upload Sound (MP3, WAV, FLAC)</h3>
 
             <div class="custom-file">
-                <label>Please select audio file: </label>
-                <input type="file" name="FilePath" value="" />
+                <div class="upload-btn-wrapper">
+                    <label class="uploadLabel">Please select audio file: </label>
+                    <button type="button" class="upload-btn"><i class="fas fa-upload"></i> Upload file</button>
+                    <input type="file" name="FilePath" value="" />
+                </div>
             </div>
 
             <div class="input-group mb-3">
@@ -61,7 +64,7 @@
             </div>
             <div class="input-group mb-3">
                 <div class="custom-control custom-switch">
-                    @Html.EditorFor(model => model.isPublic, new { htmlAttributes = new { @class = "custom-control-input", @id = "switch1", @type ="radio", @checked = "checked" } })
+                    @Html.EditorFor(model => model.isPublic, new { htmlAttributes = new { @class = "custom-control-input", @id = "switch1", @type = "checkbox", @checked = "checked" } })
                     @Html.ValidationMessageFor(model => model.isPublic, "", new { @class = "text-danger" })
                     <label class="custom-control-label" for="switch1">Public</label>
                 </div>

@@ -2,11 +2,15 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Web;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using Microsoft.Azure;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
+using Web = System.Web;
 
 namespace SampleShareV1.Controllers
 {
@@ -71,7 +75,7 @@ namespace SampleShareV1.Controllers
         }
 
         //Eksempel 3
-        public string UploadFile(HttpPostedFileBase FileToUpload, string FileName)
+        public string UploadFile(Web.HttpPostedFileBase FileToUpload, string FileName)
         {
             string absoluteUri;
             // Check HttpPostedFileBase is null or not  
@@ -108,15 +112,32 @@ namespace SampleShareV1.Controllers
             blockBlob.DownloadToStream(memStream);
             AbsoluteUri = blockBlob.Uri.AbsoluteUri;
 
-            HttpContext.Response.ContentType = blockBlob.Properties.ContentType.ToString();
-            HttpContext.Response.AddHeader("Content-Disposition", "Attachment; filename=" + blockBlob.ToString());
+            
+            Web.HttpContext.Current.Response.ContentType = blockBlob.Properties.ContentType.ToString();
+            Web.HttpContext.Current.Response.AddHeader("Content-Disposition", "Attachment; filename=" + blockBlob.Name);
 
-            HttpContext.Response.AddHeader("Content-Length", blockBlob.Properties.Length.ToString());
-            HttpContext.Response.BinaryWrite(memStream.ToArray());
-            HttpContext.Response.Flush();
-            HttpContext.Response.Close();
+            Web.HttpContext.Current.Response.AddHeader("Content-Length", blockBlob.Properties.Length.ToString());
+            Web.HttpContext.Current.Response.BinaryWrite(memStream.ToArray());
+            Web.HttpContext.Current.Response.Flush();
+            Web.HttpContext.Current.Response.Close();
             return AbsoluteUri;
         }
+
+        public string PreviewFile(string SampleFileName)
+        {
+
+            string AbsoluteUri;
+            CloudBlockBlob blockBlob = blobContainer.GetBlockBlobReference(SampleFileName);
+
+            MemoryStream memStream = new MemoryStream();
+
+            blockBlob.DownloadToStream(memStream);
+            AbsoluteUri = blockBlob.Uri.AbsoluteUri;
+
+            return AbsoluteUri;
+        }
+
+       
 
         public List<string> BlobList()
         {

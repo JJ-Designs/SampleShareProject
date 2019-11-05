@@ -5,12 +5,19 @@
     <div class="col-sm-4" style="margin-top:20px;">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Gun Shot</h4>
-                <p class="card-text"><i class="fas fa-user"></i><a href="#"><b> J-Bounce</b></a></p>
-                <audio class="embed-responsive-item" controls controlsList="nodownload">
-                    <source class="card-title" src="~/Content/samples/Sample.mp3" type="audio/mpeg">
-                    Your browser does not support the audio element.
-                </audio>
+                    
+                <div class="allign">
+                    <button id="playpause" class="circle btn btn-primary">
+                        <i class="fa fa-play"></i>
+                    </button>
+                </div>
+                <div class="allign">
+                    <h4 class="card-title">Gun Shot</h4>
+                    <p style="margin-top: -2vh;" class="card-text"><i class="fas fa-user"></i><a href="#"><b> J-Bounce</b></a></p>
+                </div>
+
+                <div id="waveform"></div>
+
                 <p class="card-text">Tags: <i>Sound, Effect, Audio </i></p>
                 <a href="#" class="btn btn-primary"><i class="fas fa-download"></i> Download</a>
                 <a href="#" class="btn btn-outline-dark">More</a>

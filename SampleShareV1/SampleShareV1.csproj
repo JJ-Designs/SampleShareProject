@@ -210,9 +210,13 @@
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\img\background1.jpg" />
     <Content Include="Content\img\SampleShare.png" />
+    <Content Include="Content\img\sampleshareicon.png" />
     <Content Include="Content\img\SampleShareLogo.png" />
+    <Content Include="Content\img\samplesharelogo_white.png" />
     <Content Include="Content\img\Wallpaper1.jpg" />
+    <Content Include="Content\js\JavaScript.js" />
     <Content Include="Content\samples\Sample.mp3" />
     <Content Include="Content\Style.css" />
     <Content Include="favicon.ico" />
@@ -279,6 +283,7 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
+    <Content Include="Content\img\samplesharelogo_white2.png" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -309,6 +314,7 @@
     <Content Include="Views\Main\Catalog.cshtml" />
     <Content Include="Views\Blob\CreateBlobContainer.cshtml" />
     <Content Include="Views\Main\UploadSample.cshtml" />
+    <Content Include="Views\Main\MyPortfolio.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -347,7 +353,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>49794</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:49794/</IISUrl>
+          <IISUrl>http://localhost:1025/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

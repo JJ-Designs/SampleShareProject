@@ -15,16 +15,19 @@
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Title</title>
+        <link rel="icon" href="~/Content/img/sampleshareicon.png" type="image/gif">
+        <title>SampleShare - @ViewBag.Title</title>
         <link rel="stylesheet" href="~/Content/Style.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
     </head>
     <body class="backgroundimg">
         <div class="login-wrap">
             <div class="login-html">
+                <img src="~/Content/img/samplesharelogo_white2.png" style="height:7.2vh; margin-top: -8vh; margin-bottom: 5vh; display: block; margin-left: auto; margin-right: auto;" class="img-fluid" alt="">
                 <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Login</label>
-            <a class="sign-up tab" href="@Url.Action("SignUp","Main")">Sign Up</a><label for="tab-2" class="tab"></label>
+                <a class="sign-up tab" href="@Url.Action("SignUp","Main")">Sign Up</a><label for="tab-2" class="tab"></label>
                 <div class="login-form">
                     <form>
                         <div class="sign-in-htm">
