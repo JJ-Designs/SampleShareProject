@@ -48,9 +48,18 @@ namespace SampleShareV1.Controllers
         public ActionResult MyPortfolio(int UserIDFromURL)
         {
             SampleShareDBEntities entities = new SampleShareDBEntities();
+            Users user = entities.Users.Single(s => s.UserID == UserIDFromURL);
+
+            if (Session["UserID"] != null)
+            {
             List<AudioSamples> audioSamples = entities.AudioSamples.Where(a => a.UserID == UserIDFromURL).ToList();
             ViewBag.Categories = entities.Categories.ToList();
             return View(audioSamples);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Main");
+            }
         }
 
         [HttpGet]
@@ -236,8 +245,10 @@ namespace SampleShareV1.Controllers
             audioSample.FilePath = audioSample.SampleTitel + fileExt;
             audioSample.CreationDate = DateTime.Now;
             audioSample.Downloads = 0;
+            audioSample.Categories = entities.Categories.Single(c => c.CategoryID == audioSample.CategoryID);
             string id = (string)Session["UserID"];
             audioSample.UserID = Int32.Parse(id);
+            audioSample.Users = entities.Users.Single(u => u.UserID == audioSample.UserID);
 
             entities.AudioSamples.Add(audioSample);
 
