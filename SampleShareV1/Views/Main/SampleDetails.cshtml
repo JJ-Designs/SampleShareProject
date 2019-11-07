@@ -1,0 +1,78 @@
+﻿@model SampleShareV1.Models.AudioSamples
+
+@{
+    ViewBag.Title = "SampleDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container emp-profile">
+    <div class="row">
+        <div class="col-md-10">
+            <div class="profile-head">
+                <h5>
+                    @Html.DisplayFor(model => model.SampleTitel)
+                </h5>
+                <h6>
+                    @Html.DisplayFor(model => model.Users.UserName)
+                </h6>
+                <div id="waveform">AUDIO SAMPLE PREVIEW</div>
+                <p class="proile-rating">Upload Date: <span>@Model.CreationDate.Value.ToString("dd/MM-yyyy")</span></p>
+                <a href="@Url.Action("Download","Main",new { AudioSampleIDFromURL = Model.SampleID })" class="btn btn-primary"><i class="fas fa-download"></i> Download</a>
+
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Description</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Information</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-2">
+             <a href="@Url.Action("Catalog", "Main")"><input type="submit" class="profile-edit-btn" name="btnAddMore" value="Back" /></a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            
+        </div>
+        <div class="col-md-10">
+            <div class="tab-content profile-tab" id="myTabContent">
+                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <label>@Html.DisplayFor(model => model.Description)</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Category:</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p>@Html.DisplayFor(model => model.Categories.CategoryName)</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Total Downloads:</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p>@Html.DisplayFor(model => model.Downloads)</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Status:</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p>@Html.DisplayNameFor(model => model.isPublic)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
