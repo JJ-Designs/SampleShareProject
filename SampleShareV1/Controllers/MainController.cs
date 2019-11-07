@@ -54,12 +54,45 @@ namespace SampleShareV1.Controllers
 
         [HttpGet]
         [ActionName("MyPortfolio")]
-        public ActionResult MyPortfolio(int UserIDFromURL)
+        public ActionResult MyPortfolio(int UserIDFromURL, int CategoryID)
         {
             SampleShareDBEntities entities = new SampleShareDBEntities();
-            List<AudioSamples> audioSamples = entities.AudioSamples.Where(a => a.UserID == UserIDFromURL).ToList();
-            ViewBag.Categories = entities.Categories.ToList();
-            return View(audioSamples);
+
+            if (Session["UserID"] != null)
+            {
+                Users user = entities.Users.Single(s => s.UserID == UserIDFromURL);
+                List<AudioSamples> audioSamples;
+                if (CategoryID != 0)
+                    audioSamples = entities.AudioSamples
+                    .Where(a => a.UserID == UserIDFromURL)
+                    .Where(a => a.CategoryID == CategoryID).ToList();
+                else
+                    audioSamples = entities.AudioSamples.Where(a => a.UserID == UserIDFromURL).ToList();
+                ViewBag.Categories = entities.Categories.ToList();
+                return View(audioSamples);
+            }
+            else
+                return RedirectToAction("Index", "Main");
+        }
+
+        [HttpGet]
+        [ActionName("SortByCategoryPortfolio")]
+        public ActionResult SortByCategoryPortfolio(int UserIDFromURL, int CategoryID)
+        {
+            SampleShareDBEntities entities = new SampleShareDBEntities();
+
+            if (Session["UserID"] != null)
+            {
+                Users user = entities.Users.Single(s => s.UserID == UserIDFromURL);
+                List<AudioSamples> audioSamples = entities.AudioSamples
+                .Where(a => a.UserID == UserIDFromURL)
+                .Where(a => a.CategoryID == CategoryID).ToList();
+
+                return RedirectToAction("","", new { UserIDFromURL = Session["UserID"], audioSamplesFromURL = audioSamples });
+            }
+            else
+                return RedirectToAction("Index", "Main");
+
         }
 
         [HttpGet]
@@ -92,9 +125,7 @@ namespace SampleShareV1.Controllers
                 return View(user);
             }
             else
-            {
                 return RedirectToAction("Index", "Main");
-            }
         }
 
         [HttpPost]
@@ -130,9 +161,7 @@ namespace SampleShareV1.Controllers
                 return View(user);
             }
             else
-            {
                 return RedirectToAction("Index", "Main");
-            }
         }
 		
         [HttpGet]
@@ -228,9 +257,7 @@ namespace SampleShareV1.Controllers
                 return View();
             }
             else
-            {
                 return RedirectToAction("Index", "Main");
-            }
         }
 
         [HttpPost]
@@ -240,22 +267,36 @@ namespace SampleShareV1.Controllers
             {
                 uploadFile = Request.Files[file];
             }
+            if(uploadFile.ContentLength < 102400)
+            {
             SampleShareDBEntities entities = new SampleShareDBEntities();
             string fileExt = uploadFile.FileName.Substring(uploadFile.FileName.IndexOf("."));
-            audioSample.FilePath = audioSample.SampleTitel + fileExt;
-            audioSample.CreationDate = DateTime.Now;
-            audioSample.Downloads = 0;
-            string id = (string)Session["UserID"];
-            audioSample.UserID = Int32.Parse(id);
+            if (fileExt == ".wav" || fileExt == ".mp3" || fileExt == ".flac")
+            {
+                audioSample.FilePath = audioSample.SampleTitel + fileExt;
+                audioSample.CreationDate = DateTime.Now;
+                audioSample.Downloads = 0;
+                audioSample.Categories = entities.Categories.Single(c => c.CategoryID == audioSample.CategoryID);
+                string id = (string)Session["UserID"];
+                audioSample.UserID = Int32.Parse(id);
+                audioSample.Users = entities.Users.Single(u => u.UserID == audioSample.UserID);
 
-            entities.AudioSamples.Add(audioSample);
+                entities.AudioSamples.Add(audioSample);
 
-            // Container Name - Sample  
-            BlobController BlobManagerObj = new BlobController("samples"); //constrktor ses i Billede eksempel 2
-            string FileAbsoluteUri = BlobManagerObj.UploadFile(uploadFile, audioSample.FilePath); //metode ses i Billede eksempel 3
-            entities.SaveChanges();
+                // Container Name - Sample  
+                BlobController BlobManagerObj = new BlobController("samples"); //constrktor ses i Billede eksempel 2
+                string FileAbsoluteUri = BlobManagerObj.UploadFile(uploadFile, audioSample.FilePath); //metode ses i Billede eksempel 3
+                entities.SaveChanges();
 
-            return RedirectToAction("index");
+                return RedirectToAction("index");
+            }
+            else
+                ViewBag.Message = "NOT A VALID FILE TYPE!";
+            }
+            else
+                ViewBag.Message = "FILE IS TOO BIG!";
+
+            return RedirectToAction("UploadSample", "Main");
         }
 
         [HttpGet]
