@@ -16,10 +16,10 @@
                 <div class="upload-btn-wrapper">
                     <label class="uploadLabel">Please select audio file: </label>
                     <button type="button" class="upload-btn"><i class="fas fa-upload"></i> Upload file</button>
-                    <input type="file" name="FilePath" value="" />
+                    <input type="file" name="FilePath" value=""  accept="file_extension/,.wav,.mp3,.flac" size="102400"/>
                 </div>
             </div>
-
+            <h3>@ViewBag.Message</h3>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="inputGroup-sizing-default">Title</span>
