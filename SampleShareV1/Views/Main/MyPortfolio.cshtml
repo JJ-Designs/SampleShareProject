@@ -9,8 +9,8 @@
     <ul class="nav">
         @foreach (var item in ViewBag.Categories)
         {
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <li class="nav-item">
+                <a class="nav-link" href="@Url.Action("MyPortfolio","Main", new { UserIDFromURL = Session["UserID"], CategoryID = item.CategoryID })" role="button" aria-haspopup="true" aria-expanded="false">
                     @item.CategoryName
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
