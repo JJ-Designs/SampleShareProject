@@ -50,12 +50,13 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="inputGroup-sizing-default">Category</span>
                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                        @foreach (var item in ViewBag.Categories)
+                        @foreach (var Category in ViewBag.Categories)
                         {
                         <label class="btn btn-secondary">
-                            @Html.EditorFor(model => model.CategoryID, new { htmlAttributes = new { @type = "radio" } })
+                            @Html.RadioButtonFor(model => model.CategoryID, (int)Category.CategoryID) @Category.CategoryName
+                            @*@Html.EditorFor(model => model.CategoryID, new { htmlAttributes = new { @type = "radio" } })
                             @item.CategoryName
-                            @Html.ValidationMessageFor(model => model.CategoryID, "", new { @class = "text-danger" })
+                            @Html.ValidationMessageFor(model => model.CategoryID, "", new { @class = "text-danger" })*@
                             @*<input type="radio" /> @item.CategoryName*@
                         </label>
                         }

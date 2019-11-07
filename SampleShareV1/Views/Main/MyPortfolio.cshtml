@@ -14,7 +14,7 @@
                     @item.CategoryName
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" href="#">Action</a>
+                    <a class="dropdown-item" href="@Url.Action("SortByCategoryPortfolio","Main",new { UserIDFromURL = Session["UserID"], category = item.CategoryID })">Action</a>
                     <a class="dropdown-item" href="#">Another action</a>
                     <a class="dropdown-item" href="#">Something else here</a>
                 </div>
@@ -34,7 +34,7 @@
                     <h4 class="card-title">@item.SampleTitel</h4>
                     <p class="card-text"><i class="fas fa-user"></i><a href="#"><b>  @item.Users.UserName</b></a></p>
                     <audio class="embed-responsive-item" controls controlsList="nodownload">
-                        <source class="card-title" src="~/samples/@Url.Content(item.FilePath)" type="audio/mpeg">
+                        <source class="card-title" src="https://sampleshare.blob.core.windows.net/samples/@item.FilePath" type="audio/mpeg">
                         Your browser does not support the audio element.
                     </audio>
                     <p class="card-text">Tags: <i>Sound, Effect, Audio </i></p>
