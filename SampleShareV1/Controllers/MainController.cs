@@ -267,7 +267,7 @@ namespace SampleShareV1.Controllers
             {
                 uploadFile = Request.Files[file];
             }
-            if(uploadFile.ContentLength < 102400)
+            if(uploadFile.ContentLength < 102400000)
             {
             SampleShareDBEntities entities = new SampleShareDBEntities();
             string fileExt = uploadFile.FileName.Substring(uploadFile.FileName.IndexOf("."));
