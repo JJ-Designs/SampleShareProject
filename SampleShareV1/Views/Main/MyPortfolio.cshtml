@@ -14,7 +14,7 @@
                     @item.CategoryName
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" href="#">Action</a>
+                    <a class="dropdown-item" href="@Url.Action("SortByCategoryPortfolio","Main",new { UserIDFromURL = Session["UserID"], category = item.CategoryID })">Action</a>
                     <a class="dropdown-item" href="#">Another action</a>
                     <a class="dropdown-item" href="#">Something else here</a>
                 </div>
