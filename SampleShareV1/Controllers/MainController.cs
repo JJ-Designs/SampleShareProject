@@ -40,15 +40,17 @@ namespace SampleShareV1.Controllers
 
         [HttpGet]
         [ActionName("Catalog")]
-        public ActionResult Catalog()
+        public ActionResult Catalog(int CategoryID)
         {
             SampleShareDBEntities entities = new SampleShareDBEntities();
-            List<AudioSamples> audioSamples = entities.AudioSamples.Where(a => a.isPublic == true).ToList();
+            List<AudioSamples> audioSamples;
+            if (CategoryID != 0)
+                audioSamples = entities.AudioSamples
+                    .Where(a => a.isPublic == true)
+                    .Where(a => a.CategoryID == CategoryID).ToList();
+            else
+                audioSamples = entities.AudioSamples.Where(a => a.isPublic == true).ToList();
             ViewBag.Categories = entities.Categories.ToList();
-
-            // Container Name - Sample  
-            BlobController BlobManagerObj = new BlobController("samples");
-            //ViewBag.FilePath = BlobManagerObj.
             return View(audioSamples);
         }
 
@@ -263,40 +265,41 @@ namespace SampleShareV1.Controllers
         [HttpPost]
         public ActionResult UploadSample(HttpPostedFileBase uploadFile, AudioSamples audioSample)
         {
+            SampleShareDBEntities entities = new SampleShareDBEntities();
             foreach (string file in Request.Files)
             {
                 uploadFile = Request.Files[file];
             }
-            if(uploadFile.ContentLength < 102400000)
+            ViewBag.Categories = entities.Categories.ToList();
+            if (uploadFile.ContentLength < 102400000)
             {
-            SampleShareDBEntities entities = new SampleShareDBEntities();
-            string fileExt = uploadFile.FileName.Substring(uploadFile.FileName.IndexOf("."));
-            if (fileExt == ".wav" || fileExt == ".mp3" || fileExt == ".flac")
-            {
-                audioSample.FilePath = audioSample.SampleTitel + fileExt;
-                audioSample.CreationDate = DateTime.Now;
-                audioSample.Downloads = 0;
-                audioSample.Categories = entities.Categories.Single(c => c.CategoryID == audioSample.CategoryID);
-                string id = (string)Session["UserID"];
-                audioSample.UserID = Int32.Parse(id);
-                audioSample.Users = entities.Users.Single(u => u.UserID == audioSample.UserID);
+                string fileExt = uploadFile.FileName.Substring(uploadFile.FileName.IndexOf("."));
+                if (fileExt == ".wav" || fileExt == ".mp3" || fileExt == ".flac")
+                {
+                    audioSample.FilePath = audioSample.SampleTitel + fileExt;
+                    audioSample.CreationDate = DateTime.Now;
+                    audioSample.Downloads = 0;
+                    audioSample.Categories = entities.Categories.Single(c => c.CategoryID == audioSample.CategoryID);
+                    string id = (string)Session["UserID"];
+                    audioSample.UserID = Int32.Parse(id);
+                    audioSample.Users = entities.Users.Single(u => u.UserID == audioSample.UserID);
 
-                entities.AudioSamples.Add(audioSample);
+                    entities.AudioSamples.Add(audioSample);
 
-                // Container Name - Sample  
-                BlobController BlobManagerObj = new BlobController("samples"); //constrktor ses i Billede eksempel 2
-                string FileAbsoluteUri = BlobManagerObj.UploadFile(uploadFile, audioSample.FilePath); //metode ses i Billede eksempel 3
-                entities.SaveChanges();
+                    // Container Name - Sample  
+                    BlobController BlobManagerObj = new BlobController("samples"); //constrktor ses i Billede eksempel 2
+                    string FileAbsoluteUri = BlobManagerObj.UploadFile(uploadFile, audioSample.FilePath); //metode ses i Billede eksempel 3
+                    entities.SaveChanges();
 
-                return RedirectToAction("index");
-            }
-            else
-                ViewBag.Message = "NOT A VALID FILE TYPE!";
+                    return RedirectToAction("index");
+                }
+                else
+                    ViewBag.Message = "NOT A VALID FILE TYPE!";
             }
             else
                 ViewBag.Message = "FILE IS TOO BIG!";
 
-            return RedirectToAction("UploadSample", "Main");
+            return View();
         }
 
         [HttpGet]

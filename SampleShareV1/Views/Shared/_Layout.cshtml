@@ -33,7 +33,7 @@
             </div>
         </li>*@
                     <li class="nav-item">
-                        <a class="nav-link" href="@Url.Action("Catalog","Main")">Catalog</a>
+                        <a class="nav-link" href="@Url.Action("Catalog","Main",  new { CategoryID = 0 })">Catalog</a>
                     </li>
                     @if (Session["UserID"] != null)
                     {
