@@ -108,7 +108,8 @@ namespace SampleShareV1.Controllers
             // Container Name - Sample  
             BlobController BlobManagerObj = new BlobController("samples");
             string FileAbsoluteUri = BlobManagerObj.DownloadFile(audioSample.FilePath);
-
+            audioSample.Downloads++;
+            entities.SaveChanges();
             return RedirectToAction("Catalog");
         }
         
@@ -158,12 +159,7 @@ namespace SampleShareV1.Controllers
         {
             SampleShareDBEntities entities = new SampleShareDBEntities();
             Users user = entities.Users.Single(s => s.UserID == UserIDFromURL);
-            if (Session["UserID"] != null)
-            {
-                return View(user);
-            }
-            else
-                return RedirectToAction("Index", "Main");
+            return View(user);
         }
 		
         [HttpGet]

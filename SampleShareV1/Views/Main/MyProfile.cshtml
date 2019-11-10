@@ -31,14 +31,17 @@
                                     <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Information</a>
+                                   <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Information</a>
                                 </li>
                             </ul>
                         </div>
                     </div>
+                    @if (Model.UserID.Equals(Session["UserID"]))
+                    {
                     <div class="col-md-2">
                             <a href="@Url.Action("EditMyProfile", "Main", new { UserIDFromURL = Session["UserID"] })"><input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile" /></a>
                          </div>
+                    }
                 </div>
                 <div class="row">
                     <div class="col-md-4">
