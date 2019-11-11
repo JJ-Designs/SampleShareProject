@@ -1,41 +1,60 @@
 ﻿@model SampleShareV1.Models.AudioSamples
 
 @{
-    ViewBag.Title = "PortfolioSampleDetails";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+                /**/
+
+                ViewBag.Title = "PortfolioSampleDetails";
+                Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<!-- Audio Sample Detail Card-->
 <div class="container emp-profile">
     <div class="row">
         <div class="col-md-10">
             <div class="profile-head">
+
+                <!-- Play / Pause Button -->
                 <div class="allign">
                     <button id="playpause" class="circle btn btn-primary">
                         <i class="fa fa-play"></i>
                     </button>
                 </div>
+
+                <!-- Title & Information -->
                 <div class="allign">
                     <h4 class="card-title">@Model.SampleTitel</h4>
                     <p style="margin-top: -2vh;" class="card-text"><i class="fas fa-user"></i><a href="@Url.Action("MyProfile","Main",new { UserIDFromURL = Model.UserID })"><b> @Model.Users.UserName</b></a></p>
                 </div>
+
             </div>
         </div>
+
+        <!-- Back Button -->
         <div class="col-md-2">
             <a href="@Url.Action("MyPortfolio", "Main",  new { UserIDFromURL = Session["UserID"], CategoryID = 0 })"><input type="submit" class="profile-edit-btn" name="btnAddMore" value="Back" /></a>
         </div>
+
     </div>
     <div class="row">
+
+        <!-- Display Audio -->
         <div class="col-md-12">
             <div id="waveform">
                 <audio id="song" style="display: none" preload="false" src="https://sampleshare.blob.core.windows.net/samples/@Url.Content(Model.FilePath)"></audio>
             </div>
         </div>
+
     </div>
     <div class="row">
+
+        <!-- Download Button -->
         <div class="col-md-2">
             <a href="@Url.Action("Download","Main",new { AudioSampleIDFromURL = Model.SampleID })" class="btn btn-primary"><i class="fas fa-download"></i> Download</a>
         </div>
+
         <div class="col-md-8">
+
+            <!-- Tab List Menu-->
             <div class="profile-head">
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item">
@@ -46,9 +65,12 @@
                     </li>
                 </ul>
             </div>
+
         </div>
         <div class="col-md-12">
             <div class="tab-content profile-tab" id="myTabContent">
+
+                <!-- Description Tab -->
                 <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                     <div class="row">
                         <div class="col-md-10">
@@ -56,47 +78,63 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Information Tab -->
                 <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                     <div class="row">
+
+                        <!-- Date -->
                         <div class="col-md-4">
                             <label>Upload Date:</label>
                         </div>
                         <div class="col-md-8">
                             <p>@Model.CreationDate.Value.ToString("dd/MM-yyyy")</p>
                         </div>
+
                     </div>
                     <div class="row">
+
+                        <!-- Category -->
                         <div class="col-md-4">
                             <label>Category:</label>
                         </div>
                         <div class="col-md-8">
                             <p>@Html.DisplayFor(model => model.Categories.CategoryName)</p>
                         </div>
+
                     </div>
                     <div class="row">
+
+                        <!-- Total Downloads -->
                         <div class="col-md-4">
                             <label>Total Downloads:</label>
                         </div>
                         <div class="col-md-8">
                             <p>@Html.DisplayFor(model => model.Downloads)</p>
                         </div>
+
                     </div>
                     <div class="row">
+
+                        <!-- Public Status -->
                         <div class="col-md-4">
                             <label>Status:</label>
                         </div>
                         <div class="col-md-8">
                             <p>@Html.DisplayNameFor(model => model.isPublic)</p>
                         </div>
+
                     </div>
                     <div class="row">
                         <div class="col-md-8">
                         </div>
                         <div class="col-md-4">
-                            <!-- Button trigger modal -->
+
+                            <!-- Delete audio sample button trigger modal -->
                             <input type="button" class="profile-delete-btn" data-toggle="modal" data-target="#downloadModal" value="Delete Sample" />
                             <label class="disclamerLabel">When deleting, you can not undo changes.</label>
-                            <!-- Modal -->
+
+                            <!-- Delete audio sample modal -->
                             <div class="modal fade" id="downloadModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                     <div class="modal-content">
@@ -115,9 +153,11 @@
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
