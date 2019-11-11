@@ -1,10 +1,10 @@
 ﻿using SampleShareV1.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using System.Data.Entity;
 
 namespace SampleShareV1.Controllers
 {
@@ -321,6 +321,18 @@ namespace SampleShareV1.Controllers
             entities.SaveChanges();
             Session.Abandon();
             return RedirectToAction("index");
+        }
+
+        [HttpGet]
+        [ActionName("DeleteAudioSample")]
+        public ActionResult DeleteAudioSample(int SampleIDFromURL)
+        {
+            SampleShareDBEntities entities = new SampleShareDBEntities();
+            AudioSamples audioSampleToDel = entities.AudioSamples.SingleOrDefault(a => a.SampleID == SampleIDFromURL);
+            entities.AudioSamples.Remove(audioSampleToDel);
+            entities.SaveChanges();
+
+            return RedirectToAction("MyPortefolio");
         }
     }
 }
