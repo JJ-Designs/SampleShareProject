@@ -10039,6 +10039,11 @@ a.text-dark:hover, a.text-dark:focus {
 }
 /*# sourceMappingURL=bootstrap.css.map */
 
+
+
+
+/* OUR OWN ADD CSS*/
+
 /* Background Image*/
 .backgroundimg {
     background: url('../Content/img/Wallpaper1.jpg');
@@ -10055,7 +10060,7 @@ a.text-dark:hover, a.text-dark:focus {
    align-content:center;
 }
 
-/* My Profile Card C*/
+/* My Profile Card */
 .emp-profile {
     padding: 3%;
     margin-top: 3%;
@@ -10064,6 +10069,7 @@ a.text-dark:hover, a.text-dark:focus {
     background: #fff;
 }
 
+/* Profile Image */
 .profile-img {
     text-align: center;
 }
@@ -10091,6 +10097,7 @@ a.text-dark:hover, a.text-dark:focus {
             top: 0;
         }
 
+/* Custom Headline Colors*/
 .profile-head h5 {
     color: #333;
 }
@@ -10099,6 +10106,8 @@ a.text-dark:hover, a.text-dark:focus {
     color: #007bff;
 }
 
+
+/* EDIT / SAVE Button */
 .profile-edit-btn {
     border: none;
     border-radius: 1.5rem;
@@ -10108,6 +10117,8 @@ a.text-dark:hover, a.text-dark:focus {
     color: #6c757d;
     cursor: pointer;
 }
+
+/* Delete User & Samples */
 .profile-delete-btn {
     border: none;
     border-radius: 1.5rem;
@@ -10120,13 +10131,19 @@ a.text-dark:hover, a.text-dark:focus {
     float: right;
 }
 
-.proile-rating {
+    .profile-delete-btn:hover {
+        color: #fffff2;
+        background-color: #a41421;
+    }
+
+/* Subtitle */
+.profile-rating {
     font-size: 12px;
     color: #818182;
     margin-top: 5%;
 }
 
-    .proile-rating span {
+    .profile-rating span {
         color: #495057;
         font-size: 15px;
         font-weight: 600;
@@ -10135,7 +10152,7 @@ a.text-dark:hover, a.text-dark:focus {
 .profile-head .nav-tabs {
     margin-bottom: 5%;
 }
-
+    /* Headline Bold */
     .profile-head .nav-tabs .nav-link {
         font-weight: 600;
         border: none;
@@ -10146,6 +10163,7 @@ a.text-dark:hover, a.text-dark:focus {
             border-bottom: 2px solid #007bff;
         }
 
+/* Statistics & Information */
 .profile-work {
     padding: 14%;
     margin-top: -15%;
@@ -10169,20 +10187,24 @@ a.text-dark:hover, a.text-dark:focus {
         list-style: none;
     }
 
+/* Label Bold*/
 .profile-tab label {
     font-weight: 600;
 }
 
+/* Disclamer Label For Delete Button */
 .disclamerLabel {
     font-size: 1.5vh;
     float: right;
 }
 
+/* Normal-Text Bold & Color */
 .profile-tab p {
     font-weight: 600;
     color: #007bff;
 }
 
+/* Checkbox fixed Size */
 input[type="checkbox"] {
     width: 200px; /*Desired width*/
     height: 200px; /*Desired height*/
@@ -10190,7 +10212,7 @@ input[type="checkbox"] {
     -webkit-appearance: none;
 }
 
-/*Circle Button*/
+/* Play/Pause Circle Button */
 .circle {
     margin-top: -3vh;
     width: 56px;
@@ -10204,12 +10226,12 @@ input[type="checkbox"] {
     border-color: #007bff;
 }
 
-/* Line Allign*/
+/* Line Allign */
 .allign {
 display:inline-block;
 }
 
-/* Upload button*/
+/* Upload Button */
 .upload-btn {
     border: 2px solid gray;
     color: gray;

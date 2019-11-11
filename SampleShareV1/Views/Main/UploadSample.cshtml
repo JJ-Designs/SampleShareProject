@@ -1,77 +1,94 @@
 ﻿@model SampleShareV1.Models.AudioSamples
 
 @{
-    ViewBag.Title = "UploadSample";
-}
+                /**/
 
-<body class="backgroundimg">
+                ViewBag.Title = "UploadSample";
+}
+    <!-- Upload Audio Sample Card -->
     <div class="container emp-profile">
         @using (Html.BeginForm("UploadSample", "Main", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
             @Html.AntiForgeryToken()
+
         <fieldset>
+
             <h3>Upload Sound (MP3, WAV, FLAC)</h3>
 
+            <!-- Upload filepath Button -->
             <div class="custom-file">
                 <div class="upload-btn-wrapper">
                     <label class="uploadLabel">Please select audio file: </label>
                     <button type="button" class="upload-btn"><i class="fas fa-upload"></i> Upload file</button>
-                    <input type="file" name="FilePath" value=""  accept="file_extension/,.wav,.mp3,.flac" size="102400"/>
+                    <input type="file" name="FilePath" value="" accept="file_extension/,.wav,.mp3,.flac" size="102400" />
                 </div>
             </div>
-            <h5 >@ViewBag.Message</h5>
+
+            <!-- Error Message -->
+            <h5>@ViewBag.Message</h5>
+
             <div class="input-group mb-3">
+
+                <!-- Title -->
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="inputGroup-sizing-default">Title</span>
                 </div>
-
                 @Html.EditorFor(model => model.SampleTitel, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.SampleTitel, "", new { @class = "text-danger" })
+
             </div>
 
             <div class="input-group mb-3">
+
+                <!-- Description -->
                 <div class="input-group-prepend">
                     <span class="input-group-text">Description</span>
                 </div>
-                @Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @class = "form-control"} })
+                @Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
                 @*<textarea class="form-control"></textarea>*@
+
             </div>
 
             <div class="input-group mb-3">
+
+                <!-- Tags -->
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="inputGroup-sizing-default">Tags (comma separated)</span>
                 </div>
                 @Html.EditorFor(model => model.Tags.TagName, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Tags.TagName, "", new { @class = "text-danger" })
                 @*<input type="text" class="form-control">*@
+
             </div>
             <div class="input-group mb-3">
+
+                <!-- Category -->
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="inputGroup-sizing-default">Category</span>
                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
                         @foreach (var Category in ViewBag.Categories)
                         {
-                        <label class="btn btn-secondary">
-                            @Html.RadioButtonFor(model => model.CategoryID, (int)Category.CategoryID) @Category.CategoryName
-                            @*@Html.EditorFor(model => model.CategoryID, new { htmlAttributes = new { @type = "radio" } })
-                            @item.CategoryName
-                            @Html.ValidationMessageFor(model => model.CategoryID, "", new { @class = "text-danger" })*@
-                            @*<input type="radio" /> @item.CategoryName*@
-                        </label>
+                            <label class="btn btn-secondary">
+                                @Html.RadioButtonFor(model => model.CategoryID, (int)Category.CategoryID) @Category.CategoryName
+                            </label>
                         }
                     </div>
                 </div>
+
             </div>
             <div class="input-group mb-3">
+
+                <!-- Private or Public Switch -->
                 <div class="custom-control custom-switch">
                     @Html.EditorFor(model => model.isPublic, new { htmlAttributes = new { @class = "custom-control-input", @id = "switch1", @type = "checkbox", @checked = "checked" } })
                     @Html.ValidationMessageFor(model => model.isPublic, "", new { @class = "text-danger" })
                     <label class="custom-control-label" for="switch1">Public</label>
                 </div>
+
             </div>
 
-
+            <!-- Upload Audio Sample Button -->
             <div style="margin-top: 2vh;">
                 <button type="submit" class="btn btn-primary">Upload</button>
             </div>
@@ -79,5 +96,4 @@
         </fieldset>
         }
     </div>
-</body>
 

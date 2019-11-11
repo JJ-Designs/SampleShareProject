@@ -295,8 +295,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Main\About.cshtml" />
-    <Content Include="Views\Main\Contact.cshtml" />
     <Content Include="Views\Main\Index.cshtml" />
     <Content Include="Scripts\umd\popper.min.js.map" />
     <Content Include="Scripts\umd\popper.js.map" />
@@ -315,7 +313,8 @@
     <Content Include="Views\Blob\CreateBlobContainer.cshtml" />
     <Content Include="Views\Main\UploadSample.cshtml" />
     <Content Include="Views\Main\MyPortfolio.cshtml" />
-    <Content Include="Views\Main\SampleDetails.cshtml" />
+    <Content Include="Views\Main\CatalogSampleDetails.cshtml" />
+    <Content Include="Views\Main\PortfolioSampleDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

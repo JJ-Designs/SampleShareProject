@@ -1,5 +1,4 @@
-﻿body {
-}
+﻿/* LOGIN / REGISTER CSS*/
 body {
     margin: 0;
     color: #c8c8c8;
@@ -186,10 +185,12 @@ a {
     background: rgba(255,255,255,.2);
 }
 
+/* Footer */
 .foot-lnk {
     text-align: center;
 }
 
+/* Background Image */
 .backgroundimg {
     background: url('../Content/img/Wallpaper1.jpg');
     background-size: cover;

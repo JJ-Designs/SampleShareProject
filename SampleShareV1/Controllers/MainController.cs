@@ -1,10 +1,10 @@
 ﻿using SampleShareV1.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using System.Data.Entity;
 
 namespace SampleShareV1.Controllers
 {
@@ -30,8 +30,17 @@ namespace SampleShareV1.Controllers
         }
 
         [HttpGet]
-        [ActionName("SampleDetails")]
-        public ActionResult SampleDetails(int SampleID)
+        [ActionName("CatalogSampleDetails")]
+        public ActionResult CatalogSampleDetails(int SampleID)
+        {
+            SampleShareDBEntities entities = new SampleShareDBEntities();
+            AudioSamples audioSample = entities.AudioSamples.Single(a => a.SampleID == SampleID);
+            return View(audioSample);
+        }
+
+        [HttpGet]
+        [ActionName("PortfolioSampleDetails")]
+        public ActionResult PortfolioSampleDetails(int SampleID)
         {
             SampleShareDBEntities entities = new SampleShareDBEntities();
             AudioSamples audioSample = entities.AudioSamples.Single(a => a.SampleID == SampleID);
@@ -110,6 +119,7 @@ namespace SampleShareV1.Controllers
             string FileAbsoluteUri = BlobManagerObj.DownloadFile(audioSample.FilePath);
             audioSample.Downloads++;
             entities.SaveChanges();
+
             return RedirectToAction("Catalog");
         }
         
@@ -311,6 +321,18 @@ namespace SampleShareV1.Controllers
             entities.SaveChanges();
             Session.Abandon();
             return RedirectToAction("index");
+        }
+
+        [HttpGet]
+        [ActionName("DeleteAudioSample")]
+        public ActionResult DeleteAudioSample(int SampleIDFromURL)
+        {
+            SampleShareDBEntities entities = new SampleShareDBEntities();
+            AudioSamples audioSampleToDel = entities.AudioSamples.SingleOrDefault(a => a.SampleID == SampleIDFromURL);
+            entities.AudioSamples.Remove(audioSampleToDel);
+            entities.SaveChanges();
+
+            return RedirectToAction("MyPortefolio");
         }
     }
 }

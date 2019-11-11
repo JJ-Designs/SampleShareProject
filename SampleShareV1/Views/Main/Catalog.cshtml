@@ -1,11 +1,13 @@
 ﻿@model IEnumerable<SampleShareV1.Models.AudioSamples>
 @{
-    ViewBag.Title = "Catalog";
+                /**/
+
+                ViewBag.Title = "Catalog";
 }
+
+<!-- Category Menu -->
 <nav class="bg-white navbar-expand-md navbar navbar-light navbar-expand-md justify-content-center"
-     style="-webkit-box-shadow: 10px 18px 39px -11px rgba(0,0,0,0.75);
-    -moz-box-shadow: 10px 18px 39px -11px rgba(0,0,0,0.75);
-    box-shadow: 10px 18px 39px -11px rgba(0,0,0,0.75);">
+     style="-webkit-box-shadow: 10px 18px 39px -11px rgba(0,0,0,0.75); -moz-box-shadow: 10px 18px 39px -11px rgba(0,0,0,0.75); box-shadow: 10px 18px 39px -11px rgba(0,0,0,0.75);">
     <ul class="nav">
         @foreach (var item in ViewBag.Categories)
         {
@@ -15,10 +17,10 @@
                 </a>
             </li>
         }
-
-
     </ul>
 </nav>
+
+<!-- Audio Sample Card -->
 <div class="row ">
     @foreach (var item in Model)
     {
@@ -33,22 +35,27 @@
                         </button>
                     </div>
                     <div class="allign">
+
+                        <!-- Title & Information -->
                         <h4 class="card-title">@item.SampleTitel</h4>
-                        <p style="margin-top: -2vh;" class="card-text"><i class="fas fa-user"></i><a href="@Url.Action("MyProfile","Main", new { UserIDFromURL = item.UserID })"><b> @item.Users.UserName</b></a></p>
+                        <p style="margin-top: -2vh;" class="card-text"><i class="fas fa-user"></i><a href="@Url.Action("MyProfile","Main",new { UserIDFromURL = item.UserID })"><b> @item.Users.UserName</b></a></p>
+
                     </div>
 
                     <div id="waveform">
-                     
-                        <audio id="song" style="display: none" preload="false" src="https://sampleshare.blob.core.windows.net/samples/@Url.Content(item.FilePath)"></audio>
+                        <audio id="song" style="display: none" preload="false" src="https://sampleshare.blob.core.windows.net/samples/@item.FilePath"></audio>
                     </div>
 
+                    <!-- Tags -->
                     <p class="card-text">Tags: <i>Sound, Effect, Audio </i></p>
+
+                    <!-- Download & More Button -->
                     <a href="@Url.Action("Download","Main",new { AudioSampleIDFromURL = item.SampleID })" class="btn btn-primary"><i class="fas fa-download"></i> Download</a>
-                    <a href="@Url.Action("SampleDetails","Main", new { SampleID = item.SampleID })" class="btn btn-outline-dark">More</a>
+                    <a href="@Url.Action("CatalogSampleDetails","Main", new { SampleID = item.SampleID })" class="btn btn-outline-dark">More</a>
+                
                 </div>
             </div>
         </div>
-        @*<script type="text/javascript">createwavesurfer('https://sampleshare.blob.core.windows.net/samples/@url.content(item.filepath)');</script>*@
-        
+
     }
 </div>

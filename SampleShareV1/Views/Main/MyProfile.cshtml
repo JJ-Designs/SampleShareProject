@@ -1,154 +1,187 @@
 ﻿@model SampleShareV1.Models.Users
 
 @{
-    ViewBag.Title = "MyProfile";
+                /**/
+
+                ViewBag.Title = "MyProfile";
 }
 
-<body class="backgroundimg">
-            <div class="container emp-profile">
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="profile-img">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog" alt=""/>
-                            <div class="file btn btn-lg btn-secondary">
-                                Change Profile Picture
-                                <input type="file" name="file"/>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="profile-head">
-                            <h5>
+    <!-- Profile Card-->
+    <div class="container emp-profile">
+        <div class="row">
+            <div class="col-md-4">
 
-                                @Html.DisplayFor(model => model.FullName)
-                            </h5>
-                            <h6>
-                                @Html.DisplayFor(model => model.Profession)
-                            </h6>
-                            <p class="proile-rating">SUBSCRIPTION: <span>@Html.DisplayFor(model => model.Userright.userrightCategory)</span></p>
-                            <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                <li class="nav-item">
-                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
-                                </li>
-                                <li class="nav-item">
-                                   <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Information</a>
-                                </li>
-                            </ul>
-                        </div>
+                <!-- Profile Picture -->
+                <div class="profile-img">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog" alt="" />
+                    <div class="file btn btn-lg btn-secondary">
+                        Change Profile Picture
+                        <input type="file" name="file" />
                     </div>
-                    @if (Model.UserID.Equals(Session["UserID"]))
-                    {
-                    <div class="col-md-2">
-                            <a href="@Url.Action("EditMyProfile", "Main", new { UserIDFromURL = Session["UserID"] })"><input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile" /></a>
-                         </div>
-                    }
                 </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="profile-work">
-                            <p>LATEST</p>
-                            <a href="">[Audio-Sample 1]</a><br/>
-                            <a href="">[Audio-Sample 2]</a><br/>
-                            <a href="">[Audio-Sample 3]</a>
-                            <p>MOST DOWNLOADED</p>
-                            <a href="">[Audio-Sample 1]</a><br/>
-                            <a href="">[Audio-Sample 2]</a><br/>
-                            <a href="">[Audio-Sample 3]</a><br/>
-                            <a href="">[Audio-Sample 4]</a><br/>
-                            <a href="">[Audio-Sample 5]</a><br/>
-                        </div>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="tab-content profile-tab" id="myTabContent">
-                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Username:</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>
-                                                    @Html.DisplayFor(model => model.UserName)
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Name:</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>
-                                                    @Html.DisplayFor(model => model.FullName)
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>E-mail:</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>
-                                                    @Html.DisplayFor(model => model.Email)
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Profession:</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>
-                                                    @Html.DisplayFor(model => model.Profession)
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Your Bio:</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>
-                                                    @Html.DisplayFor(model => model.Discriptions)
-                                                </p>
-                                            </div>
-                                        </div>
-                            </div>
-                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Total Audio-Samples:</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>20</p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Total Downloads:</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>124</p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Public Audio-Samples:</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>15</p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Private Audio-Samples:</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>5</p>
-                                            </div>
-                                        </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>         
+
+            </div>
+            <div class="col-md-6">
+                <div class="profile-head">
+
+                    <!-- Title & Information -->
+                    <h5>
+                        @Html.DisplayFor(model => model.FullName)
+                    </h5>
+                    <h6>
+                        @Html.DisplayFor(model => model.Profession)
+                    </h6>
+                    <p class="proile-rating">SUBSCRIPTION: <span>@Html.DisplayFor(model => model.Userright.userrightCategory)</span></p>
+
+                    <!-- Tab List Menu-->
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Information</a>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+
+            <!-- Edit Button -->
+            @if (Model.UserID.Equals(Session["UserID"]))
+            {
+                <div class="col-md-2">
+                    <a href="@Url.Action("EditMyProfile", "Main", new { UserIDFromURL = Session["UserID"] })"><input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile" /></a>
+                </div>
+            }
+
         </div>
-</body>
+        <div class="row">
+            <div class="col-md-4">
+
+                <!-- Statistics & Information -->
+                <div class="profile-work">
+                    <p>LATEST</p>
+                    <a href="">[Audio-Sample 1]</a><br />
+                    <a href="">[Audio-Sample 2]</a><br />
+                    <a href="">[Audio-Sample 3]</a>
+                    <p>MOST DOWNLOADED</p>
+                    <a href="">[Audio-Sample 1]</a><br />
+                    <a href="">[Audio-Sample 2]</a><br />
+                    <a href="">[Audio-Sample 3]</a><br />
+                    <a href="">[Audio-Sample 4]</a><br />
+                    <a href="">[Audio-Sample 5]</a><br />
+                </div>
+
+            </div>
+            <div class="col-md-8">
+
+                <!-- About Tab -->
+                <div class="tab-content profile-tab" id="myTabContent">
+                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <div class="row">
+
+                            <!-- Username -->
+                            <div class="col-md-6">
+                                <label>Username:</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>
+                                    @Html.DisplayFor(model => model.UserName)
+                                </p>
+                            </div>
+
+                        </div>
+                        <div class="row">
+
+                            <!-- Name -->
+                            <div class="col-md-6">
+                                <label>Name:</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>
+                                    @Html.DisplayFor(model => model.FullName)
+                                </p>
+                            </div>
+
+                        </div>
+                        <div class="row">
+
+                            <!-- E-mail -->
+                            <div class="col-md-6">
+                                <label>E-mail:</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>
+                                    @Html.DisplayFor(model => model.Email)
+                                </p>
+                            </div>
+
+                        </div>
+                        <div class="row">
+
+                            <!-- Profession -->
+                            <div class="col-md-6">
+                                <label>Profession:</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>
+                                    @Html.DisplayFor(model => model.Profession)
+                                </p>
+                            </div>
+
+                        </div>
+                        <div class="row">
+
+                            <!-- Biography -->
+                            <div class="col-md-6">
+                                <label>Your Bio:</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>
+                                    @Html.DisplayFor(model => model.Discriptions)
+                                </p>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Information Tab -->
+                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Total Audio-Samples:</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>20</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Total Downloads:</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>124</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Public Audio-Samples:</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>15</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Private Audio-Samples:</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>5</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
