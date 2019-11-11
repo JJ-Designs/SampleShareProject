@@ -16,7 +16,7 @@
                 </div>
                 <div class="allign">
                     <h4 class="card-title">@Model.SampleTitel</h4>
-                    <p style="margin-top: -2vh;" class="card-text"><i class="fas fa-user"></i><a href="#"><b> @Model.Users.UserName</b></a></p>
+                    <p style="margin-top: -2vh;" class="card-text"><i class="fas fa-user"></i><a href="@Url.Action("MyProfile","Main",new { UserIDFromURL = Model.UserID })"><b> @Model.Users.UserName</b></a></p>
                 </div>
             </div>
         </div>
