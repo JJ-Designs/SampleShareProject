@@ -108,6 +108,8 @@ namespace SampleShareV1.Controllers
             // Container Name - Sample  
             BlobController BlobManagerObj = new BlobController("samples");
             string FileAbsoluteUri = BlobManagerObj.DownloadFile(audioSample.FilePath);
+            audioSample.Downloads++;
+            entities.SaveChanges();
 
             return RedirectToAction("Catalog");
         }
