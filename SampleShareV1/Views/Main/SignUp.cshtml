@@ -1,64 +1,96 @@
 ﻿@model SampleShareV1.Models.Users
 
 @{
-    Layout = null;
-    ViewBag.Title = "sign_up";
+                /**/
+
+                Layout = null;
+                ViewBag.Title = "sign_up";
 }
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
+
     <!doctype html>
     <html class="no-js" lang="en" dir="ltr">
+
     <head>
+        <!-- Metadata -->
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- Icon & Title -->
         <title>SampleShare - @ViewBag.Title</title>
         <link rel="stylesheet" href="~/Content/Style.css">
 
+        <!-- Stylesheet Link -->
         <link rel="icon" href="~/Content/img/sampleshareicon.png" type="image/gif">
+
     </head>
+
     <body class="backgroundimg">
+
+        <!-- Registrer Card -->
         <div class="login-wrap">
             <div class="login-html">
+
+                <!-- Logo Image -->
                 <img src="~/Content/img/samplesharelogo_white2.png" style="height:7.2vh; margin-top: -8vh; margin-bottom: 5vh; display: block; margin-left: auto; margin-right: auto;" class="img-fluid" alt="">
+
+                <!-- Tab Menu-->
                 <a class="sign-in tab" href="@Url.Action("Login", "Main")">Login</a><label for="tab-1"></label>
                 <input id="tab-2" type="radio" name="tab" class="sign-up" checked><label for="tab-2" class="tab">Sign Up</label>
+
+                <!-- Registrer Form -->
                 <div class="login-form">
                     <form>
                         <div class="sign-up-htm">
 
                             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                            <!-- Name -->
                             <div class="group">
                                 <label for="fullname" class="label">Name</label>
                                 @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "input", @placeholder = "Name", tabindex = "1" } })
                                 @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
                             </div>
+
+                            <!-- Username -->
                             <div class="group">
                                 <label for="user" class="label">Username</label>
                                 @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "input", @placeholder = "Username", tabindex = "3" } })
                                 @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
                             </div>
+
+                            <!-- Email -->
                             <div class="group">
                                 <label for="pass" class="label">Email Address</label>
                                 @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "input", @placeholder = "E-Mail", tabindex = "4" } })
                                 @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                             </div>
+
+                            <!-- Password -->
                             <div class="group">
                                 <label for="pass" class="label">Password</label>
                                 @Html.EditorFor(model => model.Pass, new { htmlAttributes = new { @type = "password", @class = "input", @placeholder = "Password", tabindex = "5" } })
                                 @Html.ValidationMessageFor(model => model.Pass, "", new { @class = "text-danger" })
                             </div>
+
+                            <!-- Registrer Button -->
                             <div class="group">
                                 <input type="submit" class="button" value="Sign Up">
                             </div>
+
+                            <!-- Error Message -->
                             @if (@ViewBag.Message != null)
                             {
                                 <div class="group foot-lnk" style="color:#d11a2a;">
                                     @ViewBag.Message
                                 </div>
                             }
+
+                            <!-- Back Button-->
                             <div class="hr"></div>
                             <div class="foot-lnk" style="margin-top: -2vh;">
                                 <a href="@Url.Action("Login","Main")">Already Member?<br /></a>

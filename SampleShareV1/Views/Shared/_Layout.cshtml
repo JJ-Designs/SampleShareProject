@@ -1,59 +1,72 @@
 ﻿<!DOCTYPE html>
 <html class="no-js" lang="en" dir="ltr">
+
 <head>
+
+    <!-- Metadata -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Icon & Title -->
+    <link rel="icon" href="~/Content/img/sampleshareicon.png" type="image/gif">
     <title>SampleShare - @ViewBag.Title</title>
+
+    <!-- Stylesheet Links -->
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
-    <link rel="icon" href="~/Content/img/sampleshareicon.png" type="image/gif">
-
 </head>
+
 <body class="backgroundimg">
+
+    <!-- Main Top Menu-->
     <nav class="navbar navbar-light navbar-expand-md bg-transparent justify-content-between">
         <div class="container-fluid">
+
+            <!-- Responsive Top Menu Toggle Button -->
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-nav">
                 <span class="navbar-toggler-icon"></span>
             </button>
+
             <div class="navbar-collapse collapse dual-nav w-50 order-1 order-md-0">
                 <ul class="navbar-nav">
+
+                    <!-- Home Tab -->
                     <li class="nav-item active">
                         <a class="nav-link pl-0" href="@Url.Action("index","Main")">Home <span class="sr-only">Home</span></a>
                     </li>
-                    @*<li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Dropdown link
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
-            </div>
-        </li>*@
+
+                    <!-- Catalog Tab -->
                     <li class="nav-item">
                         <a class="nav-link" href="@Url.Action("Catalog","Main",  new { CategoryID = 0 })">Catalog</a>
                     </li>
+
                     @if (Session["UserID"] != null)
                     {
+                        <!-- Portfolio Tab -->
                         <li class="nav-item">
                             <a class="nav-link" href="@Url.Action("MyPortfolio", "Main", new { UserIDFromURL = Session["UserID"], CategoryID = 0 })">Portfolio</a>
                         </li>
 
+                        <!-- Profile Tab -->
                         <li class="nav-item">
                             <a class="nav-link" href="@Url.Action("MyProfile", "Main", new { UserIDFromURL = Session["UserID"] })">Profile</a>
                         </li>
                     }
                 </ul>
             </div>
+
+            <!-- Main Logo -->
             <a class="navbar-brand mx-auto d-block text-center order-0 order-md-1 w-25 img-fluid" href="@Url.Action("index","Main")">
                 <img src="~/Content/img/SampleShareLogo.png" class="img-fluid" alt="">
             </a>
+
             <div class="navbar-collapse collapse dual-nav w-50 order-2">
                 <ul class="nav navbar-nav ml-auto">
                     @if (Session["UserID"] != null)
                     {
+                        <!-- Upload Sample Tab -->
                         <li>
                             <form class="form-inline my-2 my-lg-0" action="~/Main/UploadSample">
                                 <button style="margin-right: 2vh;" class="btn btn-primary btn-sm my-2 my-sm-0" type="submit">
@@ -62,9 +75,11 @@
                             </form>
                         </li>
                     }
+
                     <li>
                         @if (Session["UserID"] == null)
                         {
+                            <!-- Login Tab -->
                             <form class="form-inline my-2 my-lg-0" action="~/Main/Login">
                                 <button class="btn btn-outline-dark btn-sm my-2 my-sm-0" type="submit">
                                     <i class="fas fa-user-lock"></i>  Login
@@ -73,6 +88,7 @@
                         }
                         else
                         {
+                            <!-- Logout Button -->
                             <form class="form-inline my-2 my-lg-0" action="~/Main/Logout">
                                 <button class="btn btn-outline-dark btn-sm my-2 my-sm-0" type="submit">
                                     <i class="fas fa-user-lock"></i>  Logout
@@ -85,6 +101,7 @@
         </div>
     </nav>
 
+    <!-- Footer -->
     <div class="container body-content">
         @RenderBody()
         <hr />
@@ -93,11 +110,13 @@
         </footer>
     </div>
 
+    <!-- Script References -->
     <script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.js"></script>
     <script src="https://unpkg.com/wavesurfer.js"></script>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/Content/js/JavaScript.js")
     @RenderSection("scripts", required: false)
+
 </body>
 </html>
