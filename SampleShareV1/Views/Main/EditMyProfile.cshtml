@@ -120,9 +120,28 @@
                                 <div class="col-md-6">
                                 </div>
                                 <div class="col-md-6">
-                                    <input type="button" class="profile-delete-btn" onclick="location.href='@Url.Action("DeleteUserAndFiles","Main", new {UserIDFromURL = Model.UserID })'" value="Delete Account"/>
-                                        <label class="disclamerLabel">All uploaded samples will also be deleted.</label>
-                                    
+                                    <!-- Button trigger modal -->
+                                    <input type="button" class="profile-delete-btn" data-toggle="modal" data-target="#downloadModal" value="Delete Account" />
+                                    <label class="disclamerLabel">All uploaded samples will also be deleted.</label>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="downloadModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Are you sure you want to delete account?</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    By deleting your account you will also delete all uploaded samples, both public and pritave samples.
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <input type="button" class="profile-delete-btn" onclick="location.href='@Url.Action("DeleteUserAndFiles","Main", new {UserIDFromURL = Model.UserID })'" value="Delete Account" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

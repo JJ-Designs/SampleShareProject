@@ -1,7 +1,7 @@
 ﻿@model SampleShareV1.Models.AudioSamples
 
 @{
-    ViewBag.Title = "SampleDetails";
+    ViewBag.Title = "CatalogSampleDetails";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -21,7 +21,7 @@
             </div>
         </div>
         <div class="col-md-2">
-            <a href="@Url.Action("Catalog", "Main")"><input type="submit" class="profile-edit-btn" name="btnAddMore" value="Back" /></a>
+            <a href="@Url.Action("Catalog", "Main",  new { CategoryID = 0 })"><input type="submit" class="profile-edit-btn" name="btnAddMore" value="Back" /></a>
         </div>
     </div>
     <div class="row">

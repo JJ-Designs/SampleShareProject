@@ -30,8 +30,17 @@ namespace SampleShareV1.Controllers
         }
 
         [HttpGet]
-        [ActionName("SampleDetails")]
-        public ActionResult SampleDetails(int SampleID)
+        [ActionName("CatalogSampleDetails")]
+        public ActionResult CatalogSampleDetails(int SampleID)
+        {
+            SampleShareDBEntities entities = new SampleShareDBEntities();
+            AudioSamples audioSample = entities.AudioSamples.Single(a => a.SampleID == SampleID);
+            return View(audioSample);
+        }
+
+        [HttpGet]
+        [ActionName("PortfolioSampleDetails")]
+        public ActionResult PortfolioSampleDetails(int SampleID)
         {
             SampleShareDBEntities entities = new SampleShareDBEntities();
             AudioSamples audioSample = entities.AudioSamples.Single(a => a.SampleID == SampleID);
