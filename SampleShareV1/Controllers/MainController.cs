@@ -10,49 +10,67 @@ namespace SampleShareV1.Controllers
 {
     public class MainController : Controller
     {
+        /// <summary>
+        /// Returns the index view.
+        /// </summary>
+        /// <returns>
+        /// Returns the index view.
+        /// </returns>
         public ActionResult Index()
         {
             return View();
         }
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
-
+        /// <summary>
+        /// Get audio sample data from database and returns the details view.
+        /// </summary>
+        /// <param name="SampleID"> the chosen ID in Catalog.</param>
+        /// <returns>
+        /// Returns the Catalog details view.
+        /// </returns>
         [HttpGet]
         [ActionName("CatalogSampleDetails")]
         public ActionResult CatalogSampleDetails(int SampleID)
         {
+            //Instantiate Enitity framework database
             SampleShareDBEntities entities = new SampleShareDBEntities();
+            // selects a adiosaple based on its ID 
             AudioSamples audioSample = entities.AudioSamples.Single(a => a.SampleID == SampleID);
             return View(audioSample);
         }
 
+        
+        /// <summary>
+        /// Get audio sample data from database and returns the details view.
+        /// </summary>
+        /// <param name="SampleID">  the chosen ID in Portfolio.</param>
+        /// <returns>
+        /// Returns the Portfolio details view.
+        /// </returns>
         [HttpGet]
         [ActionName("PortfolioSampleDetails")]
         public ActionResult PortfolioSampleDetails(int SampleID)
         {
+            //Instantiate Enitity framework database
             SampleShareDBEntities entities = new SampleShareDBEntities();
             AudioSamples audioSample = entities.AudioSamples.Single(a => a.SampleID == SampleID);
             return View(audioSample);
         }
 
+        /// <summary>
+        /// gets all public audio samples and checks for category.
+        /// then returns the catalog view.
+        /// </summary>
+        /// <param name="CategoryID"></param>
+        /// <returns></returns>
         [HttpGet]
         [ActionName("Catalog")]
         public ActionResult Catalog(int CategoryID)
         {
+            //Instantiate Enitity framework database
             SampleShareDBEntities entities = new SampleShareDBEntities();
             List<AudioSamples> audioSamples;
+            //If no category is chosen show all public audios amples
             if (CategoryID != 0)
                 audioSamples = entities.AudioSamples
                     .Where(a => a.isPublic == true)
@@ -67,6 +85,7 @@ namespace SampleShareV1.Controllers
         [ActionName("MyPortfolio")]
         public ActionResult MyPortfolio(int UserIDFromURL, int CategoryID)
         {
+            //Instantiate Enitity framework database
             SampleShareDBEntities entities = new SampleShareDBEntities();
 
             if (Session["UserID"] != null)
@@ -90,6 +109,7 @@ namespace SampleShareV1.Controllers
         [ActionName("SortByCategoryPortfolio")]
         public ActionResult SortByCategoryPortfolio(int UserIDFromURL, int CategoryID)
         {
+            //Instantiate Enitity framework database
             SampleShareDBEntities entities = new SampleShareDBEntities();
 
             if (Session["UserID"] != null)
@@ -110,6 +130,7 @@ namespace SampleShareV1.Controllers
         [ActionName("DownLoad")]
         public ActionResult Downlaod(int AudioSampleIDFromURL)
         {
+            //Instantiate Enitity framework database
             SampleShareDBEntities entities = new SampleShareDBEntities();
             List<AudioSamples> audioSamples = entities.AudioSamples.Where(a => a.isPublic == true).ToList();
             AudioSamples audioSample = entities.AudioSamples.SingleOrDefault(a => a.SampleID == AudioSampleIDFromURL);
@@ -131,6 +152,7 @@ namespace SampleShareV1.Controllers
         [ActionName("EditMyProfile")]
         public ActionResult EditMyProfile(int UserIDFromURL)
         {
+            //Instantiate Enitity framework database
             SampleShareDBEntities entities = new SampleShareDBEntities();
             Users user = entities.Users.Single(u => u.UserID == UserIDFromURL);
             if (Session["UserID"] != null)
@@ -145,6 +167,7 @@ namespace SampleShareV1.Controllers
         [ActionName("EditMyProfile")]
         public ActionResult EditMyProfile(Users userprofile)
         {
+            //Instantiate Enitity framework database
             SampleShareDBEntities entities = new SampleShareDBEntities();
             Users user = entities.Users.Single(u => u.UserName.Equals(userprofile.UserName));
 
@@ -167,6 +190,7 @@ namespace SampleShareV1.Controllers
         [ActionName("MyProfile")]
         public ActionResult MyProfile(int UserIDFromURL)
         {
+            //Instantiate Enitity framework database
             SampleShareDBEntities entities = new SampleShareDBEntities();
             Users user = entities.Users.Single(s => s.UserID == UserIDFromURL);
             return View(user);
@@ -186,6 +210,7 @@ namespace SampleShareV1.Controllers
         {
             if (ModelState.IsValid)
             {
+                //Instantiate Enitity framework database
                 using (SampleShareDBEntities entities = new SampleShareDBEntities())
                 {
                     var obj = entities.Users.Where(a => a.UserName.Equals(objUser.UserName) && a.Pass.Equals(objUser.Pass)).FirstOrDefault();
@@ -222,6 +247,7 @@ namespace SampleShareV1.Controllers
             {
                 if (user.Pass.Length >= 4)
                 {
+                    //Instantiate Enitity framework database
                     SampleShareDBEntities entities = new SampleShareDBEntities();
                     if (!entities.Users.Any(x => x.UserName == user.UserName))
                     {
@@ -259,7 +285,8 @@ namespace SampleShareV1.Controllers
         public ActionResult UploadSample()
         {
             if(Session["UserID"] != null)
-            { 
+            {
+                //Instantiate Enitity framework database
                 SampleShareDBEntities entities = new SampleShareDBEntities();
                 ViewBag.Categories = entities.Categories.ToList();
                 return View();
@@ -271,6 +298,7 @@ namespace SampleShareV1.Controllers
         [HttpPost]
         public ActionResult UploadSample(HttpPostedFileBase uploadFile, AudioSamples audioSample)
         {
+            //Instantiate Enitity framework database
             SampleShareDBEntities entities = new SampleShareDBEntities();
             foreach (string file in Request.Files)
             {
@@ -312,6 +340,7 @@ namespace SampleShareV1.Controllers
         [ActionName("DeleteUserAndFiles")]
         public ActionResult DeleteUserAndFiles(int UserIDFromURL)
         {
+            //Instantiate Enitity framework database
             SampleShareDBEntities entities = new SampleShareDBEntities();
             Users user = entities.Users.Single(a => a.UserID == UserIDFromURL);
             List<AudioSamples> audioSamplesToDel = entities.AudioSamples.Where(a => a.UserID == user.UserID).ToList();
@@ -327,6 +356,7 @@ namespace SampleShareV1.Controllers
         [ActionName("DeleteAudioSample")]
         public ActionResult DeleteAudioSample(int SampleIDFromURL)
         {
+            //Instantiate Enitity framework database
             SampleShareDBEntities entities = new SampleShareDBEntities();
             AudioSamples audioSampleToDel = entities.AudioSamples.SingleOrDefault(a => a.SampleID == SampleIDFromURL);
             entities.AudioSamples.Remove(audioSampleToDel);

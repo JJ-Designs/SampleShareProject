@@ -28,12 +28,6 @@
             <div class="card">
 
                 <div class="card-body">
-
-                    <div class="allign">
-                        <button id="playpause" class="circle btn btn-primary">
-                            <i class="fa fa-play"></i>
-                        </button>
-                    </div>
                     <div class="allign">
 
                         <!-- Title & Information -->
@@ -41,10 +35,10 @@
                         <p style="margin-top: -2vh;" class="card-text"><i class="fas fa-user"></i><a href="@Url.Action("MyProfile","Main",new { UserIDFromURL = item.UserID })"><b> @item.Users.UserName</b></a></p>
 
                     </div>
-
-                    <div id="waveform">
-                        <audio id="song" style="display: none" preload="false" src="https://sampleshare.blob.core.windows.net/samples/@item.FilePath"></audio>
-                    </div>
+                    <audio class="embed-responsive-item" controls controlsList="nodownload">
+                        <source class="card-title" src="https://sampleshare.blob.core.windows.net/samples/@item.FilePath" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
 
                     <!-- Tags -->
                     <p class="card-text">Tags: <i>Sound, Effect, Audio </i></p>

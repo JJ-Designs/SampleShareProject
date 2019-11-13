@@ -19,7 +19,10 @@ namespace SampleShareV1.Controllers
         //Eksempel 2
         private CloudBlobContainer blobContainer;
 
-        //BlobController constroctor. new instance for each container.
+        /// <summary>
+        /// BlobController constroctor. new instance for each container.
+        /// </summary>
+        /// <param name="ContainerName"> The name you give the container</param>
         public BlobController(string ContainerName)
         {
             // Check if Container Name is null or empty  
@@ -57,6 +60,11 @@ namespace SampleShareV1.Controllers
         {
             return View();
         }
+
+        /// <summary>
+        /// Create new blob container
+        /// </summary>
+        /// <returns></returns>
         private CloudBlobContainer GetCloudBlobContainer()
         {
             CloudStorageAccount storageAccount = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("AzureStorageConnectionString-1"));
@@ -64,7 +72,6 @@ namespace SampleShareV1.Controllers
             CloudBlobContainer container = blobClient.GetContainerReference("test-blob-container");
             return container;
         }
-
         public ActionResult CreateBlobContainer()
         {
             CloudBlobContainer container = GetCloudBlobContainer();
@@ -101,7 +108,7 @@ namespace SampleShareV1.Controllers
             return absoluteUri;
         }
 
-        //downloadFile
+        //download a File from URI
         public string DownloadFile(string SampleFileName)
         {
             string AbsoluteUri;
@@ -109,35 +116,23 @@ namespace SampleShareV1.Controllers
 
             MemoryStream memStream = new MemoryStream();
 
+            // opens a stream to downloade file from URI
             blockBlob.DownloadToStream(memStream);
             AbsoluteUri = blockBlob.Uri.AbsoluteUri;
 
-            
+            //sets the type of file in the stream
             Web.HttpContext.Current.Response.ContentType = blockBlob.Properties.ContentType.ToString();
-            Web.HttpContext.Current.Response.AddHeader("Content-Disposition", "Attachment; filename=" + blockBlob.Name);
 
+            //adds headers to set the file name and size.
+            Web.HttpContext.Current.Response.AddHeader("Content-Disposition", "Attachment; filename=" + blockBlob.Name);
             Web.HttpContext.Current.Response.AddHeader("Content-Length", blockBlob.Properties.Length.ToString());
+
+            //puts the download to the browser
             Web.HttpContext.Current.Response.BinaryWrite(memStream.ToArray());
             Web.HttpContext.Current.Response.Flush();
             Web.HttpContext.Current.Response.Close();
             return AbsoluteUri;
         }
-
-        public string PreviewFile(string SampleFileName)
-        {
-
-            string AbsoluteUri;
-            CloudBlockBlob blockBlob = blobContainer.GetBlockBlobReference(SampleFileName);
-
-            MemoryStream memStream = new MemoryStream();
-
-            blockBlob.DownloadToStream(memStream);
-            AbsoluteUri = blockBlob.Uri.AbsoluteUri;
-
-            return AbsoluteUri;
-        }
-
-       
 
         public List<string> BlobList()
         {
