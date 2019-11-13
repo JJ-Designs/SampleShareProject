@@ -81,7 +81,12 @@ namespace SampleShareV1.Controllers
             return View();
         }
 
-        //Eksempel 3
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="FileToUpload"></param>
+        /// <param name="FileName"></param>
+        /// <returns></returns>
         public string UploadFile(Web.HttpPostedFileBase FileToUpload, string FileName)
         {
             string absoluteUri;
@@ -107,8 +112,12 @@ namespace SampleShareV1.Controllers
             }
             return absoluteUri;
         }
-
-        //download a File from URI
+        
+        /// <summary>
+        /// download a File from URI
+        /// </summary>
+        /// <param name="SampleFileName"></param>
+        /// <returns></returns>
         public string DownloadFile(string SampleFileName)
         {
             string AbsoluteUri;
