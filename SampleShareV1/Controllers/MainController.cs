@@ -337,6 +337,27 @@ namespace SampleShareV1.Controllers
         }
 
         [HttpGet]
+        [ActionName("ChangeProfilePicture")]
+        public ActionResult ChangeProfilePicture(HttpPostedFileBase uploadFile, Users UserFromURL)
+        {
+            //Instantiate Enitity framework database
+            SampleShareDBEntities entities = new SampleShareDBEntities();
+            foreach (string file in Request.Files)
+            {
+                uploadFile = Request.Files[file];
+            }
+
+            Users user = entities.Users.Single(u => u.UserID == UserFromURL.UserID);
+
+            user.ProfileImgPath = UserFromURL.ProfileImgPath;
+            BlobController BlobManagerObj = new BlobController("pictures");
+            string FileAbsoluteUri = BlobManagerObj.UploadFile(uploadFile, user.ProfileImgPath);
+
+            entities.SaveChanges();
+            return RedirectToAction("MyProfile");
+        }
+
+        [HttpGet]
         [ActionName("DeleteUserAndFiles")]
         public ActionResult DeleteUserAndFiles(int UserIDFromURL)
         {
