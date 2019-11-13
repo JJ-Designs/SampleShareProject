@@ -183,9 +183,11 @@ namespace SampleShareV1.Controllers
             return RedirectToAction("MyProfile", new { UserIDFromURL = Session["UserID"] });
         }
 
-
-
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="UserIDFromURL"></param>
+        /// <returns></returns>
         [HttpGet]
         [ActionName("MyProfile")]
         public ActionResult MyProfile(int UserIDFromURL)
@@ -195,7 +197,11 @@ namespace SampleShareV1.Controllers
             Users user = entities.Users.Single(s => s.UserID == UserIDFromURL);
             return View(user);
         }
-		
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [ActionName("login")]
         public ActionResult Login()
@@ -203,6 +209,11 @@ namespace SampleShareV1.Controllers
             return View();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="objUser"></param>
+        /// <returns></returns>
         [HttpPost]
         [ActionName("login")]
         [ValidateAntiForgeryToken]
@@ -238,7 +249,11 @@ namespace SampleShareV1.Controllers
             return View();
         }
 
-        //Sign up controller. Post (When you submit information from the page)
+        /// <summary>
+        /// Sign up controller. Post (When you submit information from the page)
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         [HttpPost]
         [ActionName("SignUp")]
         public ActionResult SignUp(Users user)
@@ -271,8 +286,10 @@ namespace SampleShareV1.Controllers
                 ViewBag.Message = "YOU MUST ENTER SOMETHING IN ALL FEILDS!";
             return View(user);
         }
-
-        //Logout controller 
+        /// <summary>
+        /// The logout controller 
+        /// </summary>
+        /// <returns></returns>
         public ActionResult logout()
         {
             Session.Abandon();
@@ -295,6 +312,12 @@ namespace SampleShareV1.Controllers
                 return RedirectToAction("Index", "Main");
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="uploadFile"></param>
+        /// <param name="audioSample"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult UploadSample(HttpPostedFileBase uploadFile, AudioSamples audioSample)
         {
@@ -336,6 +359,12 @@ namespace SampleShareV1.Controllers
             return View();
         }
 
+        /// <summary>
+        /// uploades a picture to azure pictures container, and updates the path in SQL
+        /// </summary>
+        /// <param name="uploadFile">The uploaded file</param>
+        /// <param name="UserFromURL"> The user model used in my profile</param>
+        /// <returns></returns>
         [HttpGet]
         [ActionName("ChangeProfilePicture")]
         public ActionResult ChangeProfilePicture(HttpPostedFileBase uploadFile, Users UserFromURL)
