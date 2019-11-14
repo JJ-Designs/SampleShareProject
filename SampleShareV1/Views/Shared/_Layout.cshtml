@@ -33,24 +33,24 @@
                 <ul class="navbar-nav">
 
                     <!-- Home Tab -->
-                    <li class="nav-item active">
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Index" ? "active" : "")">
                         <a class="nav-link pl-0" href="@Url.Action("index","Main")">Home <span class="sr-only">Home</span></a>
                     </li>
 
                     <!-- Catalog Tab -->
-                    <li class="nav-item">
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Catalog" ? "active" : "")">
                         <a class="nav-link" href="@Url.Action("Catalog","Main",  new { CategoryID = 0 })">Catalog</a>
                     </li>
 
                     @if (Session["UserID"] != null)
                     {
                         <!-- Portfolio Tab -->
-                        <li class="nav-item">
+                        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "MyPortfolio" ? "active" : "")">
                             <a class="nav-link" href="@Url.Action("MyPortfolio", "Main", new { UserIDFromURL = Session["UserID"], CategoryID = 0 })">Portfolio</a>
                         </li>
 
                         <!-- Profile Tab -->
-                        <li class="nav-item">
+                        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "MyProfile" ? "active" : "")">
                             <a class="nav-link" href="@Url.Action("MyProfile", "Main", new { UserIDFromURL = Session["UserID"] })">Profile</a>
                         </li>
                     }
