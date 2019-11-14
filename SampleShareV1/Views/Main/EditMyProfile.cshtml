@@ -197,7 +197,7 @@
                         </div>
                         <div class="col-md-6">
                             <p>
-                                @Html.EditorFor(model => model.Pass, new { htmlAttributes = new { @type = "password", @class = "form-control" } })
+                                @Html.PasswordFor(model => model.Pass, new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.Pass, "", new { @class = "text-danger" })
                             </p>
                         </div>

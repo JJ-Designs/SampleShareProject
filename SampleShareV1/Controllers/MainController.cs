@@ -174,7 +174,7 @@ namespace SampleShareV1.Controllers
             user.Email = userprofile.Email;
             user.Profession = userprofile.Profession;
             user.Discriptions = userprofile.Discriptions;
-            user.Pass = Security.Encrypt(userprofile.Pass);
+            user.Pass = userprofile.Pass != null ? Security.Encrypt(userprofile.Pass) : user.Pass;
             user.ProfileImgPath = uploadFile.FileName != "" ? uploadFile.FileName : user.ProfileImgPath;
 
             BlobController BlobManagerObj = new BlobController("pictures");
