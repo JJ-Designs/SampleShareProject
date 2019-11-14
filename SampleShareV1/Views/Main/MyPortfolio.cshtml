@@ -29,7 +29,7 @@
 
                     <!-- Title & Information -->
                     <h4 class="card-title">@item.SampleTitel</h4>
-                    <p class="card-text"><i class="fas fa-user"></i><a href="#"><b>  @item.Users.UserName</b></a></p>
+                    <p class="card-text"><i class="fas fa-user"></i><a href="@Url.Action("MyProfile","Main",new { UserIDFromURL = item.UserID })"><b>  @item.Users.UserName</b></a></p>
 
                     <!-- Audio Element -->
                     <audio class="embed-responsive-item" controls controlsList="nodownload">

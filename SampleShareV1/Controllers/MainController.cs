@@ -155,12 +155,7 @@ namespace SampleShareV1.Controllers
             //Instantiate Enitity framework database
             SampleShareDBEntities entities = new SampleShareDBEntities();
             Users user = entities.Users.Single(u => u.UserID == UserIDFromURL);
-            if (Session["UserID"] != null)
-            {
-                return View(user);
-            }
-            else
-                return RedirectToAction("Index", "Main");
+            return View(user);
         }
 
         [HttpPost]
