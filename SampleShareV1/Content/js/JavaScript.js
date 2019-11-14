@@ -41,10 +41,12 @@ $('body').on('click', '#playpause', function () {
     playAudio();
 });
 
+// Play Waveform
 navigator.mediaSession.setActionHandler('play', function () {
     wavesurfer.play();
 });
 
+// Pause Waveform
 navigator.mediaSession.setActionHandler('pause', function () {
     wavesurfer.playPause();
 });

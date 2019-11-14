@@ -16,6 +16,7 @@ namespace SampleShareV1.Controllers
 {
     public class BlobController : Controller
     {
+        //Eksempel 2
         private CloudBlobContainer blobContainer;
 
         /// <summary>
@@ -53,8 +54,35 @@ namespace SampleShareV1.Controllers
             }
         }
 
+
+        // GET: File
+        public ActionResult Index()
+        {
+            return View();
+        }
+
         /// <summary>
-        /// Uploads a file to a blob.
+        /// Create new blob container
+        /// </summary>
+        /// <returns></returns>
+        private CloudBlobContainer GetCloudBlobContainer()
+        {
+            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("AzureStorageConnectionString-1"));
+            CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
+            CloudBlobContainer container = blobClient.GetContainerReference("test-blob-container");
+            return container;
+        }
+        public ActionResult CreateBlobContainer()
+        {
+            CloudBlobContainer container = GetCloudBlobContainer();
+            ViewBag.Success = container.CreateIfNotExists();
+            ViewBag.BlobContainerName = container.Name;
+
+            return View();
+        }
+
+        /// <summary>
+        /// 
         /// </summary>
         /// <param name="FileToUpload"></param>
         /// <param name="FileName"></param>
@@ -84,9 +112,9 @@ namespace SampleShareV1.Controllers
             }
             return absoluteUri;
         }
-
+        
         /// <summary>
-        /// downloads a File from blob based on the URI.
+        /// download a File from URI
         /// </summary>
         /// <param name="SampleFileName"></param>
         /// <returns></returns>
@@ -115,18 +143,26 @@ namespace SampleShareV1.Controllers
             return AbsoluteUri;
         }
 
-        /// <summary>
-        /// Deletes a file from the blob.
-        /// </summary>
-        /// <param name="AbsoluteUri"></param>
-        /// <returns>Returns true if successfull</returns>
+        public List<string> BlobList()
+        {
+            List<string> _blobList = new List<string>();
+            foreach (IListBlobItem item in blobContainer.ListBlobs())
+            {
+                if (item.GetType() == typeof(CloudBlockBlob))
+                {
+                    CloudBlockBlob _blobpage = (CloudBlockBlob)item;
+                    _blobList.Add(_blobpage.Uri.AbsoluteUri.ToString());
+                }
+            }
+            return _blobList;
+        }
+
         public bool DeleteBlob(string AbsoluteUri)
         {
             try
             {
-                //Uri uriObj = new Uri(AbsoluteUri);
-                //string BlobName = Path.GetFileName(uriObj.LocalPath);
-                string BlobName = Path.GetFileName(AbsoluteUri);
+                Uri uriObj = new Uri(AbsoluteUri);
+                string BlobName = Path.GetFileName(uriObj.LocalPath);
 
                 // get block blob refarence  
                 CloudBlockBlob blockBlob = blobContainer.GetBlockBlobReference(BlobName);
