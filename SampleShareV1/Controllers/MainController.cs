@@ -170,13 +170,12 @@ namespace SampleShareV1.Controllers
             //Instantiate Enitity framework database
             SampleShareDBEntities entities = new SampleShareDBEntities();
             Users user = entities.Users.Single(u => u.UserName.Equals(userprofile.UserName));
-
             user.UserName = userprofile.UserName;
             user.FullName = userprofile.FullName;
             user.Email = userprofile.Email;
             user.Profession = userprofile.Profession;
             user.Discriptions = userprofile.Discriptions;
-            user.Pass = userprofile.Pass;
+            user.Pass = Security.Encrypt(userprofile.Pass);
 
             entities.Entry(user).State = EntityState.Modified;
             entities.SaveChanges();
@@ -224,6 +223,7 @@ namespace SampleShareV1.Controllers
                 //Instantiate Enitity framework database
                 using (SampleShareDBEntities entities = new SampleShareDBEntities())
                 {
+                    objUser.Pass = Security.Encrypt(objUser.Pass);
                     var obj = entities.Users.Where(a => a.UserName.Equals(objUser.UserName) && a.Pass.Equals(objUser.Pass)).FirstOrDefault();
                     if (obj != null)
                     {
@@ -268,7 +268,9 @@ namespace SampleShareV1.Controllers
                     {
                         if (!entities.Users.Any(x => x.Email == user.Email))
                         {
+                            user.Pass = Security.Encrypt(user.Pass);
                             user.userrightid = 2;
+                            user.ProfileImgPath = "default-profile-picture.png";
                             entities.Users.Add(user);
                             entities.SaveChanges();
                             return RedirectToAction("login");
