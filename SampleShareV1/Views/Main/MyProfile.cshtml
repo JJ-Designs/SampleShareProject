@@ -16,7 +16,7 @@
                     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog" alt="" />
                     <div class="file btn btn-lg btn-secondary">
                         Change Profile Picture
-                        <input type="file" name="file" />
+                        <input type="file" name="file" value="" accept="image/*"/>
                     </div>
                 </div>
 
@@ -47,7 +47,7 @@
             </div>
 
             <!-- Edit Button -->
-            @if (Model.UserID.Equals(Session["UserID"]))
+            @if (Model.UserID.ToString().Equals(Session["UserID"].ToString()))
             {
                 <div class="col-md-2">
                     <a href="@Url.Action("EditMyProfile", "Main", new { UserIDFromURL = Session["UserID"] })"><input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile" /></a>

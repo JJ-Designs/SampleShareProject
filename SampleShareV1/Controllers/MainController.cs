@@ -81,6 +81,12 @@ namespace SampleShareV1.Controllers
             return View(audioSamples);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="UserIDFromURL"></param>
+        /// <param name="CategoryID"></param>
+        /// <returns></returns>
         [HttpGet]
         [ActionName("MyPortfolio")]
         public ActionResult MyPortfolio(int UserIDFromURL, int CategoryID)
@@ -105,27 +111,11 @@ namespace SampleShareV1.Controllers
                 return RedirectToAction("Index", "Main");
         }
 
-        [HttpGet]
-        [ActionName("SortByCategoryPortfolio")]
-        public ActionResult SortByCategoryPortfolio(int UserIDFromURL, int CategoryID)
-        {
-            //Instantiate Enitity framework database
-            SampleShareDBEntities entities = new SampleShareDBEntities();
-
-            if (Session["UserID"] != null)
-            {
-                Users user = entities.Users.Single(s => s.UserID == UserIDFromURL);
-                List<AudioSamples> audioSamples = entities.AudioSamples
-                .Where(a => a.UserID == UserIDFromURL)
-                .Where(a => a.CategoryID == CategoryID).ToList();
-
-                return RedirectToAction("","", new { UserIDFromURL = Session["UserID"], audioSamplesFromURL = audioSamples });
-            }
-            else
-                return RedirectToAction("Index", "Main");
-
-        }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="AudioSampleIDFromURL"></param>
+        /// <returns></returns>
         [HttpGet]
         [ActionName("DownLoad")]
         public ActionResult Downlaod(int AudioSampleIDFromURL)
@@ -143,11 +133,12 @@ namespace SampleShareV1.Controllers
 
             return RedirectToAction("Catalog");
         }
-        
-        public ActionResult MyContent()
-        {
-            return View();
-        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="UserIDFromURL"></param>
+        /// <returns></returns>
         [HttpGet]
         [ActionName("EditMyProfile")]
         public ActionResult EditMyProfile(int UserIDFromURL)
@@ -163,6 +154,11 @@ namespace SampleShareV1.Controllers
                 return RedirectToAction("Index", "Main");
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userprofile"></param>
+        /// <returns></returns>
         [HttpPost]
         [ActionName("EditMyProfile")]
         public ActionResult EditMyProfile(Users userprofile)
@@ -183,9 +179,11 @@ namespace SampleShareV1.Controllers
             return RedirectToAction("MyProfile", new { UserIDFromURL = Session["UserID"] });
         }
 
-
-
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="UserIDFromURL"></param>
+        /// <returns></returns>
         [HttpGet]
         [ActionName("MyProfile")]
         public ActionResult MyProfile(int UserIDFromURL)
@@ -203,6 +201,11 @@ namespace SampleShareV1.Controllers
             return View();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="objUser"></param>
+        /// <returns></returns>
         [HttpPost]
         [ActionName("login")]
         [ValidateAntiForgeryToken]
@@ -230,7 +233,10 @@ namespace SampleShareV1.Controllers
             return View(objUser);
         }
         
-        //Sign up controller. Get (When you firt open the page)
+        /// <summary>
+        /// Sign up controller. Get (When you firt open the page)
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [ActionName("SignUp")]
         public ActionResult SignUp()
@@ -238,7 +244,11 @@ namespace SampleShareV1.Controllers
             return View();
         }
 
-        //Sign up controller. Post (When you submit information from the page)
+        /// <summary>
+        /// Sign up controller. Post (When you submit information from the page)
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         [HttpPost]
         [ActionName("SignUp")]
         public ActionResult SignUp(Users user)
@@ -272,14 +282,20 @@ namespace SampleShareV1.Controllers
             return View(user);
         }
 
-        //Logout controller 
+        /// <summary>
+        /// Logout controller 
+        /// </summary>
+        /// <returns></returns>
         public ActionResult logout()
         {
             Session.Abandon();
             return RedirectToAction("index");
         }
 
-        // Upload Controller
+        /// <summary>
+        /// Upload Controller
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [ActionName("UploadSample")]
         public ActionResult UploadSample()
@@ -295,6 +311,12 @@ namespace SampleShareV1.Controllers
                 return RedirectToAction("Index", "Main");
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="uploadFile"></param>
+        /// <param name="audioSample"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult UploadSample(HttpPostedFileBase uploadFile, AudioSamples audioSample)
         {
@@ -336,6 +358,11 @@ namespace SampleShareV1.Controllers
             return View();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="UserIDFromURL"></param>
+        /// <returns></returns>
         [HttpGet]
         [ActionName("DeleteUserAndFiles")]
         public ActionResult DeleteUserAndFiles(int UserIDFromURL)
@@ -352,6 +379,11 @@ namespace SampleShareV1.Controllers
             return RedirectToAction("index");
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="SampleIDFromURL"></param>
+        /// <returns></returns>
         [HttpGet]
         [ActionName("DeleteAudioSample")]
         public ActionResult DeleteAudioSample(int SampleIDFromURL)
@@ -359,10 +391,16 @@ namespace SampleShareV1.Controllers
             //Instantiate Enitity framework database
             SampleShareDBEntities entities = new SampleShareDBEntities();
             AudioSamples audioSampleToDel = entities.AudioSamples.SingleOrDefault(a => a.SampleID == SampleIDFromURL);
+
+            // Container Name - Sample  
+            BlobController BlobManagerObj = new BlobController("samples");
+            BlobManagerObj.DeleteBlob(audioSampleToDel.FilePath);
+
+            //Removes the audiosample from the database
             entities.AudioSamples.Remove(audioSampleToDel);
             entities.SaveChanges();
 
-            return RedirectToAction("MyPortefolio");
+            return RedirectToAction("MyPortfolio", new { UserIDFromURL = Session["UserID"], CategoryID = 0 });
         }
     }
 }
