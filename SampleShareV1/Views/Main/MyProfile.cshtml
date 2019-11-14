@@ -52,7 +52,7 @@
             </div>
 
             <!-- Edit Button -->
-            @if (Model.UserID.Equals(Session["UserID"]))
+            @if (Model.UserID.ToString().Equals(Session["UserID"].ToString()))
             {
                 <div class="col-md-2">
                     <a href="@Url.Action("EditMyProfile", "Main", new { UserIDFromURL = Session["UserID"] })"><input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile" /></a>
