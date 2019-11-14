@@ -14,15 +14,6 @@
                 <!-- Profile Picture -->
                 <div class="profile-img">
                     <img src="https://sampleshare.blob.core.windows.net/pictures/@Model.ProfileImgPath" alt="" />
-                    @if(Model.UserID.ToString().Equals(Session["UserID"].ToString()))
-                    {
-                        <div class="file btn btn-lg btn-secondary">
-                            Change Profile Picture
-                            <a href="@Url.Action("ChangeProfilePicture","Main", new { UserFromURL = Model })">
-                            <input type="file" name="file" />
-                            </a>
-                        </div>
-                    }
                 </div>
 
             </div>

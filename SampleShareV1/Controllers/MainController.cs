@@ -165,10 +165,14 @@ namespace SampleShareV1.Controllers
 
         [HttpPost]
         [ActionName("EditMyProfile")]
-        public ActionResult EditMyProfile(Users userprofile)
+        public ActionResult EditMyProfile(HttpPostedFileBase uploadFile, Users userprofile)
         {
             //Instantiate Enitity framework database
             SampleShareDBEntities entities = new SampleShareDBEntities();
+            foreach (string file in Request.Files)
+            {
+                uploadFile = Request.Files[file];
+            }
             Users user = entities.Users.Single(u => u.UserName.Equals(userprofile.UserName));
             user.UserName = userprofile.UserName;
             user.FullName = userprofile.FullName;
@@ -176,6 +180,10 @@ namespace SampleShareV1.Controllers
             user.Profession = userprofile.Profession;
             user.Discriptions = userprofile.Discriptions;
             user.Pass = Security.Encrypt(userprofile.Pass);
+            user.ProfileImgPath = uploadFile.FileName;
+
+            BlobController BlobManagerObj = new BlobController("pictures");
+            string FileAbsoluteUri = BlobManagerObj.UploadFile(uploadFile, user.ProfileImgPath);
 
             entities.Entry(user).State = EntityState.Modified;
             entities.SaveChanges();
@@ -359,33 +367,6 @@ namespace SampleShareV1.Controllers
                 ViewBag.Message = "FILE IS TOO BIG!";
 
             return View();
-        }
-
-        /// <summary>
-        /// uploades a picture to azure pictures container, and updates the path in SQL
-        /// </summary>
-        /// <param name="uploadFile">The uploaded file</param>
-        /// <param name="UserFromURL"> The user model used in my profile</param>
-        /// <returns></returns>
-        [HttpGet]
-        [ActionName("ChangeProfilePicture")]
-        public ActionResult ChangeProfilePicture(HttpPostedFileBase uploadFile, Users UserFromURL)
-        {
-            //Instantiate Enitity framework database
-            SampleShareDBEntities entities = new SampleShareDBEntities();
-            foreach (string file in Request.Files)
-            {
-                uploadFile = Request.Files[file];
-            }
-
-            Users user = entities.Users.Single(u => u.UserID == UserFromURL.UserID);
-
-            user.ProfileImgPath = UserFromURL.ProfileImgPath;
-            BlobController BlobManagerObj = new BlobController("pictures");
-            string FileAbsoluteUri = BlobManagerObj.UploadFile(uploadFile, user.ProfileImgPath);
-
-            entities.SaveChanges();
-            return RedirectToAction("MyProfile");
         }
 
         [HttpGet]
