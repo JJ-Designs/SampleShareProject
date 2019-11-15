@@ -22,7 +22,7 @@ namespace SampleShareV1.Models
         public Nullable<int> UserID { get; set; }
         public Nullable<int> TagID { get; set; }
         public Nullable<int> CategoryID { get; set; }
-        public bool isPublic { get; set; }
+        public Nullable<bool> isPublic { get; set; }
         public string Description { get; set; }
     
         public virtual Categories Categories { get; set; }
