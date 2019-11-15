@@ -10231,6 +10231,7 @@ input[type="checkbox"] {
 display:inline-block;
 }
 
+
 /* Upload Button */
 .upload-btn {
     border: 2px solid gray;
@@ -10260,3 +10261,4 @@ display:inline-block;
     font-weight: 600;
     font-size: 14px;
 }
+

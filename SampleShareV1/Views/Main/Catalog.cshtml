@@ -35,18 +35,18 @@
                         <p style="margin-top: -2vh;" class="card-text"><i class="fas fa-user"></i><a href="@Url.Action("MyProfile","Main",new { UserIDFromURL = item.UserID })"><b> @item.Users.UserName</b></a></p>
 
                     </div>
-                    <audio class="embed-responsive-item" controls controlsList="nodownload">
-                        <source class="card-title" src="https://sampleshare.blob.core.windows.net/samples/@item.FilePath" type="audio/mpeg">
-                        Your browser does not support the audio element.
-                    </audio>
+                        <audio class="embed-responsive-item" controls controlsList="nodownload">
+                            <source class="card-title" src="https://sampleshare.blob.core.windows.net/samples/@item.FilePath" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>
 
-                    <!-- Tags -->
-                    <p class="card-text">Tags: <i>Sound, Effect, Audio </i></p>
+                        <!-- Tags -->
+                        <p class="card-text">Tags: <i>Sound, Effect, Audio </i></p>
 
-                    <!-- Download & More Button -->
-                    <a href="@Url.Action("Download","Main",new { AudioSampleIDFromURL = item.SampleID })" class="btn btn-primary"><i class="fas fa-download"></i> Download</a>
-                    <a href="@Url.Action("CatalogSampleDetails","Main", new { SampleID = item.SampleID })" class="btn btn-outline-dark">More</a>
-                
+                        <!-- Download & More Button -->
+                        <a href="@Url.Action("Download","Main",new { AudioSampleIDFromURL = item.SampleID })" class="btn btn-primary"><i class="fas fa-download"></i> Download</a>
+                        <a href="@Url.Action("CatalogSampleDetails","Main", new { SampleID = item.SampleID })" class="btn btn-outline-dark">More</a>
+
                 </div>
             </div>
         </div>

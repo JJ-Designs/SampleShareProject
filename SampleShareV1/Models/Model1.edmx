@@ -54,7 +54,7 @@
           <Property Name="FullName" Type="varchar" MaxLength="80" />
           <Property Name="Profession" Type="varchar" MaxLength="60" />
           <Property Name="Discriptions" Type="varchar" MaxLength="255" />
-          <Property Name="ProfileImgPath" Type="varchar" MaxLength="60" />
+          <Property Name="ProfileImgPath" Type="varchar(max)" />
         </EntityType>
         <Association Name="FK__AudioSamp__Categ__6E01572D">
           <End Role="Categories" Type="Self.Categories" Multiplicity="0..1" />
@@ -188,7 +188,7 @@
           <Property Name="FullName" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
           <Property Name="Profession" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
           <Property Name="Discriptions" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="ProfileImgPath" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="ProfileImgPath" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK__AudioSamp__Categ__6E01572D">
           <End Role="Categories" Type="Self.Categories" Multiplicity="0..1" />
