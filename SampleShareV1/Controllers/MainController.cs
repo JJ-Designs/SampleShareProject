@@ -196,7 +196,37 @@ namespace SampleShareV1.Controllers
         {
             //Instantiate Enitity framework database
             SampleShareDBEntities entities = new SampleShareDBEntities();
-            Users user = entities.Users.Single(s => s.UserID == UserIDFromURL);
+            Users user = entities.Users.Single(u => u.UserID == UserIDFromURL);
+            List<AudioSamples> lastAudioSamples = entities.AudioSamples
+                .Where(a => a.UserID == UserIDFromURL)
+                .OrderByDescending(a => a.CreationDate)
+                .Take(3).ToList();
+
+            List<AudioSamples> mostDownloadedAudioSamples = entities.AudioSamples
+                .Where(a => a.UserID == UserIDFromURL)
+                .OrderByDescending(a => a.Downloads)
+                .Take(5).ToList();
+
+            int totalAudioSamples = entities.AudioSamples.Where(a => a.UserID == UserIDFromURL).Count();
+
+            int? totalDownloads = entities.AudioSamples
+                .Where(a => a.UserID == UserIDFromURL)
+                .Select(a => a.Downloads).Sum();
+
+            int totalPublicAudiosamples = entities.AudioSamples
+                .Where(a => a.UserID == UserIDFromURL)
+                .Where(a => a.isPublic == true).Count();
+
+            int totalPrivateAudiosamples = entities.AudioSamples
+                .Where(a => a.UserID == UserIDFromURL)
+                .Where(a => a.isPublic == false).Count();
+
+            ViewBag.LatestAudioSamples = lastAudioSamples;
+            ViewBag.MostDownloadedAudioSamples = mostDownloadedAudioSamples;
+            ViewBag.TotalAudioSamples = totalAudioSamples;
+            ViewBag.TotalDownloads = totalDownloads;
+            ViewBag.TotalPublicAudiosamples = totalPublicAudiosamples;
+            ViewBag.TotalPrivateAudiosamples = totalPrivateAudiosamples;
             return View(user);
         }
 

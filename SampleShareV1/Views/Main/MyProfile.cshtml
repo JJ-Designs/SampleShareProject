@@ -57,15 +57,15 @@
                 <!-- Statistics & Information -->
                 <div class="profile-work">
                     <p>LATEST</p>
-                    <a href="">[Audio-Sample 1]</a><br />
-                    <a href="">[Audio-Sample 2]</a><br />
-                    <a href="">[Audio-Sample 3]</a>
+                    @foreach (var item in ViewBag.LatestAudioSamples)
+                    {
+                        <a href="@Url.Action("CatalogSampleDetails","Main", new { SampleID = item.SampleID })">[@item.SampleTitel]</a><br />
+                    }
                     <p>MOST DOWNLOADED</p>
-                    <a href="">[Audio-Sample 1]</a><br />
-                    <a href="">[Audio-Sample 2]</a><br />
-                    <a href="">[Audio-Sample 3]</a><br />
-                    <a href="">[Audio-Sample 4]</a><br />
-                    <a href="">[Audio-Sample 5]</a><br />
+                    @foreach (var item in ViewBag.MostDownloadedAudioSamples)
+                    {
+                        <a href="@Url.Action("CatalogSampleDetails","Main", new { SampleID = item.SampleID })">[@item.SampleTitel]</a><br />
+                    }
                 </div>
 
             </div>
@@ -148,7 +148,7 @@
                                 <label>Total Audio-Samples:</label>
                             </div>
                             <div class="col-md-6">
-                                <p>20</p>
+                                <p>@ViewBag.TotalAudioSamples</p>
                             </div>
                         </div>
                         <div class="row">
@@ -156,7 +156,7 @@
                                 <label>Total Downloads:</label>
                             </div>
                             <div class="col-md-6">
-                                <p>124</p>
+                                <p>@ViewBag.TotalDownloads </p>
                             </div>
                         </div>
                         <div class="row">
@@ -164,7 +164,7 @@
                                 <label>Public Audio-Samples:</label>
                             </div>
                             <div class="col-md-6">
-                                <p>15</p>
+                                <p>@ViewBag.TotalPublicAudiosamples</p>
                             </div>
                         </div>
                         <div class="row">
@@ -172,7 +172,7 @@
                                 <label>Private Audio-Samples:</label>
                             </div>
                             <div class="col-md-6">
-                                <p>5</p>
+                                <p>@ViewBag.TotalPrivateAudiosamples</p>
                             </div>
                         </div>
                     </div>
