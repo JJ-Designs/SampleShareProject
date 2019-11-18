@@ -10,6 +10,8 @@
 { 
     @Html.AntiForgeryToken()
 
+    @Html.HiddenFor(model => model.UserID)
+
 <!-- Profile Card-->
 <div class="container emp-profile">
     <div class="row">
