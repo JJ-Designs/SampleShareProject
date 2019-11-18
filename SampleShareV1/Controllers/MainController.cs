@@ -363,33 +363,48 @@ namespace SampleShareV1.Controllers
                 uploadFile = Request.Files[file];
             }
             ViewBag.Categories = entities.Categories.ToList();
-            if (uploadFile.ContentLength < 102400000)
+            if (uploadFile.FileName != null && !uploadFile.FileName.Equals(""))
             {
-                string fileExt = uploadFile.FileName.Substring(uploadFile.FileName.IndexOf("."));
-                if (fileExt == ".wav" || fileExt == ".mp3" || fileExt == ".flac")
+                if (audioSample.SampleTitel != null && !audioSample.SampleTitel.Equals(""))
                 {
-                    audioSample.FilePath = audioSample.SampleTitel + fileExt;
-                    audioSample.CreationDate = DateTime.Now;
-                    audioSample.Downloads = 0;
-                    audioSample.Categories = entities.Categories.Single(c => c.CategoryID == audioSample.CategoryID);
-                    string id = (string)Session["UserID"];
-                    audioSample.UserID = Int32.Parse(id);
-                    audioSample.Users = entities.Users.Single(u => u.UserID == audioSample.UserID);
+                    if (audioSample.CategoryID != null)
+                    {
+                        if (uploadFile.ContentLength < 102400000)
+                        {
+                            string fileExt = uploadFile.FileName.Substring(uploadFile.FileName.IndexOf("."));
+                            if (fileExt == ".wav" || fileExt == ".mp3" || fileExt == ".flac")
+                            {
+                                audioSample.FilePath = audioSample.SampleTitel + fileExt;
+                                audioSample.CreationDate = DateTime.Now;
+                                audioSample.Downloads = 0;
+                                audioSample.Categories = entities.Categories.Single(c => c.CategoryID == audioSample.CategoryID);
+                                string id = (string)Session["UserID"];
+                                audioSample.UserID = Int32.Parse(id);
+                                audioSample.Users = entities.Users.Single(u => u.UserID == audioSample.UserID);
 
-                    entities.AudioSamples.Add(audioSample);
+                                entities.AudioSamples.Add(audioSample);
 
-                    // Container Name - Sample  
-                    BlobController BlobManagerObj = new BlobController("samples"); //constrktor ses i Billede eksempel 2
-                    string FileAbsoluteUri = BlobManagerObj.UploadFile(uploadFile, audioSample.FilePath); //metode ses i Billede eksempel 3
-                    entities.SaveChanges();
+                                // Container Name - Sample  
+                                BlobController BlobManagerObj = new BlobController("samples"); //constrktor ses i Billede eksempel 2
+                                string FileAbsoluteUri = BlobManagerObj.UploadFile(uploadFile, audioSample.FilePath); //metode ses i Billede eksempel 3
+                                entities.SaveChanges();
 
-                    return RedirectToAction("index");
+                                return RedirectToAction("index");
+                            }
+                            else
+                                ViewBag.Message = "* NOT A VALID FILE TYPE!";
+                        }
+                        else
+                            ViewBag.Message = "* FILE IS TOO BIG!";
+                    }
+                    else
+                        ViewBag.Message = "* YOU MUST CHOOSE A CATEGORY";
                 }
                 else
-                    ViewBag.Message = "NOT A VALID FILE TYPE!";
+                    ViewBag.Message = "* YOU MUST ENTER A TITLE";
             }
             else
-                ViewBag.Message = "FILE IS TOO BIG!";
+                ViewBag.Message = "* YOU MUST CHOOSE A FILE";
 
             return View();
         }

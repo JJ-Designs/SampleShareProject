@@ -24,8 +24,6 @@
                 </div>
             </div>
 
-            <!-- Error Message -->
-            <h5>@ViewBag.Message</h5>
 
             <div class="input-group mb-3">
 
@@ -88,8 +86,13 @@
             </div>
 
             <!-- Upload Audio Sample Button -->
-            <div style="margin-top: 2vh;">
+            <div class="allign" style="margin-top: 2vh;">
                 <button type="submit" class="btn btn-primary">Upload</button>
+            </div>
+
+            <!-- Error Message -->
+            <div class="allign">
+                <p style="color: #d11a2a; font-weight: 600;">@ViewBag.Message</p>
             </div>
 
         </fieldset>
