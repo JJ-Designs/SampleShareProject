@@ -126,28 +126,34 @@ namespace SampleShareV1.Controllers
 
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="AudioSampleIDFromURL"></param>
+        /// <returns></returns>
         [HttpGet]
         [ActionName("DownLoad")]
         public ActionResult Downlaod(int AudioSampleIDFromURL)
         {
-            //Instantiate Enitity framework database
-            SampleShareDBEntities entities = new SampleShareDBEntities();
-            List<AudioSamples> audioSamples = entities.AudioSamples.Where(a => a.isPublic == true).ToList();
-            AudioSamples audioSample = entities.AudioSamples.SingleOrDefault(a => a.SampleID == AudioSampleIDFromURL);
+            if (Session["UserID"] != null)
+            {
+                //Instantiate Enitity framework database
+                SampleShareDBEntities entities = new SampleShareDBEntities();
+                List<AudioSamples> audioSamples = entities.AudioSamples.Where(a => a.isPublic == true).ToList();
+                AudioSamples audioSample = entities.AudioSamples.SingleOrDefault(a => a.SampleID == AudioSampleIDFromURL);
 
-            // Container Name - Sample  
-            BlobController BlobManagerObj = new BlobController("samples");
-            string FileAbsoluteUri = BlobManagerObj.DownloadFile(audioSample.FilePath);
-            audioSample.Downloads++;
-            entities.SaveChanges();
+                // Container Name - Sample  
+                BlobController BlobManagerObj = new BlobController("samples");
+                string FileAbsoluteUri = BlobManagerObj.DownloadFile(audioSample.FilePath);
+                audioSample.Downloads++;
+                entities.SaveChanges();
 
-            return RedirectToAction("Catalog");
+                return RedirectToAction("Catalog");
+            }
+            else
+                return RedirectToAction("Login");
         }
-        
-        public ActionResult MyContent()
-        {
-            return View();
-        }
+
         [HttpGet]
         [ActionName("EditMyProfile")]
         public ActionResult EditMyProfile(int UserIDFromURL)
