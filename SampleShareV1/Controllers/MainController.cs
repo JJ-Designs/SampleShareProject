@@ -174,7 +174,7 @@ namespace SampleShareV1.Controllers
             {
                 uploadFile = Request.Files[file];
             }
-            Users user = entities.Users.Single(u => u.UserName.Equals(userprofile.UserName));
+            Users user = entities.Users.Single(u => u.UserID.Equals(userprofile.UserID));
             user.UserName = userprofile.UserName;
             user.FullName = userprofile.FullName;
             user.Email = userprofile.Email;
