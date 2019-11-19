@@ -35,7 +35,34 @@
                 <!-- Title & Information -->
                 <h5>
                     @Html.DisplayFor(model => model.FullName)
+
+                    <!-- Delete profile button trigger modal -->
+                    <a data-toggle="modal" data-target="#downloadModal">
+                        <i class="fas fa-trash-alt" style="font-size: 3vh; color: #d11a2a;"></i>
+                    </a>
+
                 </h5>
+
+                <!-- Delete profile modal -->
+                <div class="modal fade" id="downloadModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Are you sure you want to delete account?</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                By deleting your account you will also delete all uploaded samples, both public and pritave samples.
+                            </div>
+                            <div class="modal-footer">
+                                <input type="button" class="profile-delete-btn" onclick="location.href='@Url.Action("DeleteUserAndFiles","Main", new {UserIDFromURL = Model.UserID })'" value="Delete Account" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <h6>
                     @Html.DisplayFor(model => model.Profession)
                 </h6>
@@ -44,19 +71,11 @@
                 <!-- Tab List Menu-->
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#password" role="tab" aria-controls="profile" aria-selected="false">Password</a>
+                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Edit</a>
                     </li>
                 </ul>
 
             </div>
-        </div>
-
-        <!-- Save Button -->
-        <div class="col-md-2">
-            <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Save" />
         </div>
 
     </div>
@@ -80,7 +99,7 @@
         </div>
         <div class="col-md-8">
 
-            <!-- About Tab -->
+            <!-- Edit Tab -->
             <div class="tab-content profile-tab" id="myTabContent">
                 <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                     <div class="row">
@@ -152,49 +171,7 @@
                             </p>
                         </div>
 
-                    </div>
-                    <p @ViewBag.Message/>
-                    <div class="row">
-                        <div class="col-md-6">
-                        </div>
-                        <div class="col-md-6">
-
-                            <!-- Delete profile button trigger modal -->
-                            <input type="button" class="profile-delete-btn" data-toggle="modal" data-target="#downloadModal" value="Delete Account" />
-                            <label class="disclamerLabel">All uploaded samples will also be deleted.</label>
-
-                            <!-- Delete profile modal -->
-                            <div class="modal fade" id="downloadModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Are you sure you want to delete account?</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            By deleting your account you will also delete all uploaded samples, both public and pritave samples.
-                                        </div>
-                                        <div class="modal-footer">
-                                            <input type="button" class="profile-delete-btn" onclick="location.href='@Url.Action("DeleteUserAndFiles","Main", new {UserIDFromURL = Model.UserID })'" value="Delete Account" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Password Tab -->
-                <div class="tab-pane fade" id="password" role="tabpanel" aria-labelledby="profile-tab">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label><p>Change Password:</p></label>
-                        </div>
-                    </div>
-                    <div class="row">
+                        <!-- New Password -->
                         <div class="col-md-6">
                             <label>New Password:</label>
                         </div>
@@ -204,8 +181,21 @@
                                 @Html.ValidationMessageFor(model => model.Pass, "", new { @class = "text-danger" })
                             </p>
                         </div>
+
+                    </div>
+                    <p @ViewBag.Message/>
+                    <div class="row">
+                        <div class="col-md-8">
+                        </div>
+                        <div class="col-md-4">
+
+                            <!-- Save Button -->
+                            <input type="submit" class="profile-edit-btn float-right" name="btnAddMore" value="Save" />
+                        
+                        </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
