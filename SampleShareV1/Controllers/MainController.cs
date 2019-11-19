@@ -101,7 +101,7 @@ namespace SampleShareV1.Controllers
                 ViewBag.Categories = entities.Categories.ToList();
                 return View(audioSamples);
             }
-            else
+            else //Redirect to index, if there is no user in session
                 return RedirectToAction("Index", "Main");
         }
 
@@ -121,7 +121,7 @@ namespace SampleShareV1.Controllers
 
                 return RedirectToAction("","", new { UserIDFromURL = Session["UserID"], audioSamplesFromURL = audioSamples });
             }
-            else
+            else //Redirect to index, if there is no user in session
                 return RedirectToAction("Index", "Main");
 
         }
@@ -150,45 +150,90 @@ namespace SampleShareV1.Controllers
 
                 return RedirectToAction("Catalog");
             }
-            else
+            else //Redirect to login, if there is no user in session
                 return RedirectToAction("Login");
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="UserIDFromURL"></param>
+        /// <returns></returns>
         [HttpGet]
         [ActionName("EditMyProfile")]
         public ActionResult EditMyProfile(int UserIDFromURL)
         {
-            //Instantiate Enitity framework database
-            SampleShareDBEntities entities = new SampleShareDBEntities();
-            Users user = entities.Users.Single(u => u.UserID == UserIDFromURL);
-            return View(user);
+            if (Session["UserID"] != null)
+            {
+                //Instantiate Enitity framework database
+                SampleShareDBEntities entities = new SampleShareDBEntities();
+                //Gets the logged in user from url
+                Users user = entities.Users.Single(u => u.UserID == UserIDFromURL);
+
+                //Takes the last 3 uploaded samples for the user
+                List<AudioSamples> lastAudioSamples = entities.AudioSamples
+                    .Where(a => a.UserID == UserIDFromURL)
+                    .OrderByDescending(a => a.CreationDate)
+                    .Take(3).ToList();
+
+                //Takes The 5 most downloaded samples for the user
+                List<AudioSamples> mostDownloadedAudioSamples = entities.AudioSamples
+                    .Where(a => a.UserID == UserIDFromURL)
+                    .OrderByDescending(a => a.Downloads)
+                    .Take(5).ToList();
+
+                //Saves list in viewbags for use in view
+                ViewBag.LatestAudioSamples = lastAudioSamples;
+                ViewBag.MostDownloadedAudioSamples = mostDownloadedAudioSamples;
+                //Go to view
+                return View(user);
+            }
+            else //Redirect to login, if there is no user in session
+                return RedirectToAction("Login");
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="uploadFile"></param>
+        /// <param name="userprofile"></param>
+        /// <returns></returns>
         [HttpPost]
         [ActionName("EditMyProfile")]
         public ActionResult EditMyProfile(HttpPostedFileBase uploadFile, Users userprofile)
         {
-            //Instantiate Enitity framework database
-            SampleShareDBEntities entities = new SampleShareDBEntities();
-            foreach (string file in Request.Files)
+            //checks for logged in user
+            if (Session["UserID"] != null)
             {
-                uploadFile = Request.Files[file];
+                //Instantiate Enitity framework database
+                SampleShareDBEntities entities = new SampleShareDBEntities();
+                foreach (string file in Request.Files)
+                {
+                    uploadFile = Request.Files[file];
+                }
+                //Gets the user from database
+                Users user = entities.Users.Single(u => u.UserID.Equals(userprofile.UserID));
+                //updates the user from url info
+                user.UserName = userprofile.UserName;
+                user.FullName = userprofile.FullName;
+                user.Email = userprofile.Email;
+                user.Profession = userprofile.Profession;
+                user.Discriptions = userprofile.Discriptions;
+                //encrupts the password if it was changed
+                user.Pass = userprofile.Pass != null ? Security.Encrypt(userprofile.Pass) : user.Pass;
+                user.ProfileImgPath = uploadFile.FileName != "" ? uploadFile.FileName : user.ProfileImgPath;
+
+                //saves profile picture in blob container
+                BlobController BlobManagerObj = new BlobController("pictures");
+                string FileAbsoluteUri = BlobManagerObj.UploadFile(uploadFile, user.ProfileImgPath);
+
+                //saves changes in database
+                entities.Entry(user).State = EntityState.Modified;
+                entities.SaveChanges();
+                return RedirectToAction("MyProfile", new { UserIDFromURL = Session["UserID"] });
             }
-            Users user = entities.Users.Single(u => u.UserID.Equals(userprofile.UserID));
-            user.UserName = userprofile.UserName;
-            user.FullName = userprofile.FullName;
-            user.Email = userprofile.Email;
-            user.Profession = userprofile.Profession;
-            user.Discriptions = userprofile.Discriptions;
-            user.Pass = userprofile.Pass != null ? Security.Encrypt(userprofile.Pass) : user.Pass;
-            user.ProfileImgPath = uploadFile.FileName != "" ? uploadFile.FileName : user.ProfileImgPath;
-
-            BlobController BlobManagerObj = new BlobController("pictures");
-            string FileAbsoluteUri = BlobManagerObj.UploadFile(uploadFile, user.ProfileImgPath);
-
-            entities.Entry(user).State = EntityState.Modified;
-            entities.SaveChanges();
-            return RedirectToAction("MyProfile", new { UserIDFromURL = Session["UserID"] });
+            else // redirect to login, if there is no user in session
+                return RedirectToAction("Login");
         }
 
         /// <summary>
@@ -349,7 +394,7 @@ namespace SampleShareV1.Controllers
                 ViewBag.Categories = entities.Categories.ToList();
                 return View();
             }
-            else
+            else //Redirect to index, if there is no user in session
                 return RedirectToAction("Index", "Main");
         }
 

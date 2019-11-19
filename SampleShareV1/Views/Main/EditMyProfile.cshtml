@@ -66,15 +66,15 @@
             <!-- Statistics & Information -->
             <div class="profile-work">
                 <p>LATEST</p>
-                <a href="">[Audio-Sample 1]</a><br />
-                <a href="">[Audio-Sample 2]</a><br />
-                <a href="">[Audio-Sample 3]</a>
+                @foreach (var item in ViewBag.LatestAudioSamples)
+                {
+                    <a href="@Url.Action("CatalogSampleDetails","Main", new { SampleID = item.SampleID })">[@item.SampleTitel]</a><br />
+                }
                 <p>MOST DOWNLOADED</p>
-                <a href="">[Audio-Sample 1]</a><br />
-                <a href="">[Audio-Sample 2]</a><br />
-                <a href="">[Audio-Sample 3]</a><br />
-                <a href="">[Audio-Sample 4]</a><br />
-                <a href="">[Audio-Sample 5]</a><br />
+                @foreach (var item in ViewBag.MostDownloadedAudioSamples)
+                {
+                    <a href="@Url.Action("CatalogSampleDetails","Main", new { SampleID = item.SampleID })">[@item.SampleTitel]</a><br />
+                }
             </div>
 
         </div>
@@ -153,6 +153,7 @@
                         </div>
 
                     </div>
+                    <p @ViewBag.Message/>
                     <div class="row">
                         <div class="col-md-6">
                         </div>
@@ -201,17 +202,6 @@
                             <p>
                                 @Html.PasswordFor(model => model.Pass, new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.Pass, "", new { @class = "text-danger" })
-                            </p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label>Confirm Password:</label>
-                        </div>
-                        <div class="col-md-6">
-                            <p>
-                                @*@Html.EditorFor(ViewBag.ConfrimPass, new { htmlAttributes = new { @type = "password", @class = "form-control" } })
-                                    @Html.ValidationMessageFor(ViewBag.ConfrimPass, "", new { @class = "text-danger" })*@
                             </p>
                         </div>
                     </div>
