@@ -1,4 +1,5 @@
-﻿@{
+﻿@model IEnumerable<SampleShareV1.Models.AudioSamples>
+@{
     ViewBag.Title = "Main Page";
 }
 <div class="row ">
@@ -14,27 +15,19 @@
                         <h5 style="margin-top: -3vh; margin-bottom: 0.5vh;" class="card-title Center">Most Downloaded</h5>
                     </li>
 
-                    <li class="list-group-item">
+                    @foreach (var item in ViewBag.MostDownloaded)
+                    {
+                        <li class="list-group-item">
 
-                        <!-- Audio Sample Info -->
-                        <p class="card-text"><i class="fas fa-user"></i><a href="#"><b> J-Bounce</b></a></p>
-                        <h5 style="margin-top: -2.5vh; margin-bottom: -1vh;" class="card-title">Voice-in-background</h5>
-                        <h6 style="margin-top: -2vh; font-size: 1.5vh;" class="card-text allign"><i class="fas fa-download"></i>10 </h6>
-                        <h6 style="margin-top: -2vh; font-size: 1.5vh;" class="card-text allign"><i class="fas fa-clock"></i>10/12-2019 </h6>
-                        <h6 style="margin-top: -2vh; font-size: 1.5vh;" class="card-text allign"><i class="fas fa-list"></i>FX </h6>
+                            <!-- Audio Sample Info -->
+                            <p class="card-text"><i class="fas fa-user"></i><a href="@Url.Action("MyProfile","Main",new { UserIDFromURL = item.UserID })"><b> @item.Users.UserName</b></a></p>
+                            <h5 style="margin-top: -2.5vh; margin-bottom: -1vh;" class="card-title"><a style="color: #333" href="@Url.Action("CatalogSampleDetails","Main", new { SampleID = item.SampleID })">@item.SampleTitel</a></h5>
+                            <h6 style="margin-top: -2vh; font-size: 1.5vh;" class="card-text allign"><i class="fas fa-download"></i> @item.Downloads </h6>
+                            <h6 style="margin-top: -2vh; font-size: 1.5vh;" class="card-text allign"><i class="fas fa-clock"></i> @item.CreationDate.ToString("dd-mm-yyyy") </h6>
+                            <h6 style="margin-top: -2vh; font-size: 1.5vh;" class="card-text allign"><i class="fas fa-list"></i> @item.Categories.CategoryName </h6>
 
-                    </li>
-
-                    <li class="list-group-item">
-
-                        <!-- Audio Sample Info -->
-                        <p class="card-text"><i class="fas fa-user"></i><a href="#"><b> J-Bounce</b></a></p>
-                        <h5 style="margin-top: -2.5vh; margin-bottom: -1vh;" class="card-title">Voice-in-background</h5>
-                        <h6 style="margin-top: -2vh; font-size: 1.5vh;" class="card-text allign"><i class="fas fa-download"></i>10 </h6>
-                        <h6 style="margin-top: -2vh; font-size: 1.5vh;" class="card-text allign"><i class="fas fa-clock"></i>10/12-2019 </h6>
-                        <h6 style="margin-top: -2vh; font-size: 1.5vh;" class="card-text allign"><i class="fas fa-list"></i>FX </h6>
-
-                    </li>
+                        </li>
+                    }
                 </ul>
             </div>
         </div>
@@ -51,27 +44,18 @@
                         <h5 style="margin-top: -3vh; margin-bottom: 0.5vh;" class="card-title Center">Recent</h5>
                     </li>
 
-                    <li class="list-group-item">
+                    @foreach (var item in ViewBag.Recent)
+                    {
+                        <li class="list-group-item">
 
-                        <!-- Audio Sample Info -->
-                        <p class="card-text"><i class="fas fa-user"></i><a href="#"><b> J-Bounce</b></a></p>
-                        <h5 style="margin-top: -2.5vh; margin-bottom: -1vh;" class="card-title">Voice-in-background</h5>
-                        <h6 style="margin-top: -2vh; font-size: 1.5vh;" class="card-text allign"><i class="fas fa-download"></i>10 </h6>
-                        <h6 style="margin-top: -2vh; font-size: 1.5vh;" class="card-text allign"><i class="fas fa-clock"></i>10/12-2019 </h6>
-                        <h6 style="margin-top: -2vh; font-size: 1.5vh;" class="card-text allign"><i class="fas fa-list"></i>FX </h6>
-
-                    </li>
-
-                    <li class="list-group-item">
-
-                        <!-- Audio Sample Info -->
-                        <p class="card-text"><i class="fas fa-user"></i><a href="#"><b> J-Bounce</b></a></p>
-                        <h5 style="margin-top: -2.5vh; margin-bottom: -1vh;" class="card-title">Voice-in-background</h5>
-                        <h6 style="margin-top: -2vh; font-size: 1.5vh;" class="card-text allign"><i class="fas fa-download"></i>10 </h6>
-                        <h6 style="margin-top: -2vh; font-size: 1.5vh;" class="card-text allign"><i class="fas fa-clock"></i>10/12-2019 </h6>
-                        <h6 style="margin-top: -2vh; font-size: 1.5vh;" class="card-text allign"><i class="fas fa-list"></i>FX </h6>
-
-                    </li>
+                            <!-- Audio Sample Info -->
+                            <p class="card-text"><i class="fas fa-user"></i><a href="@Url.Action("MyProfile","Main",new { UserIDFromURL = item.UserID })"><b> @item.Users.UserName</b></a></p>
+                            <h5 style="margin-top: -2.5vh; margin-bottom: -1vh;" class="card-title"><a style="color: #333" href="@Url.Action("CatalogSampleDetails","Main", new { SampleID = item.SampleID })">@item.SampleTitel</a></h5>
+                            <h6 style="margin-top: -2vh; font-size: 1.5vh;" class="card-text allign"><i class="fas fa-download"></i> @item.Downloads </h6>
+                            <h6 style="margin-top: -2vh; font-size: 1.5vh;" class="card-text allign"><i class="fas fa-clock"></i> @item.CreationDate.ToString("dd-mm-yyyy") </h6>
+                            <h6 style="margin-top: -2vh; font-size: 1.5vh;" class="card-text allign"><i class="fas fa-list"></i> @item.Categories.CategoryName </h6>
+                        </li>
+                    }
                 </ul>
             </div>
         </div>
@@ -88,27 +72,18 @@
                         <h5 style="margin-top: -3vh; margin-bottom: 0.5vh;" class="card-title Center">Best Of Category</h5>
                     </li>
 
+                   @foreach(var item in ViewBag.BestOfCategory)
+                   {
                     <li class="list-group-item">
-
                         <!-- Audio Sample Info -->
-                        <p class="card-text"><i class="fas fa-user"></i><a href="#"><b> J-Bounce</b></a></p>
-                        <h5 style="margin-top: -2.5vh; margin-bottom: -1vh;" class="card-title">Voice-in-background</h5>
-                        <h6 style="margin-top: -2vh; font-size: 1.5vh;" class="card-text allign"><i class="fas fa-download"></i>10 </h6>
-                        <h6 style="margin-top: -2vh; font-size: 1.5vh;" class="card-text allign"><i class="fas fa-clock"></i>10/12-2019 </h6>
-                        <h6 style="margin-top: -2vh; font-size: 1.5vh;" class="card-text allign"><i class="fas fa-list"></i>FX </h6>
+                        <p class="card-text"><i class="fas fa-user"></i><a href="@Url.Action("MyProfile","Main",new { UserIDFromURL = item.UserID })"><b> @item.Users.UserName</b></a></p>
+                        <h5 style="margin-top: -2.5vh; margin-bottom: -1vh;" class="card-title"><a style="color: #333" href="@Url.Action("CatalogSampleDetails","Main", new { SampleID = item.SampleID })">@item.SampleTitel</a></h5>
+                        <h6 style="margin-top: -2vh; font-size: 1.5vh;" class="card-text allign"><i class="fas fa-download"></i> @item.Downloads </h6>
+                        <h6 style="margin-top: -2vh; font-size: 1.5vh;" class="card-text allign"><i class="fas fa-clock"></i> @item.CreationDate.ToString("dd-mm-yyyy") </h6>
+                        <h6 style="margin-top: -2vh; font-size: 1.5vh;" class="card-text allign"><i class="fas fa-list"></i> @item.Categories.CategoryName </h6>
 
                     </li>
-
-                    <li class="list-group-item">
-
-                        <!-- Audio Sample Info -->
-                        <p class="card-text"><i class="fas fa-user"></i><a href="#"><b> J-Bounce</b></a></p>
-                        <h5 style="margin-top: -2.5vh; margin-bottom: -1vh;" class="card-title">Voice-in-background</h5>
-                        <h6 style="margin-top: -2vh; font-size: 1.5vh;" class="card-text allign"><i class="fas fa-download"></i>10 </h6>
-                        <h6 style="margin-top: -2vh; font-size: 1.5vh;" class="card-text allign"><i class="fas fa-clock"></i>10/12-2019 </h6>
-                        <h6 style="margin-top: -2vh; font-size: 1.5vh;" class="card-text allign"><i class="fas fa-list"></i>FX </h6>
-
-                    </li>
+                   }
                 </ul>
             </div>
         </div>

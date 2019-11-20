@@ -18,6 +18,54 @@ namespace SampleShareV1.Controllers
         /// </returns>
         public ActionResult Index()
         {
+            //Instantiate Enitity framework database
+            SampleShareDBEntities entities = new SampleShareDBEntities();
+
+            //Takes the 5 most downloaded public samples
+            List<AudioSamples> mostDownloaded = entities.AudioSamples
+                .Where(a => a.isPublic == true)
+                .OrderByDescending(a => a.Downloads)
+                .Take(5).ToList();
+
+            //Takes the last 5 public uploaded samples
+            List<AudioSamples> lastUploaded = entities.AudioSamples
+                .Where(a => a.isPublic == true )
+                .OrderByDescending(a => a.CreationDate)
+                .Take(5).ToList();
+
+            List<AudioSamples> bestOfCategory = entities.AudioSamples
+                .Where(a => a.isPublic == true)
+                .Where(a => a.CategoryID == 1)
+                .OrderByDescending(a => a.Downloads)
+                .Take(1).ToList();
+
+            bestOfCategory.Add(entities.AudioSamples
+                .Where(a => a.isPublic == true)
+                .Where(a => a.CategoryID == 2)
+                .OrderByDescending(a => a.Downloads)
+                .Take(1).Single());
+
+            bestOfCategory.Add(entities.AudioSamples
+               .Where(a => a.isPublic == true)
+               .Where(a => a.CategoryID == 3)
+               .OrderByDescending(a => a.Downloads)
+               .Take(1).Single());
+
+            bestOfCategory.Add(entities.AudioSamples
+               .Where(a => a.isPublic == true)
+               .Where(a => a.CategoryID == 4)
+               .OrderByDescending(a => a.Downloads)
+               .Take(1).Single());
+
+            bestOfCategory.Add(entities.AudioSamples
+               .Where(a => a.isPublic == true)
+               .Where(a => a.CategoryID == 5)
+               .OrderByDescending(a => a.Downloads)
+               .Take(1).Single());
+
+            ViewBag.MostDownloaded = mostDownloaded;
+            ViewBag.Recent = lastUploaded;
+            ViewBag.BestOfCategory = bestOfCategory;
             return View();
         }
 
@@ -436,8 +484,8 @@ namespace SampleShareV1.Controllers
                                 entities.AudioSamples.Add(audioSample);
 
                                 // Container Name - Sample  
-                                BlobController BlobManagerObj = new BlobController("samples"); //constrktor ses i Billede eksempel 2
-                                string FileAbsoluteUri = BlobManagerObj.UploadFile(uploadFile, audioSample.FilePath); //metode ses i Billede eksempel 3
+                                BlobController BlobManagerObj = new BlobController("samples");
+                                string FileAbsoluteUri = BlobManagerObj.UploadFile(uploadFile, audioSample.FilePath);
                                 entities.SaveChanges();
 
                                 return RedirectToAction("index");
