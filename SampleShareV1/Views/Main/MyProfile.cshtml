@@ -46,7 +46,7 @@
             @if (Model.UserID.ToString().Equals(Session["UserID"]) || 1.ToString().Equals(Session["UserRightID"]))
             {
                 <div class="col-md-2">
-                    <a href="@Url.Action("EditMyProfile", "Main", new { UserIDFromURL =Model.UserID })"><input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile" /></a>
+                    <a href="@Url.Action("EditMyProfile", "Main", new { UserIDFromURL =Model.UserID })"><input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit" /></a>
                 </div>
             }
 

@@ -10114,7 +10114,8 @@ a.text-dark:hover, a.text-dark:focus {
     width: 70%;
     padding: 2%;
     font-weight: 600;
-    color: #6c757d;
+    color: #fff;
+    background-color: #007bff;
     cursor: pointer;
 }
 

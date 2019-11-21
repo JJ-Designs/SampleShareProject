@@ -6,202 +6,234 @@
     ViewBag.Title = "EditMyProfile";
     ViewBag.ConfrimPass = null;
 }
-@using (Html.BeginForm("EditMyProfile", "Main", FormMethod.Post, new { enctype = "multipart/form-data"}))
-{ 
+
+@using (Html.BeginForm("EditMyProfile", "Main", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
     @Html.AntiForgeryToken()
 
     @Html.HiddenFor(model => model.UserID)
 
-<!-- Profile Card-->
-<div class="container emp-profile">
-    <div class="row">
-        <div class="col-md-4">
+    <!-- Profile Card-->
+    <div class="container emp-profile">
+        <div class="row">
+            <div class="col-md-4">
 
-            <!-- Profile Picture -->
+                <!-- Profile Picture -->
 
-            <div class="profile-img">
-                <img src="https://sampleshare.blob.core.windows.net/pictures/@Model.ProfileImgPath" alt="" />
-                <div class="file btn btn-lg btn-secondary">
-                    <div class="upload-btn-wrapper">
-                        Change Profile Picture
-                        <input type="file" name="file" />
-                    </div>
-                </div>
-            </div>
-
-        </div>
-        <div class="col-md-6">
-            <div class="profile-head">
-                <!-- Title & Information -->
-                <h5>
-                    @Html.DisplayFor(model => model.FullName)
-
-                    <!-- Delete profile button trigger modal -->
-                    <a data-toggle="modal" data-target="#downloadModal">
-                        <i class="fas fa-trash-alt" style="font-size: 3vh; color: #d11a2a;"></i>
-                    </a>
-
-                </h5>
-
-                <!-- Delete profile modal -->
-                <div class="modal fade" id="downloadModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Are you sure you want to delete account?</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                By deleting your account you will also delete all uploaded samples, both public and pritave samples.
-                            </div>
-                            <div class="modal-footer">
-                                <input type="button" class="profile-delete-btn" onclick="location.href='@Url.Action("DeleteUserAndFiles","Main", new {UserIDFromURL = Model.UserID })'" value="Delete Account" />
-                            </div>
+                <div class="profile-img">
+                    <img src="https://sampleshare.blob.core.windows.net/pictures/@Model.ProfileImgPath" alt="" />
+                    <div class="file btn btn-lg btn-secondary">
+                        <div class="upload-btn-wrapper">
+                            Change Profile Picture
+                            <input type="file" name="file" />
                         </div>
                     </div>
                 </div>
 
-                <h6>
-                    @Html.DisplayFor(model => model.Profession)
-                </h6>
-                <p class="proile-rating">SUBSCRIPTION: <span>@Html.DisplayFor(model => model.Userright.userrightCategory)</span></p>
+            </div>
+            <div class="col-md-6">
+                <div class="profile-head">
+                    <!-- Title & Information -->
+                    <h5>
+                        @Html.DisplayFor(model => model.FullName)
 
-                <!-- Tab List Menu-->
-                <ul class="nav nav-tabs" id="myTab" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Edit</a>
-                    </li>
-                </ul>
+                        <!-- Delete profile button trigger modal -->
+                        <a data-toggle="modal" data-target="#downloadModal">
+                            <i class="fas fa-trash-alt" style="font-size: 3vh; color: #d11a2a;"></i>
+                        </a>
+
+                    </h5>
+
+                    <!-- Delete profile modal -->
+                    <div class="modal fade" id="downloadModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Are you sure you want to delete account?</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    By deleting your account you will also delete all uploaded samples, both public and pritave samples.
+                                </div>
+                                <div class="modal-footer">
+                                    <input type="button" class="profile-delete-btn" onclick="location.href='@Url.Action("DeleteUserAndFiles","Main", new {UserIDFromURL = Model.UserID })'" value="Delete Account" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h6>
+                        @Html.DisplayFor(model => model.Profession)
+                    </h6>
+                    <p class="proile-rating">SUBSCRIPTION: <span>@Html.DisplayFor(model => model.Userright.userrightCategory)</span></p>
+
+                    <!-- Tab List Menu-->
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Edit</a>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+
+                <!-- Statistics & Information -->
+                <div class="profile-work">
+                    <p>LATEST</p>
+                    @foreach (var item in ViewBag.LatestAudioSamples)
+                    {
+                        <a href="@Url.Action("SampleDetails","Main", new { SampleID = item.SampleID })">[@item.SampleTitel]</a><br />
+                    }
+                    <p>MOST DOWNLOADED</p>
+                    @foreach (var item in ViewBag.MostDownloadedAudioSamples)
+                    {
+                        <a href="@Url.Action("SampleDetails","Main", new { SampleID = item.SampleID })">[@item.SampleTitel]</a><br />
+                    }
+                </div>
 
             </div>
-        </div>
+            <div class="col-md-8">
 
+                <!-- Edit Tab -->
+                <div class="tab-content profile-tab" id="myTabContent">
+                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <div class="row">
+
+                            <!-- Username -->
+                            <div class="col-md-6">
+                                <label>Username:</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>
+                                    @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                                </p>
+                            </div>
+
+                        </div>
+                        <div class="row">
+
+                            <!-- Name -->
+                            <div class="col-md-6">
+                                <label>Name:</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>
+                                    @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
+                                </p>
+                            </div>
+
+                        </div>
+                        <div class="row">
+
+                            <!-- E-mail -->
+                            <div class="col-md-6">
+                                <label>E-mail:</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>
+                                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                </p>
+                            </div>
+
+                        </div>
+                        <div class="row">
+
+                            <!-- Profession -->
+                            <div class="col-md-6">
+                                <label>Profession:</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>
+                                    @Html.EditorFor(model => model.Profession, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Profession, "", new { @class = "text-danger" })
+                                </p>
+                            </div>
+
+                        </div>
+                        <div class="row">
+
+                            <!-- Biography -->
+                            <div class="col-md-6">
+                                <label>Your Bio:</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>
+                                    @Html.EditorFor(model => model.Discriptions, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Discriptions, "", new { @class = "text-danger" })
+                                </p>
+                            </div>
+
+                            <!-- New Password -->
+                            <div class="col-md-6">
+                                <label>New Password:</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>
+                                    @Html.PasswordFor(model => model.Pass, new { @class = "form-control", @id = "password", @onkeyup="check();"})
+                                    @Html.ValidationMessageFor(model => model.Pass, "", new { @class = "text-danger" })
+                                </p>
+                            </div>
+
+                            <!-- Confirm Password -->
+                            <div class="col-md-6">
+                                <label>Confirm Password:</label>
+                                <span id='message'></span>
+                            </div>
+                            <div class="col-md-6">
+                                <p>
+                                    <input type="password" class="form-control" name="confirm_password" id="confirm_password" onkeyup="check();" />
+                                    @*@Html.PasswordFor(model => model.Pass, new { @class = "form-control", @id = "confirm_password", @onkeyup = "check();" })
+                                    @Html.ValidationMessageFor(model => model.Pass, "", new { @class = "text-danger" })*@
+                                </p>
+                            </div>
+                            <p id='message'></p>
+                        </div>
+                        <p @ViewBag.Message />
+
+
+                        <div class="row">
+                            <div class="col-md-8">
+                            </div>
+                            <div class="col-md-4">
+
+                                <!-- Save Button -->
+                                <input id="btnSave" type="submit" class="profile-edit-btn float-right" name="btnSave" value="Save" />
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="row">
-        <div class="col-md-4">
-
-            <!-- Statistics & Information -->
-            <div class="profile-work">
-                <p>LATEST</p>
-                @foreach (var item in ViewBag.LatestAudioSamples)
-                {
-                    <a href="@Url.Action("SampleDetails","Main", new { SampleID = item.SampleID })">[@item.SampleTitel]</a><br />
-                }
-                <p>MOST DOWNLOADED</p>
-                @foreach (var item in ViewBag.MostDownloadedAudioSamples)
-                {
-                    <a href="@Url.Action("SampleDetails","Main", new { SampleID = item.SampleID })">[@item.SampleTitel]</a><br />
-                }
-            </div>
-
-        </div>
-        <div class="col-md-8">
-
-            <!-- Edit Tab -->
-            <div class="tab-content profile-tab" id="myTabContent">
-                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                    <div class="row">
-
-                        <!-- Username -->
-                        <div class="col-md-6">
-                            <label>Username:</label>
-                        </div>
-                        <div class="col-md-6">
-                            <p>
-                                @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
-                            </p>
-                        </div>
-
-                    </div>
-                    <div class="row">
-
-                        <!-- Name -->
-                        <div class="col-md-6">
-                            <label>Name:</label>
-                        </div>
-                        <div class="col-md-6">
-                            <p>
-                                @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
-                            </p>
-                        </div>
-
-                    </div>
-                    <div class="row">
-
-                        <!-- E-mail -->
-                        <div class="col-md-6">
-                            <label>E-mail:</label>
-                        </div>
-                        <div class="col-md-6">
-                            <p>
-                                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-                            </p>
-                        </div>
-
-                    </div>
-                    <div class="row">
-
-                        <!-- Profession -->
-                        <div class="col-md-6">
-                            <label>Profession:</label>
-                        </div>
-                        <div class="col-md-6">
-                            <p>
-                                @Html.EditorFor(model => model.Profession, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.Profession, "", new { @class = "text-danger" })
-                            </p>
-                        </div>
-
-                    </div>
-                    <div class="row">
-
-                        <!-- Biography -->
-                        <div class="col-md-6">
-                            <label>Your Bio:</label>
-                        </div>
-                        <div class="col-md-6">
-                            <p>
-                                @Html.EditorFor(model => model.Discriptions, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.Discriptions, "", new { @class = "text-danger" })
-                            </p>
-                        </div>
-
-                        <!-- New Password -->
-                        <div class="col-md-6">
-                            <label>New Password:</label>
-                        </div>
-                        <div class="col-md-6">
-                            <p>
-                                @Html.PasswordFor(model => model.Pass, new { @class = "form-control" })
-                                @Html.ValidationMessageFor(model => model.Pass, "", new { @class = "text-danger" })
-                            </p>
-                        </div>
-
-                    </div>
-                    <p @ViewBag.Message/>
-                    <div class="row">
-                        <div class="col-md-8">
-                        </div>
-                        <div class="col-md-4">
-
-                            <!-- Save Button -->
-                            <input type="submit" class="profile-edit-btn float-right" name="btnAddMore" value="Save" />
-                        
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-</div>
 }
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+
+<script>
+    var check = function () {
+        if (document.getElementById('password').value == document.getElementById('confirm_password').value) {
+            document.getElementById('confirm_password').style.borderColor = 'green';
+            document.getElementById('btnSave').style.backgroundColor = '#007bff';
+            document.getElementById('btnSave').style.Color = '#fff';
+            $('#btnSave').attr("disabled", false);
+        } else {
+            document.getElementById('confirm_password').style.borderColor = 'red';
+            document.getElementById('btnSave').style.backgroundColor = '#ddd';
+            document.getElementById('btnSave').style.Color = '#6c757d';
+            $("#btnSave").attr("disabled", true);
+
+        }
+    }</script>
