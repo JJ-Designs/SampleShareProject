@@ -65,7 +65,7 @@
 
                             <!-- Email -->
                             <div class="group">
-                                <label for="pass" class="label">Email Address</label>
+                                <label for="E-mail" class="label">Email Address</label>
                                 @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "input", @placeholder = "E-Mail", tabindex = "4" } })
                                 @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                             </div>
@@ -73,13 +73,20 @@
                             <!-- Password -->
                             <div class="group">
                                 <label for="pass" class="label">Password</label>
-                                @Html.EditorFor(model => model.Pass, new { htmlAttributes = new { @type = "password", @class = "input", @placeholder = "Password", tabindex = "5" } })
+                                @Html.EditorFor(model => model.Pass, new { htmlAttributes = new { @type = "password", @class = "input", @placeholder = "Password", tabindex = "5" , @id = "password", @onkeyup="check();"} })
                                 @Html.ValidationMessageFor(model => model.Pass, "", new { @class = "text-danger" })
+                            </div>
+
+
+                            <!-- Confirm Password -->
+                            <div class="group">
+                                <label for="ConfirmPass" class="label">Confirm Password</label>
+                                <input type="password" class="input" name="confirm_password" placeholder="Password" id="confirm_password" onkeyup="check();" />
                             </div>
 
                             <!-- Registrer Button -->
                             <div class="group">
-                                <input type="submit" class="button" value="Sign Up">
+                                <input id="btnRegistrer" type="submit" class="button" value="Sign Up">
                             </div>
 
                             <!-- Error Message -->
@@ -96,10 +103,26 @@
                                 <a href="@Url.Action("Login","Main")">Already Member?<br /></a>
                             </div>
                         </div>
-                    </form>
+</form>
                 </div>
             </div>
         </div>
     </body>
 </html>
 }
+<script>
+    var check = function () {
+        if (document.getElementById('password').value == document.getElementById('confirm_password').value) {
+            document.getElementById('confirm_password').style.border = '1px solid green';
+            document.getElementById('btnRegistrer').style.backgroundColor = '#007bff';
+            document.getElementById('btnRegistrer').style.Color = '#fff';
+            $('#btnRegistrer').attr("disabled", false);
+        } else {
+            document.getElementById('confirm_password').style.border = '1px solid red';
+            document.getElementById('btnRegistrer').style.backgroundColor = '#ddd';
+            document.getElementById('btnRegistrer').style.Color = '#6c757d';
+            $("#btnRegistrer").attr("disabled", true);
+
+        }
+    }
+</script>
