@@ -42,7 +42,7 @@
 
                     <!-- Download & More Button -->
                     <a href="@Url.Action("Download","Main",new { AudioSampleIDFromURL = item.SampleID })" class="btn btn-primary"><i class="fas fa-download"></i> Download</a>
-                    <a href="@Url.Action("PortfolioSampleDetails","Main", new { SampleID = item.SampleID })" class="btn btn-outline-dark">More</a>
+                    <a href="@Url.Action("SampleDetails","Main", new { SampleID = item.SampleID })" class="btn btn-outline-dark">More</a>
                 
                 </div>
             </div>

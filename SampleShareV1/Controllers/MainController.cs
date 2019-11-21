@@ -77,30 +77,12 @@ namespace SampleShareV1.Controllers
         /// Returns the Catalog details view.
         /// </returns>
         [HttpGet]
-        [ActionName("CatalogSampleDetails")]
-        public ActionResult CatalogSampleDetails(int SampleID)
+        [ActionName("SampleDetails")]
+        public ActionResult SampleDetails(int SampleID)
         {
             //Instantiate Enitity framework database
             SampleShareDBEntities entities = new SampleShareDBEntities();
             // selects a adiosaple based on its ID 
-            AudioSamples audioSample = entities.AudioSamples.Single(a => a.SampleID == SampleID);
-            return View(audioSample);
-        }
-
-        
-        /// <summary>
-        /// Get audio sample data from database and returns the details view.
-        /// </summary>
-        /// <param name="SampleID">  the chosen ID in Portfolio.</param>
-        /// <returns>
-        /// Returns the Portfolio details view.
-        /// </returns>
-        [HttpGet]
-        [ActionName("PortfolioSampleDetails")]
-        public ActionResult PortfolioSampleDetails(int SampleID)
-        {
-            //Instantiate Enitity framework database
-            SampleShareDBEntities entities = new SampleShareDBEntities();
             AudioSamples audioSample = entities.AudioSamples.Single(a => a.SampleID == SampleID);
             return View(audioSample);
         }
@@ -278,7 +260,7 @@ namespace SampleShareV1.Controllers
                 //saves changes in database
                 entities.Entry(user).State = EntityState.Modified;
                 entities.SaveChanges();
-                return RedirectToAction("MyProfile", new { UserIDFromURL = Session["UserID"] });
+                return RedirectToAction("MyProfile", new { UserIDFromURL = userprofile.UserID });
             }
             else // redirect to login, if there is no user in session
                 return RedirectToAction("Login");
@@ -362,6 +344,7 @@ namespace SampleShareV1.Controllers
                         Session["UserID"] = obj.UserID.ToString();
                         Session["UserName"] = obj.UserName.ToString();
                         Session["FullName"] = obj.FullName.ToString();
+                        Session["UserRightID"] = obj.userrightid.ToString();
                         return RedirectToAction("MyProfile", new { UserIDFromURL = Session["UserID"] });
                     }
                     else

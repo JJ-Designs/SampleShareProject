@@ -87,12 +87,12 @@
                 <p>LATEST</p>
                 @foreach (var item in ViewBag.LatestAudioSamples)
                 {
-                    <a href="@Url.Action("CatalogSampleDetails","Main", new { SampleID = item.SampleID })">[@item.SampleTitel]</a><br />
+                    <a href="@Url.Action("SampleDetails","Main", new { SampleID = item.SampleID })">[@item.SampleTitel]</a><br />
                 }
                 <p>MOST DOWNLOADED</p>
                 @foreach (var item in ViewBag.MostDownloadedAudioSamples)
                 {
-                    <a href="@Url.Action("CatalogSampleDetails","Main", new { SampleID = item.SampleID })">[@item.SampleTitel]</a><br />
+                    <a href="@Url.Action("SampleDetails","Main", new { SampleID = item.SampleID })">[@item.SampleTitel]</a><br />
                 }
             </div>
 

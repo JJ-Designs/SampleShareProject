@@ -43,10 +43,10 @@
             </div>
 
             <!-- Edit Button -->
-            @if (Model.UserID.ToString().Equals(Session["UserID"]))
+            @if (Model.UserID.ToString().Equals(Session["UserID"]) || 1.ToString().Equals(Session["UserRightID"]))
             {
                 <div class="col-md-2">
-                    <a href="@Url.Action("EditMyProfile", "Main", new { UserIDFromURL = Session["UserID"] })"><input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile" /></a>
+                    <a href="@Url.Action("EditMyProfile", "Main", new { UserIDFromURL =Model.UserID })"><input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile" /></a>
                 </div>
             }
 
@@ -59,12 +59,12 @@
                     <p>LATEST</p>
                     @foreach (var item in ViewBag.LatestAudioSamples)
                     {
-                        <a href="@Url.Action("CatalogSampleDetails","Main", new { SampleID = item.SampleID })">[@item.SampleTitel]</a><br />
+                        <a href="@Url.Action("SampleDetails","Main", new { SampleID = item.SampleID })">[@item.SampleTitel]</a><br />
                     }
                     <p>MOST DOWNLOADED</p>
                     @foreach (var item in ViewBag.MostDownloadedAudioSamples)
                     {
-                        <a href="@Url.Action("CatalogSampleDetails","Main", new { SampleID = item.SampleID })">[@item.SampleTitel]</a><br />
+                        <a href="@Url.Action("SampleDetails","Main", new { SampleID = item.SampleID })">[@item.SampleTitel]</a><br />
                     }
                 </div>
 
