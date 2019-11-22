@@ -81,14 +81,14 @@
                             <!-- Confirm Password -->
                             <div class="group">
                                 <label for="ConfirmPass" class="label">Confirm Password</label>
-                                <input type="password" class="input" name="confirm_password" placeholder="Password" id="confirm_password" onkeyup="check();" />
+                                <input type="password" class="input" name="confirm_password" placeholder="Password" id="confirm_password" tabindex="6" onkeyup="check();" />
                             </div>
 
                             <br />
 
                             <!-- Registrer Button -->
                             <div class="group">
-                                <input id="btnRegistrer" type="submit" class="button" value="Sign Up">
+                                <input id="btnRegistrer" type="submit" class="button" value="Sign Up" tabindex="7">
                             </div>
 
                             <!-- Error Message -->
@@ -102,7 +102,7 @@
                             <!-- Back Button-->
                             <div class="hr"></div>
                             <div class="foot-lnk" style="margin-top: -1.5vh;">
-                                <a href="@Url.Action("Login","Main")">Already Member?<br /></a>
+                                <a tabindex="8" href="@Url.Action("Login","Main")">Already Member?<br /></a>
                             </div>
 
                         </div>

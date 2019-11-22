@@ -10,10 +10,8 @@ namespace SampleShareV1.Controllers
 {
     public class MainController : Controller
     {
-
-        #region Index
         /// <summary>
-        /// Returns the index view.
+        /// Routes to the index view.
         /// </summary>
         /// <returns>
         /// Returns the index view.
@@ -35,6 +33,7 @@ namespace SampleShareV1.Controllers
                 .OrderByDescending(a => a.CreationDate)
                 .Take(5).ToList();
 
+            //Get's the most downloaded for each catecory
             List<AudioSamples> bestOfCategory = entities.AudioSamples
                 .Where(a => a.isPublic == true)
                 .Where(a => a.CategoryID == 1)
@@ -65,15 +64,13 @@ namespace SampleShareV1.Controllers
                .OrderByDescending(a => a.Downloads)
                .Take(1).Single());
 
+            //put's the data in viewbags for use in view
             ViewBag.MostDownloaded = mostDownloaded;
             ViewBag.Recent = lastUploaded;
             ViewBag.BestOfCategory = bestOfCategory;
             return View();
         }
-        #endregion
 
-
-        #region Sample Details
         /// <summary>
         /// Get audio sample data from database and returns the details view.
         /// </summary>
@@ -91,10 +88,7 @@ namespace SampleShareV1.Controllers
             AudioSamples audioSample = entities.AudioSamples.Single(a => a.SampleID == SampleID);
             return View(audioSample);
         }
-        #endregion
 
-
-        #region Catalog
         /// <summary>
         /// gets all public audio samples and checks for category.
         /// then returns the catalog view.
@@ -118,9 +112,13 @@ namespace SampleShareV1.Controllers
             ViewBag.Categories = entities.Categories.ToList();
             return View(audioSamples);
         }
-        #endregion
 
-        #region Portfolio
+        /// <summary>
+        /// Routes to the profile view if a user is logged in. Else route to index
+        /// </summary>
+        /// <param name="UserIDFromURL"></param>
+        /// <param name="CategoryID">Category to filter by. No filter if id is 0</param>
+        /// <returns>Returns the profile view if a user is logged in. Else route to index.</returns>
         [HttpGet]
         [ActionName("MyPortfolio")]
         public ActionResult MyPortfolio(int UserIDFromURL, int CategoryID)
@@ -128,15 +126,17 @@ namespace SampleShareV1.Controllers
             //Instantiate Enitity framework database
             SampleShareDBEntities entities = new SampleShareDBEntities();
 
+            //cheaks for af user is logged in
             if (Session["UserID"] != null)
             {
+                //Gets the user from URL ID
                 Users user = entities.Users.Single(s => s.UserID == UserIDFromURL);
                 List<AudioSamples> audioSamples;
-                if (CategoryID != 0)
+                if (CategoryID != 0) // gets all audio samples for the user if category id is 0
                     audioSamples = entities.AudioSamples
                     .Where(a => a.UserID == UserIDFromURL)
                     .Where(a => a.CategoryID == CategoryID).ToList();
-                else
+                else //Only gets the audio samples where the category id equals the selected category
                     audioSamples = entities.AudioSamples.Where(a => a.UserID == UserIDFromURL).ToList();
                 ViewBag.Categories = entities.Categories.ToList();
                 return View(audioSamples);
@@ -144,8 +144,13 @@ namespace SampleShareV1.Controllers
             else //Redirect to index, if there is no user in session
                 return RedirectToAction("Index", "Main");
         }
-        #endregion
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="UserIDFromURL"></param>
+        /// <param name="CategoryID"></param>
+        /// <returns></returns>
         [HttpGet]
         [ActionName("SortByCategoryPortfolio")]
         public ActionResult SortByCategoryPortfolio(int UserIDFromURL, int CategoryID)
@@ -288,42 +293,52 @@ namespace SampleShareV1.Controllers
         {
             //Instantiate Enitity framework database
             SampleShareDBEntities entities = new SampleShareDBEntities();
+            //Gets the user from URL ID
             Users user = entities.Users.Single(u => u.UserID == UserIDFromURL);
+            
+            //Gets the latest 3 samples for the user 
             List<AudioSamples> lastAudioSamples = entities.AudioSamples
                 .Where(a => a.UserID == UserIDFromURL)
                 .OrderByDescending(a => a.CreationDate)
                 .Take(3).ToList();
 
+            //Gets the 5 most downloaded samples for the user 
             List<AudioSamples> mostDownloadedAudioSamples = entities.AudioSamples
                 .Where(a => a.UserID == UserIDFromURL)
                 .OrderByDescending(a => a.Downloads)
                 .Take(5).ToList();
 
+            //Gets total count of audio samples for the user
             int totalAudioSamples = entities.AudioSamples.Where(a => a.UserID == UserIDFromURL).Count();
-
+            
+            //Gets total count of downloads of all audio samples for the user
             int? totalDownloads = entities.AudioSamples
                 .Where(a => a.UserID == UserIDFromURL)
                 .Select(a => a.Downloads).Sum();
 
+            //Gets total count of public audio samples for the user
             int totalPublicAudiosamples = entities.AudioSamples
                 .Where(a => a.UserID == UserIDFromURL)
                 .Where(a => a.isPublic == true).Count();
 
+            //Gets total count of private audio samples for the user
             int totalPrivateAudiosamples = entities.AudioSamples
                 .Where(a => a.UserID == UserIDFromURL)
                 .Where(a => a.isPublic == false).Count();
 
+
+            //Put's the data in viewbags for use in view
             ViewBag.LatestAudioSamples = lastAudioSamples;
             ViewBag.MostDownloadedAudioSamples = mostDownloadedAudioSamples;
             ViewBag.TotalAudioSamples = totalAudioSamples;
-            ViewBag.TotalDownloads = totalDownloads;
+            ViewBag.TotalDownloads = totalDownloads != null ? totalDownloads : 0;
             ViewBag.TotalPublicAudiosamples = totalPublicAudiosamples;
             ViewBag.TotalPrivateAudiosamples = totalPrivateAudiosamples;
             return View(user);
         }
 
         /// <summary>
-        /// 
+        /// Routes to login view
         /// </summary>
         /// <returns></returns>
         [HttpGet]
@@ -345,24 +360,29 @@ namespace SampleShareV1.Controllers
         {
             if (ModelState.IsValid)
             {
-                //Instantiate Enitity framework database
-                using (SampleShareDBEntities entities = new SampleShareDBEntities())
-                {
-                    objUser.Pass = Security.Encrypt(objUser.Pass);
-                    var obj = entities.Users.Where(a => a.UserName.Equals(objUser.UserName) && a.Pass.Equals(objUser.Pass)).FirstOrDefault();
-                    if (obj != null)
+                if(objUser.Pass != null && objUser.UserName != null)
+                { 
+                    //Instantiate Enitity framework database
+                    using (SampleShareDBEntities entities = new SampleShareDBEntities())
                     {
-                        Session["UserID"] = obj.UserID.ToString();
-                        Session["UserName"] = obj.UserName.ToString();
-                        Session["FullName"] = obj.FullName.ToString();
-                        Session["UserRightID"] = obj.userrightid.ToString();
-                        return RedirectToAction("MyProfile", new { UserIDFromURL = Session["UserID"] });
-                    }
-                    else
-                    {
-                        ViewBag.Message = "USERNAME OR PASSWORD IS WRONG!";
+                        objUser.Pass = Security.Encrypt(objUser.Pass);
+                        var obj = entities.Users.Where(a => a.UserName.Equals(objUser.UserName) && a.Pass.Equals(objUser.Pass)).FirstOrDefault();
+                        if (obj != null)
+                        {
+                            Session["UserID"] = obj.UserID.ToString();
+                            Session["UserName"] = obj.UserName.ToString();
+                            Session["FullName"] = obj.FullName.ToString();
+                            Session["UserRightID"] = obj.userrightid.ToString();
+                            return RedirectToAction("MyProfile", new { UserIDFromURL = Session["UserID"] });
+                        }
+                        else
+                        {
+                            ViewBag.Message = "USERNAME OR PASSWORD IS WRONG!";
+                        }
                     }
                 }
+                else
+                    ViewBag.Message = "YOU MUST ENTER SOMETHING IN ALL FEILDS!";
             }
             return View(objUser);
         }
@@ -528,7 +548,7 @@ namespace SampleShareV1.Controllers
             entities.AudioSamples.Remove(audioSampleToDel);
             entities.SaveChanges();
 
-            return RedirectToAction("MyPortefolio");
+            return RedirectToAction("Index");
         }
     }
 }
