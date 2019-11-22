@@ -16,7 +16,6 @@ namespace SampleShareV1.Controllers
 {
     public class BlobController : Controller
     {
-        //Eksempel 2
         private CloudBlobContainer blobContainer;
 
         /// <summary>
@@ -32,12 +31,14 @@ namespace SampleShareV1.Controllers
             }
             try
             {
+                //Gets the connetion string from Web.config file
                 CloudStorageAccount storageAccount = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("AzureStorageConnectionString-1"));
 
+                //azure library for making Containers
                 CloudBlobClient cloudBlobClient = storageAccount.CreateCloudBlobClient();
                 blobContainer = cloudBlobClient.GetContainerReference(ContainerName);
 
-                // Create the container and set the permission  
+                // Create the container and set the permission if it doesn't already exist
                 if (blobContainer.CreateIfNotExists())
                 {
                     blobContainer.SetPermissions(
@@ -54,39 +55,12 @@ namespace SampleShareV1.Controllers
             }
         }
 
-
-        // GET: File
-        public ActionResult Index()
-        {
-            return View();
-        }
-
         /// <summary>
-        /// Create new blob container
+        /// Uploads a file to the definded container
         /// </summary>
-        /// <returns></returns>
-        private CloudBlobContainer GetCloudBlobContainer()
-        {
-            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("AzureStorageConnectionString-1"));
-            CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
-            CloudBlobContainer container = blobClient.GetContainerReference("test-blob-container");
-            return container;
-        }
-        public ActionResult CreateBlobContainer()
-        {
-            CloudBlobContainer container = GetCloudBlobContainer();
-            ViewBag.Success = container.CreateIfNotExists();
-            ViewBag.BlobContainerName = container.Name;
-
-            return View();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="FileToUpload"></param>
-        /// <param name="FileName"></param>
-        /// <returns></returns>
+        /// <param name="FileToUpload">The file to upload</param>
+        /// <param name="FileName">The name it should be uploaded as</param>
+        /// <returns>Returns the absolute URI as an string</returns>
         public string UploadFile(Web.HttpPostedFileBase FileToUpload, string FileName)
         {
             string absoluteUri;
@@ -110,9 +84,10 @@ namespace SampleShareV1.Controllers
             {
                 throw ExceptionObj;
             }
+            //Returns URI
             return absoluteUri;
         }
-        
+
         /// <summary>
         /// download a File from URI
         /// </summary>
@@ -121,6 +96,7 @@ namespace SampleShareV1.Controllers
         public string DownloadFile(string SampleFileName)
         {
             string AbsoluteUri;
+            //gets the blob in the defined container
             CloudBlockBlob blockBlob = blobContainer.GetBlockBlobReference(SampleFileName);
 
             MemoryStream memStream = new MemoryStream();
@@ -141,40 +117,6 @@ namespace SampleShareV1.Controllers
             Web.HttpContext.Current.Response.Flush();
             Web.HttpContext.Current.Response.Close();
             return AbsoluteUri;
-        }
-
-        public List<string> BlobList()
-        {
-            List<string> _blobList = new List<string>();
-            foreach (IListBlobItem item in blobContainer.ListBlobs())
-            {
-                if (item.GetType() == typeof(CloudBlockBlob))
-                {
-                    CloudBlockBlob _blobpage = (CloudBlockBlob)item;
-                    _blobList.Add(_blobpage.Uri.AbsoluteUri.ToString());
-                }
-            }
-            return _blobList;
-        }
-
-        public bool DeleteBlob(string AbsoluteUri)
-        {
-            try
-            {
-                Uri uriObj = new Uri(AbsoluteUri);
-                string BlobName = Path.GetFileName(uriObj.LocalPath);
-
-                // get block blob refarence  
-                CloudBlockBlob blockBlob = blobContainer.GetBlockBlobReference(BlobName);
-
-                // delete blob from container      
-                blockBlob.Delete();
-                return true;
-            }
-            catch (Exception ExceptionObj)
-            {
-                throw ExceptionObj;
-            }
         }
     }
 }
