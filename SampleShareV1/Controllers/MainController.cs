@@ -10,6 +10,8 @@ namespace SampleShareV1.Controllers
 {
     public class MainController : Controller
     {
+
+        #region Index
         /// <summary>
         /// Returns the index view.
         /// </summary>
@@ -68,7 +70,10 @@ namespace SampleShareV1.Controllers
             ViewBag.BestOfCategory = bestOfCategory;
             return View();
         }
+        #endregion
 
+
+        #region Sample Details
         /// <summary>
         /// Get audio sample data from database and returns the details view.
         /// </summary>
@@ -86,7 +91,10 @@ namespace SampleShareV1.Controllers
             AudioSamples audioSample = entities.AudioSamples.Single(a => a.SampleID == SampleID);
             return View(audioSample);
         }
+        #endregion
 
+
+        #region Catalog
         /// <summary>
         /// gets all public audio samples and checks for category.
         /// then returns the catalog view.
@@ -110,7 +118,9 @@ namespace SampleShareV1.Controllers
             ViewBag.Categories = entities.Categories.ToList();
             return View(audioSamples);
         }
+        #endregion
 
+        #region Portfolio
         [HttpGet]
         [ActionName("MyPortfolio")]
         public ActionResult MyPortfolio(int UserIDFromURL, int CategoryID)
@@ -134,6 +144,7 @@ namespace SampleShareV1.Controllers
             else //Redirect to index, if there is no user in session
                 return RedirectToAction("Index", "Main");
         }
+        #endregion
 
         [HttpGet]
         [ActionName("SortByCategoryPortfolio")]
