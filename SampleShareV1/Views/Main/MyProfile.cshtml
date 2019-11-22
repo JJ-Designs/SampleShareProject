@@ -21,12 +21,8 @@
                 <div class="profile-head">
 
                     <!-- Title & Information -->
-                    <h5>
-                        @Html.DisplayFor(model => model.FullName)
-                    </h5>
-                    <h6>
-                        @Html.DisplayFor(model => model.Profession)
-                    </h6>
+                    <h5>@Html.DisplayFor(model => model.FullName)</h5>
+                    <h6>@Html.DisplayFor(model => model.Profession)</h6>
                     <p class="proile-rating">SUBSCRIPTION: <span>@Html.DisplayFor(model => model.Userright.userrightCategory)</span></p>
 
                     <!-- Tab List Menu-->
@@ -144,36 +140,48 @@
                     <!-- Information Tab -->
                     <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                         <div class="row">
+
+                            <!-- Total Audio Samples -->
                             <div class="col-md-6">
                                 <label>Total Audio-Samples:</label>
                             </div>
                             <div class="col-md-6">
                                 <p>@ViewBag.TotalAudioSamples</p>
                             </div>
+
                         </div>
                         <div class="row">
+
+                            <!-- Total Downloads -->
                             <div class="col-md-6">
                                 <label>Total Downloads:</label>
                             </div>
                             <div class="col-md-6">
                                 <p>@ViewBag.TotalDownloads </p>
                             </div>
+
                         </div>
                         <div class="row">
+
+                            <!-- Public Audio Samples -->
                             <div class="col-md-6">
                                 <label>Public Audio-Samples:</label>
                             </div>
                             <div class="col-md-6">
                                 <p>@ViewBag.TotalPublicAudiosamples</p>
                             </div>
+
                         </div>
                         <div class="row">
+
+                            <!-- Private Audio Samples -->
                             <div class="col-md-6">
                                 <label>Private Audio-Samples:</label>
                             </div>
                             <div class="col-md-6">
                                 <p>@ViewBag.TotalPrivateAudiosamples</p>
                             </div>
+
                         </div>
                     </div>
                 </div>

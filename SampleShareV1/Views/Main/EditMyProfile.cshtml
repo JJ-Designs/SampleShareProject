@@ -19,7 +19,6 @@
             <div class="col-md-4">
 
                 <!-- Profile Picture -->
-
                 <div class="profile-img">
                     <img src="https://sampleshare.blob.core.windows.net/pictures/@Model.ProfileImgPath" alt="" />
                     <div class="file btn btn-lg btn-secondary">
@@ -33,7 +32,8 @@
             </div>
             <div class="col-md-6">
                 <div class="profile-head">
-                    <!-- Title & Information -->
+
+                    <!-- Title -->
                     <h5>
                         @Html.DisplayFor(model => model.FullName)
 
@@ -64,6 +64,7 @@
                         </div>
                     </div>
 
+                    <!-- Information-->
                     <h6>
                         @Html.DisplayFor(model => model.Profession)
                     </h6>
@@ -178,7 +179,7 @@
                             </div>
                             <div class="col-md-6">
                                 <p>
-                                    @Html.PasswordFor(model => model.Pass, new { @class = "form-control", @id = "password", @onkeyup="check();"})
+                                    @Html.PasswordFor(model => model.Pass, new { @class = "form-control", @id = "password", @onkeyup = "check();" })
                                     @Html.ValidationMessageFor(model => model.Pass, "", new { @class = "text-danger" })
                                 </p>
                             </div>
@@ -191,12 +192,11 @@
                             <div class="col-md-6">
                                 <p>
                                     <input type="password" class="form-control" name="confirm_password" id="confirm_password" onkeyup="check();" />
-                                    @*@Html.PasswordFor(model => model.Pass, new { @class = "form-control", @id = "confirm_password", @onkeyup = "check();" })
-                                    @Html.ValidationMessageFor(model => model.Pass, "", new { @class = "text-danger" })*@
                                 </p>
                             </div>
-                            <p id='message'></p>
                         </div>
+
+                        <!-- Error Message -->
                         <p @ViewBag.Message />
 
 
@@ -222,17 +222,34 @@
     @Scripts.Render("~/bundles/jqueryval")
 }
 
+<!-- Confirm Password Script-->
 <script>
     var check = function () {
         if (document.getElementById('password').value == document.getElementById('confirm_password').value) {
+
+            // Confirm Password Input Box Green 
             document.getElementById('confirm_password').style.borderColor = 'green';
+
+            // Save Button Background Color Dodger Blue 
             document.getElementById('btnSave').style.backgroundColor = '#007bff';
+
+            // Save Button Text Color White
             document.getElementById('btnSave').style.Color = '#fff';
+
+            // Enable Save Button
             $('#btnSave').attr("disabled", false);
         } else {
-            document.getElementById('confirm_password').style.borderColor = 'red';
+
+            // Confirm Password Input Box Red 
+            document.getElementById('confirm_password').style.borderColor = '#d11a2a';
+
+            // Save Button Background Color Gray
             document.getElementById('btnSave').style.backgroundColor = '#ddd';
+
+            // Save Button Text Color Dark Gray
             document.getElementById('btnSave').style.Color = '#6c757d';
+
+            // Disabled Save Button
             $("#btnSave").attr("disabled", true);
 
         }

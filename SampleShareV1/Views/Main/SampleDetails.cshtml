@@ -33,6 +33,7 @@
         <div class="col-md-2">
             <a href="javascript:history.back()"><input type="submit" class="profile-edit-btn" name="btnAddMore" value="Back" /></a>
         </div>
+
     </div>
     <div class="row">
         
@@ -81,36 +82,48 @@
                 <!-- Information Tab -->
                 <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                     <div class="row">
+
+                        <!-- Creation Date -->
                         <div class="col-md-4">
                             <label>Upload Date:</label>
                         </div>
                         <div class="col-md-8">
                             <p>@Model.CreationDate.Value.ToString("dd/MM-yyyy")</p>
                         </div>
+
                     </div>
                     <div class="row">
+
+                        <!-- Category -->
                         <div class="col-md-4">
                             <label>Category:</label>
                         </div>
                         <div class="col-md-8">
                             <p>@Html.DisplayFor(model => model.Categories.CategoryName)</p>
                         </div>
+
                     </div>
                     <div class="row">
+
+                        <!-- Total Downloads -->
                         <div class="col-md-4">
                             <label>Total Downloads:</label>
                         </div>
                         <div class="col-md-8">
                             <p>@Html.DisplayFor(model => model.Downloads)</p>
                         </div>
+
                     </div>
                     <div class="row">
+
+                        <!-- Status -->
                         <div class="col-md-4">
                             <label>Status:</label>
                         </div>
                         <div class="col-md-8">
                             <p>@Html.DisplayNameFor(model => model.isPublic)</p>
                         </div>
+
                     </div>
                     <div class="row">
                         <div class="col-md-8">

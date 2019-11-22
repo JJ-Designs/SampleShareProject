@@ -54,6 +54,7 @@
                             <h6 style="margin-top: -2vh; font-size: 1.5vh;" class="card-text allign"><i class="fas fa-download"></i> @item.Downloads </h6>
                             <h6 style="margin-top: -2vh; font-size: 1.5vh;" class="card-text allign"><i class="fas fa-clock"></i> @item.CreationDate.ToString("dd-mm-yyyy") </h6>
                             <h6 style="margin-top: -2vh; font-size: 1.5vh;" class="card-text allign"><i class="fas fa-list"></i> @item.Categories.CategoryName </h6>
+                        
                         </li>
                     }
                 </ul>
@@ -61,7 +62,7 @@
         </div>
     </div>
 
-    <!-- Random Tab -->
+    <!-- Best of Category Tab -->
     <div class="col-sm-4" style="margin-top:20px;">
         <div class="card">
             <div class="card-body">
@@ -75,6 +76,7 @@
                    @foreach(var item in ViewBag.BestOfCategory)
                    {
                     <li class="list-group-item">
+
                         <!-- Audio Sample Info -->
                         <p class="card-text"><i class="fas fa-user"></i><a href="@Url.Action("MyProfile","Main",new { UserIDFromURL = item.UserID })"><b> @item.Users.UserName</b></a></p>
                         <h5 style="margin-top: -2.5vh; margin-bottom: -1vh;" class="card-title"><a style="color: #333" href="@Url.Action("SampleDetails","Main", new { SampleID = item.SampleID })">@item.SampleTitel</a></h5>
