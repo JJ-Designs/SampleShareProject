@@ -10,6 +10,7 @@ namespace SampleShareV1.Controllers
 {
     public class MainController : Controller
     {
+        #region Index
         /// <summary>
         /// Routes to the index view.
         /// </summary>
@@ -70,7 +71,10 @@ namespace SampleShareV1.Controllers
             ViewBag.BestOfCategory = bestOfCategory;
             return View();
         }
+        #endregion
 
+
+        #region Sample Details
         /// <summary>
         /// Get audio sample data from database and returns the details view.
         /// </summary>
@@ -88,7 +92,10 @@ namespace SampleShareV1.Controllers
             AudioSamples audioSample = entities.AudioSamples.Single(a => a.SampleID == SampleID);
             return View(audioSample);
         }
+        #endregion
 
+
+        #region Catalog
         /// <summary>
         /// gets all public audio samples and checks for category.
         /// then returns the catalog view.
@@ -112,7 +119,10 @@ namespace SampleShareV1.Controllers
             ViewBag.Categories = entities.Categories.ToList();
             return View(audioSamples);
         }
+        #endregion
 
+
+        #region Portfolio
         /// <summary>
         /// Routes to the profile view if a user is logged in. Else route to index
         /// </summary>
@@ -144,34 +154,10 @@ namespace SampleShareV1.Controllers
             else //Redirect to index, if there is no user in session
                 return RedirectToAction("Index", "Main");
         }
+        #endregion
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="UserIDFromURL"></param>
-        /// <param name="CategoryID"></param>
-        /// <returns></returns>
-        [HttpGet]
-        [ActionName("SortByCategoryPortfolio")]
-        public ActionResult SortByCategoryPortfolio(int UserIDFromURL, int CategoryID)
-        {
-            //Instantiate Enitity framework database
-            SampleShareDBEntities entities = new SampleShareDBEntities();
 
-            if (Session["UserID"] != null)
-            {
-                Users user = entities.Users.Single(s => s.UserID == UserIDFromURL);
-                List<AudioSamples> audioSamples = entities.AudioSamples
-                .Where(a => a.UserID == UserIDFromURL)
-                .Where(a => a.CategoryID == CategoryID).ToList();
-
-                return RedirectToAction("","", new { UserIDFromURL = Session["UserID"], audioSamplesFromURL = audioSamples });
-            }
-            else //Redirect to index, if there is no user in session
-                return RedirectToAction("Index", "Main");
-
-        }
-
+        #region Download
         /// <summary>
         /// 
         /// </summary>
@@ -199,7 +185,10 @@ namespace SampleShareV1.Controllers
             else //Redirect to login, if there is no user in session
                 return RedirectToAction("Login");
         }
+        #endregion
 
+
+        #region Edit Profile
         /// <summary>
         /// 
         /// </summary>
@@ -281,7 +270,10 @@ namespace SampleShareV1.Controllers
             else // redirect to login, if there is no user in session
                 return RedirectToAction("Login");
         }
+        #endregion
 
+
+        #region Profile
         /// <summary>
         /// 
         /// </summary>
@@ -336,7 +328,10 @@ namespace SampleShareV1.Controllers
             ViewBag.TotalPrivateAudiosamples = totalPrivateAudiosamples;
             return View(user);
         }
+        #endregion
 
+
+        #region Login
         /// <summary>
         /// Routes to login view
         /// </summary>
@@ -386,7 +381,10 @@ namespace SampleShareV1.Controllers
             }
             return View(objUser);
         }
-        
+        #endregion
+
+
+        #region Sign Up
         //Sign up controller. Get (When you firt open the page)
         [HttpGet]
         [ActionName("SignUp")]
@@ -434,6 +432,10 @@ namespace SampleShareV1.Controllers
                 ViewBag.Message = "YOU MUST ENTER SOMETHING IN ALL FEILDS!";
             return View(user);
         }
+        #endregion
+
+
+        #region Logout
         /// <summary>
         /// The logout controller 
         /// </summary>
@@ -443,7 +445,10 @@ namespace SampleShareV1.Controllers
             Session.Abandon();
             return RedirectToAction("index");
         }
+        #endregion
 
+
+        #region Upload Sample
         // Upload Controller
         [HttpGet]
         [ActionName("UploadSample")]
@@ -521,7 +526,10 @@ namespace SampleShareV1.Controllers
 
             return View();
         }
+        #endregion
 
+
+        #region Delete User & Audio-Samples
         [HttpGet]
         [ActionName("DeleteUserAndFiles")]
         public ActionResult DeleteUserAndFiles(int UserIDFromURL)
@@ -537,7 +545,10 @@ namespace SampleShareV1.Controllers
             Session.Abandon();
             return RedirectToAction("index");
         }
+        #endregion
 
+
+        #region Delete Audio-Sample
         [HttpGet]
         [ActionName("DeleteAudioSample")]
         public ActionResult DeleteAudioSample(int SampleIDFromURL)
@@ -550,5 +561,6 @@ namespace SampleShareV1.Controllers
 
             return RedirectToAction("Index");
         }
+        #endregion
     }
 }
