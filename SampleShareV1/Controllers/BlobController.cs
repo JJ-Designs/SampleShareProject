@@ -16,10 +16,10 @@ namespace SampleShareV1.Controllers
 {
     public class BlobController : Controller
     {
-        private CloudBlobContainer blobContainer;
 
+        #region Blob constructor 
         /// <summary>
-        /// BlobController constroctor. new instance for each container.
+        /// BlobController constructor. new instance for each container.
         /// </summary>
         /// <param name="ContainerName"> The name you give the container</param>
         public BlobController(string ContainerName)
@@ -54,7 +54,15 @@ namespace SampleShareV1.Controllers
                 throw ExceptionObj;
             }
         }
+        #endregion
 
+
+        #region Blob Fields
+        private CloudBlobContainer blobContainer;
+        #endregion
+
+
+        #region Upload File Blob
         /// <summary>
         /// Uploads a file to the definded container
         /// </summary>
@@ -87,7 +95,10 @@ namespace SampleShareV1.Controllers
             //Returns URI
             return absoluteUri;
         }
+        #endregion
 
+
+        #region Download File Blob
         /// <summary>
         /// download a File from URI
         /// </summary>
@@ -118,5 +129,8 @@ namespace SampleShareV1.Controllers
             Web.HttpContext.Current.Response.Close();
             return AbsoluteUri;
         }
+        #endregion
+
+
     }
 }
