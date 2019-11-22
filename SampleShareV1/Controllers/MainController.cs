@@ -394,7 +394,7 @@ namespace SampleShareV1.Controllers
                             ViewBag.Message = "ACCOUNT ALREADY LINKED TO E-MAIL";
                     }
                     else
-                        ViewBag.Message = "USERNAME ALLREADY EXSIST";
+                        ViewBag.Message = "USERNAME ALREADY EXSIST";
                 }
                 else
                     ViewBag.Message = "PASSWORD MUST BE LONGER THEN 4 CHARACTERS";

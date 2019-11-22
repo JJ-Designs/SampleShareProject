@@ -1,10 +1,10 @@
 ﻿@model SampleShareV1.Models.Users
 
 @{
-                /**/
+    /**/
 
-                Layout = null;
-                ViewBag.Title = "sign_up";
+    Layout = null;
+    ViewBag.Title = "sign_up";
 }
 
 @using (Html.BeginForm())
@@ -73,7 +73,7 @@
                             <!-- Password -->
                             <div class="group">
                                 <label for="pass" class="label">Password</label>
-                                @Html.EditorFor(model => model.Pass, new { htmlAttributes = new { @type = "password", @class = "input", @placeholder = "Password", tabindex = "5" , @id = "password", @onkeyup="check();"} })
+                                @Html.EditorFor(model => model.Pass, new { htmlAttributes = new { @type = "password", @class = "input", @placeholder = "Password", tabindex = "5", @id = "password", @onkeyup = "check();" } })
                                 @Html.ValidationMessageFor(model => model.Pass, "", new { @class = "text-danger" })
                             </div>
 
@@ -83,6 +83,8 @@
                                 <label for="ConfirmPass" class="label">Confirm Password</label>
                                 <input type="password" class="input" name="confirm_password" placeholder="Password" id="confirm_password" onkeyup="check();" />
                             </div>
+
+                            <br />
 
                             <!-- Registrer Button -->
                             <div class="group">
@@ -99,28 +101,47 @@
 
                             <!-- Back Button-->
                             <div class="hr"></div>
-                            <div class="foot-lnk" style="margin-top: -2vh;">
+                            <div class="foot-lnk" style="margin-top: -1.5vh;">
                                 <a href="@Url.Action("Login","Main")">Already Member?<br /></a>
                             </div>
+
                         </div>
-</form>
+                    </form>
                 </div>
             </div>
         </div>
     </body>
 </html>
 }
+
+<!-- Confirm Password Script-->
 <script>
     var check = function () {
         if (document.getElementById('password').value == document.getElementById('confirm_password').value) {
+
+            // Confirm Password Input Box Green 
             document.getElementById('confirm_password').style.border = '1px solid green';
+
+            // Registrer Button Background Color Dodger Blue 
             document.getElementById('btnRegistrer').style.backgroundColor = '#007bff';
+
+            // Registrer Button Text Color White
             document.getElementById('btnRegistrer').style.Color = '#fff';
+
+            // Enable Registrer Button
             $('#btnRegistrer').attr("disabled", false);
         } else {
+
+            // Confirm Password Input Box Red 
             document.getElementById('confirm_password').style.border = '1px solid red';
+
+            // Registrer Button Background Color Gray
             document.getElementById('btnRegistrer').style.backgroundColor = '#ddd';
+
+            // Registrer Button Text Color Dark Gray
             document.getElementById('btnRegistrer').style.Color = '#6c757d';
+
+            // Disabled Registrer Button
             $("#btnRegistrer").attr("disabled", true);
 
         }

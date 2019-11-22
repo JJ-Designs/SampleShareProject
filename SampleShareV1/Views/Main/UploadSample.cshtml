@@ -46,7 +46,6 @@
                 </div>
                 @Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-                @*<textarea class="form-control"></textarea>*@
 
             </div>
 
@@ -58,7 +57,6 @@
                 </div>
                 @Html.EditorFor(model => model.Tags.TagName, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Tags.TagName, "", new { @class = "text-danger" })
-                @*<input type="text" class="form-control">*@
 
             </div>
             <div class="input-group mb-3">
@@ -85,6 +83,7 @@
                     @Html.ValidationMessageFor(model => model.isPublic, "", new { @class = "text-danger" })
                     <label class="custom-control-label" for="switch1">Public</label>
                 </div>
+
             </div>
 
             <!-- Upload Audio Sample Button -->
