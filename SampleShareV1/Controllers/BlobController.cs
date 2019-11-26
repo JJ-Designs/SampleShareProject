@@ -19,12 +19,12 @@ namespace SampleShareV1.Controllers
 
         #region Blob constructor 
         /// <summary>
-        /// BlobController constructor. new instance for each container.
+        /// BlobController constructor. New instance for each container.
         /// </summary>
         /// <param name="ContainerName"> The name you give the container</param>
         public BlobController(string ContainerName)
         {
-            // Check if Container Name is null or empty  
+            // Checks if Container name is null or empty  
             if (string.IsNullOrEmpty(ContainerName))
             {
                 throw new ArgumentNullException("ContainerName", "Container Name can't be empty");
@@ -34,7 +34,7 @@ namespace SampleShareV1.Controllers
                 //Gets the connetion string from Web.config file
                 CloudStorageAccount storageAccount = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("AzureStorageConnectionString-1"));
 
-                //azure library for making Containers
+                //Azure library for making containers
                 CloudBlobClient cloudBlobClient = storageAccount.CreateCloudBlobClient();
                 blobContainer = cloudBlobClient.GetContainerReference(ContainerName);
 
@@ -72,7 +72,7 @@ namespace SampleShareV1.Controllers
         public string UploadFile(Web.HttpPostedFileBase FileToUpload, string FileName)
         {
             string absoluteUri;
-            // Check HttpPostedFileBase is null or not  
+            // Check HttpPostedFileBase is null  
             if (FileToUpload == null || FileToUpload.ContentLength == 0)
                 return null;
             try
@@ -82,10 +82,10 @@ namespace SampleShareV1.Controllers
                 blockBlob = blobContainer.GetBlockBlobReference(FileName);
                 // Set the object's content type  
                 blockBlob.Properties.ContentType = FileToUpload.ContentType;
-                // upload to blob  
+                // Upload to blob  
                 blockBlob.UploadFromStream(FileToUpload.InputStream);
 
-                // get file uri  
+                // Get's file URI
                 absoluteUri = blockBlob.Uri.AbsoluteUri;
             }
             catch (Exception ExceptionObj)
@@ -100,30 +100,30 @@ namespace SampleShareV1.Controllers
 
         #region Download File Blob
         /// <summary>
-        /// download a File from URI
+        /// Download a file from URI
         /// </summary>
         /// <param name="SampleFileName"></param>
         /// <returns></returns>
         public string DownloadFile(string SampleFileName)
         {
             string AbsoluteUri;
-            //gets the blob in the defined container
+            //Gets the blob in the defined container
             CloudBlockBlob blockBlob = blobContainer.GetBlockBlobReference(SampleFileName);
 
             MemoryStream memStream = new MemoryStream();
 
-            // opens a stream to downloade file from URI
+            //Opens a stream to downloade file from URI
             blockBlob.DownloadToStream(memStream);
             AbsoluteUri = blockBlob.Uri.AbsoluteUri;
 
-            //sets the type of file in the stream
+            //Sets the type of file in the stream
             Web.HttpContext.Current.Response.ContentType = blockBlob.Properties.ContentType.ToString();
 
-            //adds headers to set the file name and size.
+            //Adds headers to set the file name and size.
             Web.HttpContext.Current.Response.AddHeader("Content-Disposition", "Attachment; filename=" + blockBlob.Name);
             Web.HttpContext.Current.Response.AddHeader("Content-Length", blockBlob.Properties.Length.ToString());
 
-            //puts the download to the browser
+            //Puts the download to the browser
             Web.HttpContext.Current.Response.BinaryWrite(memStream.ToArray());
             Web.HttpContext.Current.Response.Flush();
             Web.HttpContext.Current.Response.Close();

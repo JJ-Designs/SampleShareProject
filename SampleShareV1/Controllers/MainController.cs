@@ -19,7 +19,7 @@ namespace SampleShareV1.Controllers
         /// </returns>
         public ActionResult Index()
         {
-            //Instantiate Enitity framework database
+            //Instantiate entity framework database
             SampleShareDBEntities entities = new SampleShareDBEntities();
 
             //Takes the 5 most downloaded public samples
@@ -34,7 +34,7 @@ namespace SampleShareV1.Controllers
                 .OrderByDescending(a => a.CreationDate)
                 .Take(5).ToList();
 
-            //Get's the most downloaded for each catecory
+            //Get's the most downloaded for each category
             List<AudioSamples> bestOfCategory = entities.AudioSamples
                 .Where(a => a.isPublic == true)
                 .Where(a => a.CategoryID == 1)
@@ -86,9 +86,9 @@ namespace SampleShareV1.Controllers
         [ActionName("SampleDetails")]
         public ActionResult SampleDetails(int SampleID)
         {
-            //Instantiate Enitity framework database
+            //Instantiate entity framework database
             SampleShareDBEntities entities = new SampleShareDBEntities();
-            // selects a adiosaple based on its ID 
+            //Selects a audio sample based on its id
             AudioSamples audioSample = entities.AudioSamples.Single(a => a.SampleID == SampleID);
             return View(audioSample);
         }
@@ -97,7 +97,7 @@ namespace SampleShareV1.Controllers
 
         #region Catalog
         /// <summary>
-        /// gets all public audio samples and checks for category.
+        /// Gets all public audio samples and checks for category.
         /// then returns the catalog view.
         /// </summary>
         /// <param name="CategoryID"></param>
@@ -106,7 +106,7 @@ namespace SampleShareV1.Controllers
         [ActionName("Catalog")]
         public ActionResult Catalog(int CategoryID)
         {
-            //Instantiate Enitity framework database
+            //Instantiate entity framework database
             SampleShareDBEntities entities = new SampleShareDBEntities();
             List<AudioSamples> audioSamples;
             //If no category is chosen show all public audios amples
@@ -133,16 +133,16 @@ namespace SampleShareV1.Controllers
         [ActionName("MyPortfolio")]
         public ActionResult MyPortfolio(int UserIDFromURL, int CategoryID)
         {
-            //Instantiate Enitity framework database
+            //Instantiate entity framework database
             SampleShareDBEntities entities = new SampleShareDBEntities();
 
-            //cheaks for af user is logged in
+            //checks if user is logged in
             if (Session["UserID"] != null)
             {
                 //Gets the user from URL ID
                 Users user = entities.Users.Single(s => s.UserID == UserIDFromURL);
                 List<AudioSamples> audioSamples;
-                if (CategoryID != 0) // gets all audio samples for the user if category id is 0
+                if (CategoryID != 0) // Gets all audio samples for the user if category id is 0
                     audioSamples = entities.AudioSamples
                     .Where(a => a.UserID == UserIDFromURL)
                     .Where(a => a.CategoryID == CategoryID).ToList();
@@ -159,27 +159,27 @@ namespace SampleShareV1.Controllers
 
         #region Download
         /// <summary>
-        /// Downloads the audiosample chosen from its ID.
+        /// Downloads the audiosample chosen from its id.
         /// Adds the download count to the database.
         /// </summary>
-        /// <param name="AudioSampleIDFromURL">The ID of the audiosample to download.</param>
-        /// <returns>If there are no user in session, rediret to Index. else after download, go to catalog. </returns>
+        /// <param name="AudioSampleIDFromURL">The id of the audio sample to download.</param>
+        /// <returns>If there are no user in session, rediret to Index. Else after download, go to catalog. </returns>
         [HttpGet]
         [ActionName("DownLoad")]
         public ActionResult Downlaod(int AudioSampleIDFromURL)
         {
             if (Session["UserID"] != null)
             {
-                //Instantiate Enitity framework database
+                //Instantiate entity framework database
                 SampleShareDBEntities entities = new SampleShareDBEntities();
-                //Get's the audiosample to download from the database
+                //Get's the audio sample to download from the database
                 AudioSamples audioSample = entities.AudioSamples.SingleOrDefault(a => a.SampleID == AudioSampleIDFromURL);
 
-                // Finds the Container with the name Sample  
+                // Finds the Container with the name samples 
                 BlobController BlobManagerObj = new BlobController("samples");
                 //Downloads the file in the container
                 string FileAbsoluteUri = BlobManagerObj.DownloadFile(audioSample.FilePath);
-                //adds the download count to the database
+                //Adds the download count to the database
                 audioSample.Downloads++;
                 entities.SaveChanges();
 
@@ -195,7 +195,7 @@ namespace SampleShareV1.Controllers
         /// <summary>
         /// Get's information of the user user from the database, and returns the Edit view. 
         /// </summary>
-        /// <param name="UserIDFromURL">The is of the user to show in the edit view</param>
+        /// <param name="UserIDFromURL">The id of the user to show in the edit view</param>
         /// <returns>If there are no user in session, rediret to Index. else returns the Edit view.</returns>
         [HttpGet]
         [ActionName("EditMyProfile")]
@@ -203,7 +203,7 @@ namespace SampleShareV1.Controllers
         {
             if (Session["UserID"] != null)
             {
-                //Instantiate Enitity framework database
+                //Instantiate entity framework database
                 SampleShareDBEntities entities = new SampleShareDBEntities();
                 //Gets the logged in user from url
                 Users user = entities.Users.Single(u => u.UserID == UserIDFromURL);
@@ -214,7 +214,7 @@ namespace SampleShareV1.Controllers
                     .OrderByDescending(a => a.CreationDate)
                     .Take(3).ToList();
 
-                //Takes The 5 most downloaded samples for the user
+                //Takes the 5 most downloaded samples for the user
                 List<AudioSamples> mostDownloadedAudioSamples = entities.AudioSamples
                     .Where(a => a.UserID == UserIDFromURL)
                     .OrderByDescending(a => a.Downloads)
@@ -231,7 +231,7 @@ namespace SampleShareV1.Controllers
         }
 
         /// <summary>
-        /// Updates The user in the database based on input in edit view.
+        /// Updates the user in the database based on input in edit view.
         /// </summary>
         /// <param name="uploadFile">File to upload for profile picture</param>
         /// <param name="userprofile">User information from view</param>
@@ -240,10 +240,10 @@ namespace SampleShareV1.Controllers
         [ActionName("EditMyProfile")]
         public ActionResult EditMyProfile(HttpPostedFileBase uploadFile, Users userprofile)
         {
-            //checks for logged in user
+            //Checks if user is logged in
             if (Session["UserID"] != null)
             {
-                //Instantiate Enitity framework database
+                //Instantiate entity framework database
                 SampleShareDBEntities entities = new SampleShareDBEntities();
                 foreach (string file in Request.Files)
                 {
@@ -251,26 +251,26 @@ namespace SampleShareV1.Controllers
                 }
                 //Gets the user from database
                 Users user = entities.Users.Single(u => u.UserID.Equals(userprofile.UserID));
-                //updates the user from url info
+                //Updates the user from url info
                 user.UserName = userprofile.UserName;
                 user.FullName = userprofile.FullName;
                 user.Email = userprofile.Email;
                 user.Profession = userprofile.Profession;
                 user.Discriptions = userprofile.Discriptions;
-                //encrupts the password if it was changed
+                //Encrupts the password if it was changed
                 user.Pass = userprofile.Pass != null ? Security.Encrypt(userprofile.Pass) : user.Pass;
                 user.ProfileImgPath = uploadFile.FileName != "" ? uploadFile.FileName : user.ProfileImgPath;
 
-                //saves profile picture in blob container
+                //Saves profile picture in blob container
                 BlobController BlobManagerObj = new BlobController("pictures");
                 string FileAbsoluteUri = BlobManagerObj.UploadFile(uploadFile, user.ProfileImgPath);
 
-                //saves changes in database
+                //Saves changes in database
                 entities.Entry(user).State = EntityState.Modified;
                 entities.SaveChanges();
                 return RedirectToAction("MyProfile", new { UserIDFromURL = userprofile.UserID });
             }
-            else // redirect to login, if there is no user in session
+            else // Redirect to login, if there is no user in session
                 return RedirectToAction("Login");
         }
         #endregion
@@ -280,13 +280,13 @@ namespace SampleShareV1.Controllers
         /// <summary>
         /// Get's information of the user user from the database, and returns the profile view.   
         /// </summary>
-        /// <param name="UserIDFromURL">The is of the user to show in the profile view</param>
+        /// <param name="UserIDFromURL">The id of the user to show in the profile view</param>
         /// <returns></returns>
         [HttpGet]
         [ActionName("MyProfile")]
         public ActionResult MyProfile(int UserIDFromURL)
         {
-            //Instantiate Enitity framework database
+            //Instantiate entity framework database
             SampleShareDBEntities entities = new SampleShareDBEntities();
             //Gets the user from URL ID
             Users user = entities.Users.Single(u => u.UserID == UserIDFromURL);
@@ -303,20 +303,20 @@ namespace SampleShareV1.Controllers
                 .OrderByDescending(a => a.Downloads)
                 .Take(5).ToList();
 
-            //Gets total count of audio samples for the user
+            //Gets the total count of audio samples for the user
             int totalAudioSamples = entities.AudioSamples.Where(a => a.UserID == UserIDFromURL).Count();
             
-            //Gets total count of downloads of all audio samples for the user
+            //Gets the total count of downloads of all audio samples for the user
             int? totalDownloads = entities.AudioSamples
                 .Where(a => a.UserID == UserIDFromURL)
                 .Select(a => a.Downloads).Sum();
 
-            //Gets total count of public audio samples for the user
+            //Gets the total count of public audio samples for the user
             int totalPublicAudiosamples = entities.AudioSamples
                 .Where(a => a.UserID == UserIDFromURL)
                 .Where(a => a.isPublic == true).Count();
 
-            //Gets total count of private audio samples for the user
+            //Gets the total count of private audio samples for the user
             int totalPrivateAudiosamples = entities.AudioSamples
                 .Where(a => a.UserID == UserIDFromURL)
                 .Where(a => a.isPublic == false).Count();
@@ -347,7 +347,7 @@ namespace SampleShareV1.Controllers
         }
 
         /// <summary>
-        /// If username and password matches, logs in the user and opens a session.
+        /// If username and password matches, then it logs the user it and opens a session.
         /// </summary>
         /// <param name="objUser">Get's user information from view.</param>
         /// <returns></returns>
@@ -356,12 +356,12 @@ namespace SampleShareV1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult login(Users objUser)
         {
-            //cheks for correct login information
+            //Checks for correct login information
             if (ModelState.IsValid)
             {
                 if(objUser.Pass != null && objUser.UserName != null)
-                { 
-                    //Instantiate Enitity framework database
+                {
+                    //Instantiate entity framework database
                     using (SampleShareDBEntities entities = new SampleShareDBEntities())
                     {
                         objUser.Pass = Security.Encrypt(objUser.Pass);
@@ -369,7 +369,7 @@ namespace SampleShareV1.Controllers
                         var obj = entities.Users.Where(a => a.UserName.Equals(objUser.UserName) && a.Pass.Equals(objUser.Pass)).FirstOrDefault();
                         if (obj != null)
                         {
-                            //set's session information on the user
+                            //Set's session information on the user
                             Session["UserID"] = obj.UserID.ToString();
                             Session["UserName"] = obj.UserName.ToString();
                             Session["FullName"] = obj.FullName.ToString();
@@ -394,7 +394,7 @@ namespace SampleShareV1.Controllers
         /// <summary>
         /// Routes to the Sign up view
         /// </summary>
-        /// <returns>returns the Sign up view</returns>
+        /// <returns>Returns the Sign up view</returns>
         [HttpGet]
         [ActionName("SignUp")]
         public ActionResult SignUp()
@@ -403,27 +403,27 @@ namespace SampleShareV1.Controllers
         }
 
         /// <summary>
-        /// Cheaks for valid data, end then enters a new user to the database.
+        /// Checks for valid data, and then enters a new user to the database.
         /// </summary>
         /// <param name="user">Get's User information from the view.</param>
-        /// <returns> If succesfull sign up, redirect to login. Else returns the signup viw with error messege. </returns>
+        /// <returns> If succesfull sign up, redirect to login. Else returns the Sign up viw with error message. </returns>
         [HttpPost]
         [ActionName("SignUp")]
         public ActionResult SignUp(Users user)
         {
-            //checks for no empty textboxes
+            //Checks for no empty textboxes
             if (user.FullName != "" && user.FullName != null && user.Email != "" && user.Email != null && user.Pass != "" && user.Pass != null && user.UserName != "" && user.UserName != null)
             {
                 if (user.Pass.Length >= 4)
                 {
-                    //Instantiate Enitity framework database
+                    //Instantiate entity framework database
                     SampleShareDBEntities entities = new SampleShareDBEntities();
-                    //checks if user already exists
+                    //Checks if user already exists
                     if (!entities.Users.Any(x => x.UserName == user.UserName))
                     {
                         if (!entities.Users.Any(x => x.Email == user.Email))
                         {
-                            //enters User information to the database
+                            //Enters user information to the database
                             user.Pass = Security.Encrypt(user.Pass);
                             user.userrightid = 2;
                             user.ProfileImgPath = "default-profile-picture.png";
@@ -461,7 +461,6 @@ namespace SampleShareV1.Controllers
 
 
         #region Upload Sample
-        // Upload 
         /// <summary>
         /// Routes to the upload view if a user is logged in. Else route to index
         /// </summary>
@@ -472,7 +471,7 @@ namespace SampleShareV1.Controllers
         {
             if(Session["UserID"] != null)
             {
-                //Instantiate Enitity framework database
+                //Instantiate entity framework database
                 SampleShareDBEntities entities = new SampleShareDBEntities();
                 ViewBag.Categories = entities.Categories.ToList();
                 return View();
@@ -485,20 +484,20 @@ namespace SampleShareV1.Controllers
         /// Uploads the file to the storage, and enters the information to the database.
         /// </summary>
         /// <param name="uploadFile">File to upload</param>
-        /// <param name="audioSample">Information on the audiosample to uploade to the database</param>
+        /// <param name="audioSample">Information on the audio sample to uploade to the database</param>
         /// <returns></returns>
         [HttpPost]
         public ActionResult UploadSample(HttpPostedFileBase uploadFile, AudioSamples audioSample)
         {
-            //Instantiate Enitity framework database
+            //Instantiate entity framework database
             SampleShareDBEntities entities = new SampleShareDBEntities();
             foreach (string file in Request.Files)
             {
-                //gets the file uploaded the the browser
+                //Gets the file uploaded from the browser
                 uploadFile = Request.Files[file];
             }
             ViewBag.Categories = entities.Categories.ToList();
-            //checks for empty inputs
+            //Checks for empty inputs
             if (uploadFile.FileName != null && !uploadFile.FileName.Equals(""))
             {
                 if (audioSample.SampleTitel != null && !audioSample.SampleTitel.Equals(""))
@@ -507,11 +506,11 @@ namespace SampleShareV1.Controllers
                     {
                         if (uploadFile.ContentLength < 102400000)
                         {
-                            //only wav, mp3 or flac file type is accepted
+                            //Only wav, mp3 or flac file type is accepted
                             string fileExt = uploadFile.FileName.Substring(uploadFile.FileName.IndexOf("."));
                             if (fileExt == ".wav" || fileExt == ".mp3" || fileExt == ".flac")
                             {
-                                //enters the new audio sample to the database
+                                //Enters the new audio sample to the database
                                 audioSample.FilePath = audioSample.SampleTitel + fileExt;
                                 audioSample.CreationDate = DateTime.Now;
                                 audioSample.Downloads = 0;
@@ -522,7 +521,7 @@ namespace SampleShareV1.Controllers
 
                                 entities.AudioSamples.Add(audioSample);
 
-                                // Finds the Container with the name Sample
+                                //Finds the Container with the name samples
                                 BlobController BlobManagerObj = new BlobController("samples");
                                 string FileAbsoluteUri = BlobManagerObj.UploadFile(uploadFile, audioSample.FilePath);
                                 entities.SaveChanges();
@@ -549,41 +548,20 @@ namespace SampleShareV1.Controllers
         #endregion
 
 
-        #region Delete User & Audio-Samples
-        /// <summary>
-        /// Deletes the user from the database with all of it's audio samples. 
-        /// </summary>
-        /// <param name="UserIDFromURL">The ID of the user to delete.</param>
-        /// <returns></returns>
-        [HttpGet]
-        [ActionName("DeleteUserAndFiles")]
-        public ActionResult DeleteUserAndFiles(int UserIDFromURL)
-        {
-            //Instantiate Enitity framework database
-            SampleShareDBEntities entities = new SampleShareDBEntities();
-            Users user = entities.Users.Single(a => a.UserID == UserIDFromURL);
-            List<AudioSamples> audioSamplesToDel = entities.AudioSamples.Where(a => a.UserID == user.UserID).ToList();
-            foreach (AudioSamples audioSample in audioSamplesToDel)
-                entities.AudioSamples.Remove(audioSample);
-            entities.Users.Remove(user);
-            entities.SaveChanges();
-            Session.Abandon();
-            return RedirectToAction("index");
-        }
-        #endregion
+        
 
 
         #region Delete Audio-Sample
         /// <summary>
         /// Deletes the audio samples from the database.
         /// </summary>
-        /// <param name="SampleIDFromURL">The ID of the audio sample to delete</param>
+        /// <param name="SampleIDFromURL">The id of the audio sample to delete</param>
         /// <returns></returns>
         [HttpGet]
         [ActionName("DeleteAudioSample")]
         public ActionResult DeleteAudioSample(int SampleIDFromURL)
         {
-            //Instantiate Enitity framework database
+            //Instantiate entity framework database
             SampleShareDBEntities entities = new SampleShareDBEntities();
             //Get's the audio sample to delete
             AudioSamples audioSampleToDel = entities.AudioSamples.SingleOrDefault(a => a.SampleID == SampleIDFromURL);

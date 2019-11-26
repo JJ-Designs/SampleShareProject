@@ -27,7 +27,7 @@ var wavesurfer = WaveSurfer.create({
 //CreateWavesurfer('#song');
 //CreateWavesurfer('#song');
 
-//Loading waveform via ID tag from HTML
+//Loading waveform via id-tag from HTML
 wavesurfer.load(document.querySelector('#song'))
 
 // PLAY / PAUSE Function

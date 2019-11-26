@@ -218,7 +218,6 @@
     <Content Include="Content\img\samplesharelogo_white.png" />
     <Content Include="Content\img\Wallpaper1.jpg" />
     <Content Include="Content\js\JavaScript.js" />
-    <Content Include="Content\samples\Sample.mp3" />
     <Content Include="Content\Style.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />

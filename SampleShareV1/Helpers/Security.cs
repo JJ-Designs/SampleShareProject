@@ -8,6 +8,8 @@ using System.Text;
 //This class was taken from StackOverflow, with minimal changes
 public static class Security
 {
+
+    #region Encryption 
     public static string Encrypt(string textToEncrypt)
     {
         try
@@ -46,6 +48,10 @@ public static class Security
             throw new Exception(e.Message, e.InnerException);
         }
     }
+    #endregion
+
+
+    #region Decryption
     public static string Decrypt(string textToDecrypt)
     {
         try
@@ -66,7 +72,7 @@ public static class Security
             //The password as byte
             byte[] inputbyteArray = new byte[textToDecrypt.Replace(" ", "+").Length];
             inputbyteArray = Convert.FromBase64String(textToDecrypt.Replace(" ", "+"));
-            //Using the Encrytion service to make sure it desposes
+            //Using the encrytion service to make sure it desposes
             using (DESCryptoServiceProvider des = new DESCryptoServiceProvider())
             {
                 //Initializes the memStream
@@ -86,4 +92,6 @@ public static class Security
             throw new Exception(e.Message, e.InnerException);
         }
     }
+    #endregion
+
 }
