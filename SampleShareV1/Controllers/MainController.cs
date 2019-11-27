@@ -558,7 +558,7 @@ namespace SampleShareV1.Controllers
         [ActionName("DeleteUserAndFiles")]
         public ActionResult DeleteUserAndFiles(int UserIDFromURL)
         {
-            //Instantiate Enitity framework database
+            //Instantiate entity framework database
             SampleShareDBEntities entities = new SampleShareDBEntities();
             //Findes user from URL
             Users user = entities.Users.Single(a => a.UserID == UserIDFromURL);
