@@ -548,7 +548,32 @@ namespace SampleShareV1.Controllers
         #endregion
 
 
-        
+        #region Delete User & Audio-Samples
+        /// <summary>
+        /// Deletes the user from the database with all of it's audio samples. 
+        /// </summary>
+        /// <param name="UserIDFromURL">The ID of the user to delete.</param>
+        /// <returns></returns>
+        [HttpGet]
+        [ActionName("DeleteUserAndFiles")]
+        public ActionResult DeleteUserAndFiles(int UserIDFromURL)
+        {
+            //Instantiate Enitity framework database
+            SampleShareDBEntities entities = new SampleShareDBEntities();
+            //Findes user from URL
+            Users user = entities.Users.Single(a => a.UserID == UserIDFromURL);
+            //Get's all audio samples made by that user
+            List<AudioSamples> audioSamplesToDel = entities.AudioSamples.Where(a => a.UserID == user.UserID).ToList();
+            //Deletes all the audio samples in the list
+            foreach (AudioSamples audioSample in audioSamplesToDel)
+                entities.AudioSamples.Remove(audioSample);
+            //Deletes the user
+            entities.Users.Remove(user);
+            entities.SaveChanges();
+            Session.Abandon();
+            return RedirectToAction("index");
+        }
+        #endregion
 
 
         #region Delete Audio-Sample
