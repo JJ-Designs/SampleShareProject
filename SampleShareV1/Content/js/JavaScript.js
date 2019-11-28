@@ -8,24 +8,6 @@ var wavesurfer = WaveSurfer.create({
     responsive: true,
 });
 
-//function CreateWavesurfer(url) {
-//    var wavesurfer = WaveSurfer.create({
-//        container: '#waveform',
-//        backend: 'MediaElement',
-//        progressColor: '#007bff',
-//        cursorColor: '#fff',
-//        hideScrollbar: true,
-//        responsive: true,
-//    });
-
-   // wavesurfer.load(document.querySelector(url))
-
-//}
-
-//CreateWavesurfer('#song');
-//CreateWavesurfer('#song');
-//CreateWavesurfer('#song');
-//CreateWavesurfer('#song');
 
 //Loading waveform via id-tag from HTML
 wavesurfer.load(document.querySelector('#song'))
